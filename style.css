@@ -44,3 +44,21 @@
     font-size:42px;
     margin-bottom:20px;
 }
+
+.affiliate-card{
+  text-align:center;
+}
+
+.affiliate-card span{
+  font-size:34px;
+  display:block;
+  margin-bottom:18px;
+}
+
+.affiliate-name{
+  font-size:22px;
+  font-weight:800;
+  color:#202638;
+  margin:0;
+  line-height:1.5;
+}
