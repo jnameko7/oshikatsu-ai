@@ -1,3 +1,70 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>推し活資金AI｜推しを諦めないためのお金管理AI</title><meta name="description" content="推し活・ライブ遠征・旅行・美容のために、収入と支出から使えるお金を診断。年間予算、遠征費、グッズ費用をシミュレーションできます。"><!-- AdSense審査通過後に下を自分のコードに差し替え
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
---><link rel="stylesheet" href="style.css"></head><body><header class="site-header"><div class="container header-inner"><a class="logo" href="#top"><span class="logo-mark">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><button class="menu-btn" id="menuBtn">☰</button><nav class="nav" id="nav"><a href="#fund">資金診断</a><a href="#saving">捻出診断</a><a href="#yearly">年間予算</a><a href="#trip">遠征検索</a><a href="#goods">家計簿</a></nav><a class="header-cta" href="#fund">無料で診断</a></div></header><main id="top"><section class="hero"><div class="container hero-grid"><div class="hero-card"><p class="eyebrow">無料ブラウザ版</p><h1>推しを<br><span>諦めない。</span></h1><p class="lead">収入と支出から、推し活・ライブ遠征・旅行・美容に使えるお金を見える化。年間予算、遠征費、グッズ購入予定までまとめて管理できます。</p><div class="hero-tools"><a href="#fund" class="mini-tool"><span>🐷</span><strong>推し活資金診断</strong><small>毎月いくら使える？</small></a><a href="#yearly" class="mini-tool"><span>📅</span><strong>年間予算</strong><small>推し活総額はいくら？</small></a><a href="#trip" class="mini-tool"><span>✈️</span><strong>遠征格安検索</strong><small>ホテル・交通を比較</small></a><a href="#goods" class="mini-tool"><span>🛍️</span><strong>推し活家計簿</strong><small>グッズ費を自動集計</small></a></div></div><aside class="result-panel"><div class="panel-head"><h2>診断結果サンプル</h2><span>無料</span></div><div class="result-list"><div class="result-row"><span class="icon pink">💖</span><p>毎月の推し活予算</p><strong id="sideMonthly">18,000円</strong></div><div class="result-row"><span class="icon purple">💜</span><p>年間推し活予算</p><strong id="sideYearly">216,000円</strong></div><div class="result-row"><span class="icon blue">✈️</span><p>遠征可能回数</p><strong id="sideTrips">5回</strong></div><div class="result-row"><span class="icon gold">✨</span><p>捻出可能額</p><strong id="sideSaving">月8,500円</strong></div></div><p class="note">※結果は参考情報です。契約・予約・購入の最終判断は利用者自身で行ってください。</p></aside></div></section><section class="ad-section"><div class="container"><div class="ad-box">AdSense広告枠：審査通過後に広告コードをここへ貼ります</div></div></section><section class="section"><div class="container"><div class="section-title"><span></span><h2>診断ツール</h2></div><div class="tool-grid"><article id="fund" class="tool-card"><div class="tool-number pink">01</div><h3>推し活資金診断</h3><p>月収と支出から、毎月推し活に使える金額を計算します。</p><form id="fundForm" class="form"><label>手取り月収<input type="number" id="income" value="220000"></label><label>家賃<input type="number" id="rent" value="60000"></label><label>食費<input type="number" id="food" value="35000"></label><label>通信費<input type="number" id="mobile" value="8000"></label><label>光熱費<input type="number" id="utility" value="12000"></label><label>サブスク<input type="number" id="subs" value="3000"></label><label>交通費<input type="number" id="transport" value="10000"></label><label>その他支出<input type="number" id="other" value="35000"></label><label>毎月残したい貯金<input type="number" id="save" value="30000"></label><button class="btn pink" type="submit">診断する</button></form><div class="answer" id="fundResult"></div></article><article id="saving" class="tool-card"><div class="tool-number purple">02</div><h3>娯楽費捻出診断</h3><p>支出の見直し候補から、推し活に回せる可能性のある金額を出します。</p><form id="savingForm" class="form"><label>現在の通信費<input type="number" id="sMobile" value="8000"></label><label>現在のサブスク<input type="number" id="sSubs" value="5000"></label><label>現在の食費<input type="number" id="sFood" value="45000"></label><label>現在のコンビニ代<input type="number" id="sConvenience" value="12000"></label><button class="btn purple" type="submit">捻出額を見る</button></form><div class="answer" id="savingResult"></div></article><article id="yearly" class="tool-card"><div class="tool-number green">03</div><h3>推し活年間予算シミュレーター</h3><p>ライブ・グッズ・美容・遠征費を合計し、年間に必要な金額を出します。</p><form id="yearlyForm" class="form"><label>ライブ回数/年<input type="number" id="liveCount" value="4"></label><label>チケット代/回<input type="number" id="ticketPrice" value="10000"></label><label>グッズ代/年<input type="number" id="goodsYear" value="80000"></label><label>美容代/年<input type="number" id="beautyYear" value="60000"></label><label>遠征回数/年<input type="number" id="tripCountYear" value="3"></label><label>遠征費/回<input type="number" id="tripPrice" value="35000"></label><button class="btn green" type="submit">年間予算を見る</button></form><div class="answer" id="yearlyResult"></div></article><article id="goal" class="tool-card"><div class="tool-number gold">04</div><h3>目標シミュレーター</h3><p>旅行・ライブ・美容などの目標達成に必要な積立額を計算します。</p><form id="goalForm" class="form"><label>目標名<input type="text" id="goalName" value="東京ドーム遠征4回"></label><label>必要金額<input type="number" id="goalAmount" value="120000"></label><label>毎月積立できる金額<input type="number" id="monthlySaving" value="10000"></label><button class="btn gold" type="submit">シミュレーション</button></form><div class="answer" id="goalResult"></div></article></div></div></section><section id="trip" class="section soft"><div class="container"><div class="section-title"><span></span><h2>遠征格安検索・交通費算出</h2></div><div class="wide-card"><p>出発地・目的地・日程を入れると、交通費の目安とホテル/交通比較サイトへのリンクを作ります。</p><form id="tripForm" class="form wide-form"><label>出発地<select id="fromCity"><option>名古屋</option><option>東京</option><option>大阪</option><option>札幌</option><option>福岡</option></select></label><label>目的地<select id="toCity"><option>東京</option><option>大阪</option><option>名古屋</option><option>札幌</option><option>福岡</option></select></label><label>出発日<input type="date" id="departDate"></label><label>宿泊数<input type="number" id="nights" value="1" min="0"></label><label>1日食費<input type="number" id="mealBudget" value="3000"></label><button class="btn blue" type="submit">遠征プランを作る</button></form><div class="answer" id="tripResult"></div></div></div></section><section id="goods" class="section"><div class="container"><div class="section-title"><span></span><h2>推し活家計簿・グッズ自動集計</h2></div><div class="wide-card"><p>買う予定のグッズ名・金額・URLを入れると、合計金額を自動集計します。</p><form id="goodsForm" class="form wide-form"><label>グッズ名<input type="text" id="goodsName" placeholder="例：ペンライト"></label><label>価格<input type="number" id="goodsPrice" placeholder="例：3500"></label><label>数量<input type="number" id="goodsQty" value="1"></label><label>販売URL<input type="url" id="goodsUrl" placeholder="https://..."></label><button class="btn pink" type="submit">買うものリストに追加</button></form><div class="goods-summary"><strong>合計：<span id="goodsTotal">0円</span></strong><button id="clearGoods" class="sub-btn" type="button">リストを削除</button></div><div class="table-wrap"><table class="goods-table"><thead><tr><th>グッズ名</th><th>価格</th><th>数量</th><th>小計</th><th>URL</th></tr></thead><tbody id="goodsList"></tbody></table></div><p class="note">※販売URL先の価格自動取得は次段階でAPI/規約を確認して実装します。</p></div></div></section><section class="ad-section"><div class="container"><div class="ad-box">AdSense広告枠：記事下・診断結果下に配置予定</div></div></section><section class="section affiliate-section"><div class="container"><div class="section-title"><span></span><h2>遠征・節約に役立つ比較リンク</h2></div><div class="affiliate-grid"><a class="affiliate-card" id="rakutenLink" href="https://travel.rakuten.co.jp/" target="_blank" rel="nofollow sponsored noopener"><span>🏨</span><strong>楽天トラベルでホテルを見る</strong><small>アフィリエイトリンク差し替え枠</small></a><a class="affiliate-card" id="jalanLink" href="https://www.jalan.net/" target="_blank" rel="nofollow sponsored noopener"><span>🛏️</span><strong>じゃらんで宿を探す</strong><small>アフィリエイトリンク差し替え枠</small></a><a class="affiliate-card" id="busLink" href="https://www.bushikaku.net/" target="_blank" rel="nofollow sponsored noopener"><span>🚌</span><strong>高速バスを探す</strong><small>アフィリエイトリンク差し替え枠</small></a><a class="affiliate-card" href="#" target="_blank" rel="nofollow sponsored noopener"><span>📱</span><strong>格安SIMで通信費を見直す</strong><small>アフィリエイトリンク差し替え枠</small></a></div></div></section><section class="section soft"><div class="container notice-box"><h2>ご利用について</h2><ul><li>診断結果・交通費・宿泊費は参考目安です。</li><li>実際の料金や空席は各公式サイトで確認してください。</li><li>契約・予約・購入の最終判断は利用者自身で行ってください。</li><li>この無料版では入力情報はブラウザ内のみに保存されます。</li></ul></div></section></main><footer class="footer"><div class="container footer-inner"><p>© 推し活資金AI</p><p><a href="terms.html">利用規約</a> / <a href="privacy.html">プライバシーポリシー</a></p></div></footer><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推し活資金AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header"><div class="container header-inner">
+<a class="logo" href="#top"><span class="logo-mark">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a>
+<nav class="nav"><a href="#fund">資金診断</a><a href="#fare">交通費</a><a href="#saved">保存結果</a><a href="#share">シェア</a></nav>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="container hero-card">
+<p class="eyebrow">無料ブラウザ版</p><h1>推しを<span>諦めない。</span></h1>
+<p class="lead">推し活資金・遠征交通費・目標予算を診断し、結果保存とSNSシェアができます。</p>
+</div></section>
+
+<section class="section"><div class="container grid">
+<article id="fund" class="card">
+<h2>推し活資金診断</h2>
+<form id="fundForm" class="form">
+<label>手取り月収<input type="number" id="income" value="220000"></label>
+<label>家賃<input type="number" id="rent" value="60000"></label>
+<label>食費<input type="number" id="food" value="35000"></label>
+<label>通信費<input type="number" id="mobile" value="8000"></label>
+<label>光熱費<input type="number" id="utility" value="12000"></label>
+<label>サブスク<input type="number" id="subs" value="3000"></label>
+<label>その他支出<input type="number" id="other" value="35000"></label>
+<label>毎月残したい貯金<input type="number" id="save" value="30000"></label>
+<label class="wide consent"><input type="checkbox" id="agreeSave"> 匿名集計・診断結果保存に同意する</label>
+<button class="btn pink" type="submit">診断する</button>
+</form>
+<div class="answer" id="fundResult"></div>
+</article>
+
+<article id="fare" class="card">
+<h2>駅・交通手段別 交通費概算</h2>
+<form id="fareForm" class="form">
+<label>出発駅<input type="text" id="fromStation" value="名古屋"></label>
+<label>到着駅<input type="text" id="toStation" value="東京"></label>
+<label>交通手段<select id="transportType"><option value="shinkansen">新幹線</option><option value="plane">飛行機</option><option value="bus">夜行バス</option><option value="local">在来線</option></select></label>
+<label>宿泊数<input type="number" id="nights" value="1"></label>
+<button class="btn blue" type="submit">交通費を見る</button>
+</form>
+<div class="answer" id="fareResult"></div>
+</article>
+</div></section>
+
+<section id="share" class="section soft"><div class="container card">
+<h2>診断結果をシェア</h2>
+<textarea id="shareText" readonly rows="5">診断するとここにシェア文が出ます。</textarea>
+<div class="share-buttons"><button class="btn dark" id="shareX">Xでシェア</button><button class="btn green" id="shareLine">LINEで送る</button><button class="btn purple" id="copyInstagram">Instagram用にコピー</button></div>
+</div></section>
+
+<section id="saved" class="section"><div class="container card">
+<h2>保存した診断結果</h2><p>このブラウザに保存された結果です。後で管理画面に拡張できます。</p>
+<div id="savedList"></div><button class="sub-btn" id="clearSaved">保存結果を削除</button>
+</div></section>
+
+<section class="section soft"><div class="container card notice">
+<h2>データ管理について</h2>
+<p>本デモ版では、同意時のみブラウザ保存＋API送信の土台を動かします。運営側で本格管理するにはSupabaseなどのDB連携が必要です。</p>
+<p>保存する場合は、プライバシーポリシー、保存目的、削除依頼窓口を必ず用意してください。</p>
+</div></section>
+</main>
+<footer class="footer"><div class="container">© 推し活資金AI</div></footer>
+<script src="app.js"></script>
+</body></html>
