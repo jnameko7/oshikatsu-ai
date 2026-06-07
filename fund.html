@@ -7,6 +7,33 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+  .custom-expenses{
+  display:grid;
+  gap:14px;
+}
+
+.custom-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.add-expense-btn{
+  margin-top:14px;
+  border:1px dashed #ef5b91;
+  background:#fff8fb;
+  color:#ef5b91;
+  border-radius:10px;
+  padding:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+@media(max-width:700px){
+  .custom-row{
+    grid-template-columns:1fr;
+  }
+}
 .fund-page{padding:40px 16px 70px;background:linear-gradient(180deg,#fff,#fffafb)}
 .fund-box{max-width:920px;margin:auto;background:#fff;border:1px solid #e9e8ef;border-radius:22px;box-shadow:0 18px 45px rgba(36,30,68,.10);padding:36px}
 .breadcrumb{font-size:13px;color:#8b93a5;margin-bottom:24px}
@@ -92,7 +119,20 @@
           <label>サブスク<input type="number" id="subs" value="5000"></label>
           <label>交通費<input type="number" id="transport" value="10000"></label>
           <label>日用品・雑費<input type="number" id="daily" value="10000"></label>
-          <label>その他の支出<input type="number" id="other" value="20000"></label>
+          <div id="customExpenses" class="custom-expenses">
+  <div class="custom-row">
+    <label>支出項目名
+      <input type="text" class="custom-name" value="その他の支出">
+    </label>
+    <label>金額
+      <input type="number" class="custom-amount" value="20000">
+    </label>
+  </div>
+</div>
+
+<button type="button" id="addExpense" class="add-expense-btn">
+  ＋ 支出項目を追加
+</button>
           <label>毎月の貯金・積立<input type="number" id="save" value="20000"></label>
         </div>
       </div>
@@ -116,7 +156,21 @@ document.getElementById("fundForm").addEventListener("submit",function(e){
   const yen=v=>Math.round(v).toLocaleString()+"円";
 
   const income=n("income");
-  const fixed=n("rent")+n("food")+n("mobile")+n("utility")+n("subs")+n("transport")+n("daily")+n("other")+n("save");
+  let customTotal = 0;
+document.querySelectorAll(".custom-amount").forEach(input=>{
+  customTotal += Number(input.value || 0);
+});
+
+const fixed =
+  n("rent") +
+  n("food") +
+  n("mobile") +
+  n("utility") +
+  n("subs") +
+  n("transport") +
+  n("daily") +
+  n("save") +
+  customTotal;
   const monthly=Math.max(income-fixed,0);
   const yearly=monthly*12;
   const goods=Math.floor(yearly*0.3);
@@ -136,6 +190,23 @@ document.getElementById("fundForm").addEventListener("submit",function(e){
     </div>
     <div class="result-note">家計のバランスは良好です。無理のない範囲で推し活を楽しみましょう。</div>
   `;
+});
+  document.getElementById("addExpense").addEventListener("click",function(){
+  const area = document.getElementById("customExpenses");
+
+  const row = document.createElement("div");
+  row.className = "custom-row";
+
+  row.innerHTML = `
+    <label>支出項目名
+      <input type="text" class="custom-name" placeholder="例：美容院代">
+    </label>
+    <label>金額
+      <input type="number" class="custom-amount" value="0">
+    </label>
+  `;
+
+  area.appendChild(row);
 });
 </script>
 </body>
