@@ -1,1 +1,0 @@
-export default async function handler(req,res){if(req.method!=="POST")return res.status(405).json({error:"POST only"});return res.status(200).json({message:"API連携の土台です。Vercelの環境変数にAPIキーを設定後、AI家計診断を実装します。"});}
