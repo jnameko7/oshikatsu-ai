@@ -7,3 +7,40 @@
 .answer{display:none;margin-top:22px;border:1px solid #ffd4e5;background:#fff8fb;border-radius:18px;padding:22px}.answer.show{display:block}.big-result{text-align:center;background:linear-gradient(#fff8fb,#fff);border:1px solid #ffd4e5;border-radius:18px;padding:24px}.big-result b{display:block;color:var(--pink);font-size:42px}.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}.plan{border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}.plan:nth-child(1){background:#f7fff8}.plan:nth-child(2){background:#f3f9ff;border-color:#8ccfff}.plan:nth-child(3){background:#fff8fb}.plan b{display:block;font-size:30px}.table{width:100%;border-collapse:collapse;margin-top:18px}.table th,.table td{border-bottom:1px solid var(--line);padding:12px;text-align:left}
 .affiliate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.affiliate-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(36,30,68,.06);padding:20px;display:grid;gap:8px}.affiliate-card span{font-size:30px}.affiliate-card strong{font-size:17px}.affiliate-card small{color:var(--muted);font-weight:800}.share{margin-top:20px;display:none}.share.show{display:grid;gap:10px}.share-buttons{display:flex;gap:10px;flex-wrap:wrap}.contact-box{background:#fff8fb;border:1px solid #ffd4e5;border-radius:16px;padding:18px;margin-top:18px}.footer{background:#172233;color:white;margin-top:40px;padding:36px 0}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px}.footer a,.footer p{color:#dfe7f0}
 @media(max-width:900px){.nav{display:none}.plans,.affiliate-grid,.footer-grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}@media(max-width:560px){.container{width:min(100% - 24px,1180px)}.logo strong{font-size:20px}.cta{display:none}.plans,.affiliate-grid,.footer-grid{grid-template-columns:1fr}}
+/* 予約リンクカード修正版 */
+
+.affiliate-card h3{
+    display:none;
+}
+
+.affiliate-card p{
+    display:none;
+}
+
+.affiliate-title{
+    display:block !important;
+    font-size:30px;
+    font-weight:700;
+    color:#1f2937;
+    text-align:center;
+    margin-top:45px;
+    line-height:1.4;
+}
+
+.affiliate-card{
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+}
+
+.affiliate-card:hover{
+    transform:translateY(-5px);
+}
+
+.affiliate-card .icon{
+    font-size:42px;
+    margin-bottom:20px;
+}
