@@ -1,30 +1,5 @@
 [
-  {
-    "slug": "live-expedition-saving",
-    "title": "ライブ遠征費を安くする基本ルール",
-    "summary": "交通費・宿泊費・食費を分けて見直す方法。",
-    "category": "遠征節約",
-    "publishDate": "2026-01-01"
-  },
-  {
-    "slug": "oshikatsu-budget-start",
-    "title": "推し活予算は月いくらが安全？",
-    "summary": "手取りと固定費から無理のない予算を考える方法。",
-    "category": "家計管理",
-    "publishDate": "2026-01-02"
-  },
-  {
-    "slug": "goods-budget-list",
-    "title": "グッズ買いすぎを防ぐリストの作り方",
-    "summary": "発売日前に合計金額を見える化する方法。",
-    "category": "グッズ管理",
-    "publishDate": "2026-01-03"
-  },
-  {
-    "slug": "sim-saving-for-oshi",
-    "title": "通信費を見直して推し活費を作る方法",
-    "summary": "固定費削減で年間予算を増やす考え方。",
-    "category": "節約",
-    "publishDate": "2026-07-01"
-  }
+{"slug":"live-expedition-saving","title":"ライブ遠征費を安くする基本ルール","summary":"交通費・宿泊費・食費を分けて見直す方法。","category":"遠征節約","publishDate":"2026-01-01"},
+{"slug":"oshikatsu-budget-start","title":"推し活予算は月いくらが安全？","summary":"手取りと固定費から無理のない予算を考える方法。","category":"家計管理","publishDate":"2026-01-02"},
+{"slug":"goods-budget-list","title":"グッズ買いすぎを防ぐリストの作り方","summary":"発売日前に合計金額を見える化する方法。","category":"グッズ管理","publishDate":"2026-01-03"}
 ]
