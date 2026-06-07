@@ -5,6 +5,42 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>推し活資金診断｜推し活資金AI</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+.fund-page{padding:40px 16px 70px;background:linear-gradient(180deg,#fff,#fffafb)}
+.fund-box{max-width:920px;margin:auto;background:#fff;border:1px solid #e9e8ef;border-radius:22px;box-shadow:0 18px 45px rgba(36,30,68,.10);padding:36px}
+.breadcrumb{font-size:13px;color:#8b93a5;margin-bottom:24px}
+.fund-box h1{text-align:center;font-size:30px;margin:0 0 8px}
+.lead{text-align:center;color:#6e7587;font-weight:800;margin-bottom:28px}
+.steps{display:flex;justify-content:center;gap:70px;margin-bottom:34px;color:#8b93a5;font-size:13px;font-weight:800}
+.step{display:grid;place-items:center;gap:6px}
+.step span{width:24px;height:24px;border-radius:50%;background:#f2f2f6;display:grid;place-items:center}
+.step.active span{background:#ef5b91;color:white}
+.form-section{margin-top:24px}
+.form-section h2{font-size:17px;margin:0 0 14px}
+.form-section h2 span{display:inline-grid;place-items:center;width:24px;height:24px;margin-right:8px;border-radius:50%;background:#ef5b91;color:#fff;font-size:13px}
+.fund-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.fund-grid label,.income-label{display:grid;gap:6px;font-size:13px;font-weight:900}
+.fund-grid input,.income-label input{width:100%;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:15px}
+.check{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:13px;font-weight:900}
+.submit{width:100%;margin-top:24px;border:0;border-radius:10px;padding:15px;background:linear-gradient(135deg,#ef5b91,#ff80ad);color:#fff;font-weight:900;cursor:pointer}
+.result{display:none;margin-top:30px}
+.result.show{display:block}
+.result-main{text-align:center;background:linear-gradient(#fff8fb,#fff);border:1px solid #ffd4e5;border-radius:20px;padding:28px}
+.result-main p{font-weight:900;margin:0 0 8px}
+.result-main strong{display:block;font-size:46px;color:#ef5b91}
+.result-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.result-cards div{border:1px solid #e9e8ef;border-radius:16px;padding:18px;text-align:center;background:#fff}
+.result-cards span{display:block;color:#6e7587;font-size:13px;font-weight:900}
+.result-cards b{display:block;color:#ef5b91;font-size:24px;margin-top:6px}
+.result-note{margin-top:18px;background:#fff8fb;border:1px solid #ffd4e5;border-radius:16px;padding:18px;font-weight:900;color:#df3f7d}
+@media(max-width:700px){
+  .fund-box{padding:24px}
+  .fund-grid,.result-cards{grid-template-columns:1fr}
+  .steps{gap:24px}
+  .result-main strong{font-size:36px}
+}
+</style>
 </head>
 
 <body>
@@ -26,7 +62,7 @@
 </header>
 
 <main class="fund-page">
-  <section class="fund-card">
+  <section class="fund-box">
     <div class="breadcrumb">ホーム ＞ 推し活資金診断</div>
 
     <h1>推し活資金診断</h1>
@@ -38,23 +74,27 @@
       <div class="step"><span>3</span>結果</div>
     </div>
 
-    <form id="fundForm" class="fund-form">
-      <h2><span>1</span>収入を入力してください</h2>
-      <label>手取り月収
-        <input type="number" id="income" value="300000">
-      </label>
+    <form id="fundForm">
+      <div class="form-section">
+        <h2><span>1</span>収入を入力してください</h2>
+        <label class="income-label">手取り月収
+          <input type="number" id="income" value="300000">
+        </label>
+      </div>
 
-      <h2><span>2</span>毎月の支出を入力してください</h2>
-      <div class="fund-grid">
-        <label>家賃（住宅ローン）<input type="number" id="rent" value="80000"></label>
-        <label>食費<input type="number" id="food" value="40000"></label>
-        <label>通信費<input type="number" id="mobile" value="10000"></label>
-        <label>光熱費<input type="number" id="utility" value="10000"></label>
-        <label>サブスク・定期サービス<input type="number" id="subs" value="5000"></label>
-        <label>交通費<input type="number" id="transport" value="10000"></label>
-        <label>日用品・雑費<input type="number" id="daily" value="10000"></label>
-        <label>その他の支出<input type="number" id="other" value="20000"></label>
-        <label>毎月の貯金・積立<input type="number" id="save" value="20000"></label>
+      <div class="form-section">
+        <h2><span>2</span>毎月の支出を入力してください</h2>
+        <div class="fund-grid">
+          <label>家賃<input type="number" id="rent" value="80000"></label>
+          <label>食費<input type="number" id="food" value="40000"></label>
+          <label>通信費<input type="number" id="mobile" value="10000"></label>
+          <label>光熱費<input type="number" id="utility" value="10000"></label>
+          <label>サブスク<input type="number" id="subs" value="5000"></label>
+          <label>交通費<input type="number" id="transport" value="10000"></label>
+          <label>日用品・雑費<input type="number" id="daily" value="10000"></label>
+          <label>その他の支出<input type="number" id="other" value="20000"></label>
+          <label>毎月の貯金・積立<input type="number" id="save" value="20000"></label>
+        </div>
       </div>
 
       <label class="check">
@@ -62,53 +102,39 @@
         匿名データとして集計・保存することに同意します
       </label>
 
-      <button class="fund-submit" type="submit">診断する →</button>
+      <button class="submit" type="submit">診断する →</button>
     </form>
 
-    <div id="fundResult" class="fund-result"></div>
+    <div id="fundResult" class="result"></div>
   </section>
 </main>
 
-<script src="common.js"></script>
 <script>
-document.getElementById("fundForm").addEventListener("submit", function(e){
+document.getElementById("fundForm").addEventListener("submit",function(e){
   e.preventDefault();
+  const n=id=>Number(document.getElementById(id).value||0);
+  const yen=v=>Math.round(v).toLocaleString()+"円";
 
-  const n = id => Number(document.getElementById(id).value || 0);
-  const yen = v => Math.round(v).toLocaleString() + "円";
+  const income=n("income");
+  const fixed=n("rent")+n("food")+n("mobile")+n("utility")+n("subs")+n("transport")+n("daily")+n("other")+n("save");
+  const monthly=Math.max(income-fixed,0);
+  const yearly=monthly*12;
+  const goods=Math.floor(yearly*0.3);
+  const trips=Math.floor(yearly/40000);
 
-  const income = n("income");
-  const fixed =
-    n("rent") + n("food") + n("mobile") + n("utility") +
-    n("subs") + n("transport") + n("daily") + n("other") + n("save");
-
-  const monthly = Math.max(income - fixed, 0);
-  const yearly = monthly * 12;
-  const goods = Math.floor(yearly * 0.3);
-  const trips = Math.max(Math.floor(yearly / 40000), 0);
-
-  document.getElementById("fundResult").innerHTML = `
-    <div class="result-hero">
+  const result=document.getElementById("fundResult");
+  result.classList.add("show");
+  result.innerHTML=`
+    <div class="result-main">
       <p>あなたが毎月推し活に使える金額</p>
       <strong>${yen(monthly)}</strong>
     </div>
-
-    <div class="result-boxes">
+    <div class="result-cards">
       <div><span>年間推し活予算</span><b>${yen(yearly)}</b></div>
-      <div><span>グッズ予算目安（年間）</span><b>${yen(goods)}</b></div>
-      <div><span>遠征可能回数（年間）</span><b>${trips}〜${trips + 1}回</b></div>
+      <div><span>グッズ予算目安</span><b>${yen(goods)}</b></div>
+      <div><span>遠征可能回数</span><b>${trips}〜${trips+1}回</b></div>
     </div>
-
-    <div class="result-summary">
-      <h2>収支の内訳</h2>
-      <ul>
-        <li><span>収入</span><b>${yen(income)}</b></li>
-        <li><span>固定費合計</span><b>${yen(fixed)}</b></li>
-        <li><span>推し活に使える金額</span><b>${yen(monthly)}</b></li>
-      </ul>
-    </div>
-
-    <div class="result-note">家計のバランスは良好です！無理のない範囲で推し活を楽しみましょう。</div>
+    <div class="result-note">家計のバランスは良好です。無理のない範囲で推し活を楽しみましょう。</div>
   `;
 });
 </script>
