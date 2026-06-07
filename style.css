@@ -9,41 +9,7 @@
 @media(max-width:900px){.nav{display:none}.plans,.affiliate-grid,.footer-grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}}@media(max-width:560px){.container{width:min(100% - 24px,1180px)}.logo strong{font-size:20px}.cta{display:none}.plans,.affiliate-grid,.footer-grid{grid-template-columns:1fr}}
 /* 予約リンクカード修正版 */
 
-.affiliate-card h3{
-    display:none;
-}
-
-.affiliate-card p{
-    display:none;
-}
-
-.affiliate-title{
-    display:block !important;
-    font-size:30px;
-    font-weight:700;
-    color:#1f2937;
-    text-align:center;
-    margin-top:45px;
-    line-height:1.4;
-}
-
-.affiliate-card{
-    min-height:220px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    transition:.3s;
-}
-
-.affiliate-card:hover{
-    transform:translateY(-5px);
-}
-
-.affiliate-card .icon{
-    font-size:42px;
-    margin-bottom:20px;
-}
+/* 予約リンクカード修正版 */
 
 .affiliate-grid{
     display:grid;
@@ -56,12 +22,14 @@
     border:1px solid #e5e7eb;
     border-radius:20px;
     min-height:220px;
+    padding:20px;
 
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
 
+    text-align:center;
     text-decoration:none;
     transition:.2s;
 }
@@ -71,15 +39,36 @@
     box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
+.affiliate-card span,
 .affiliate-card .icon{
     font-size:48px;
+    display:block;
     margin-bottom:20px;
 }
 
+.affiliate-card strong,
+.affiliate-card small{
+    display:none;
+}
+
 .affiliate-name{
+    display:block !important;
     font-size:22px;
     font-weight:700;
     color:#1f2937;
     text-align:center;
     line-height:1.5;
+    margin:0;
+}
+
+@media(max-width:900px){
+    .affiliate-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:560px){
+    .affiliate-grid{
+        grid-template-columns:1fr;
+    }
 }
