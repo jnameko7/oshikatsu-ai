@@ -10,3 +10,240 @@
 .blog-hero{padding:36px 0 10px}.blog-hero-box{background:linear-gradient(135deg,#fff3f8,#f4ecff 58%,#eaf7ff);border:1px solid #eadff3;border-radius:22px;box-shadow:var(--shadow);padding:42px;position:relative;overflow:hidden}.blog-hero-box:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#ef5b91 2px,transparent 2px),radial-gradient(#4aa3df 2px,transparent 2px),radial-gradient(#55b96f 2px,transparent 2px);background-size:90px 90px,110px 110px,130px 130px;opacity:.22}.blog-hero-box>*{position:relative;z-index:1}.blog-hero h1{margin:0 0 12px;font-size:40px;line-height:1.25}.blog-hero p{color:var(--muted);font-weight:800;margin:0}.blog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.blog-card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 12px 32px rgba(36,30,68,.08);display:flex;flex-direction:column}.blog-card-thumb{height:150px;background:linear-gradient(135deg,#fff0f6,#f3edff,#eef8ff);display:grid;place-items:center;font-size:42px}.blog-card-body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}.blog-category{display:inline-flex;width:fit-content;background:#fff0f6;color:var(--pink-dark);font-size:12px;font-weight:900;padding:5px 10px;border-radius:999px}.blog-card h2{font-size:20px;line-height:1.45;margin:0}.blog-card p{color:var(--muted);font-weight:700;margin:0}.blog-date{color:#8b93a5;font-size:13px;font-weight:800;margin-top:auto}.blog-read{display:inline-flex;justify-content:center;align-items:center;margin-top:8px;padding:11px 14px;border-radius:12px;background:linear-gradient(135deg,var(--pink),#ff80ad);color:#fff;font-weight:900}.ad{min-height:110px;border:1px dashed #ffc2d9;background:#fff7fb;border-radius:16px;display:grid;place-items:center;color:#b55b80;font-weight:900}.contact-box{background:#fff8fb;border:1px solid #ffd4e5;border-radius:16px;padding:18px;margin-top:18px}.footer{background:#172233;color:white;margin-top:40px;padding:36px 0}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:28px}.footer a,.footer p{color:#dfe7f0}
 @media(max-width:1000px){.nav{display:none}.hero-stable{grid-template-columns:1fr;padding:38px}.hero-visual{order:-1;opacity:.9}.top-tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.plans,.affiliate-grid,.blog-grid,.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.container{width:min(100% - 24px,1180px)}.header-inner{min-height:72px}.logo strong{font-size:20px}.logo small{font-size:11px}.cta{display:none}.hero-stable{padding:28px 20px;min-height:auto}.hero-visual img{max-height:240px}.top-tool-grid,.plans,.affiliate-grid,.blog-grid,.footer-grid{grid-template-columns:1fr}.form{grid-template-columns:1fr}.instagram-share-panel{flex-direction:column;align-items:stretch;text-align:center}.insta-btn{width:100%}.blog-hero-box{padding:28px 22px}.blog-hero h1{font-size:30px}}
+
+/* 推し活資金診断ページ修正 */
+
+.fund-page{
+  padding:36px 0 60px;
+  background:linear-gradient(180deg,#fff,#fffafb);
+}
+
+.fund-card{
+  width:min(900px,calc(100% - 32px));
+  margin:auto;
+  background:#fff;
+  border:1px solid #e9e8ef;
+  border-radius:22px;
+  box-shadow:0 18px 45px rgba(36,30,68,.10);
+  padding:36px;
+}
+
+.breadcrumb{
+  color:#8b93a5;
+  font-size:13px;
+  margin-bottom:24px;
+}
+
+.fund-card h1{
+  text-align:center;
+  font-size:30px;
+  margin:0 0 8px;
+}
+
+.lead{
+  text-align:center;
+  color:#6e7587;
+  font-weight:800;
+  margin-bottom:30px;
+}
+
+.steps{
+  display:flex;
+  justify-content:center;
+  gap:70px;
+  margin-bottom:34px;
+  color:#8b93a5;
+  font-size:13px;
+  font-weight:800;
+}
+
+.step{
+  display:grid;
+  place-items:center;
+  gap:6px;
+}
+
+.step span{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#f2f2f6;
+  display:grid;
+  place-items:center;
+}
+
+.step.active span{
+  background:#ef5b91;
+  color:#fff;
+}
+
+.fund-form h2{
+  font-size:16px;
+  margin:24px 0 14px;
+}
+
+.fund-form h2 span{
+  display:inline-grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  margin-right:8px;
+  border-radius:50%;
+  background:#ef5b91;
+  color:#fff;
+  font-size:13px;
+}
+
+.fund-form label{
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.fund-form input{
+  width:100%;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:12px;
+  font-size:15px;
+}
+
+.fund-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.check{
+  display:flex !important;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:8px;
+  margin-top:20px;
+}
+
+.check input{
+  width:auto;
+}
+
+.fund-submit{
+  width:100%;
+  margin-top:24px;
+  border:0;
+  border-radius:10px;
+  padding:15px;
+  background:linear-gradient(135deg,#ef5b91,#ff80ad);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.fund-result{
+  margin-top:30px;
+}
+
+.result-hero{
+  text-align:center;
+  background:linear-gradient(#fff8fb,#fff);
+  border:1px solid #ffd4e5;
+  border-radius:20px;
+  padding:28px;
+}
+
+.result-hero p{
+  font-weight:900;
+  margin:0 0 8px;
+}
+
+.result-hero strong{
+  display:block;
+  font-size:46px;
+  color:#ef5b91;
+}
+
+.result-boxes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.result-boxes div{
+  border:1px solid #e9e8ef;
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+  background:#fff;
+}
+
+.result-boxes span{
+  display:block;
+  color:#6e7587;
+  font-size:13px;
+  font-weight:900;
+}
+
+.result-boxes b{
+  display:block;
+  color:#ef5b91;
+  font-size:24px;
+  margin-top:6px;
+}
+
+.result-summary{
+  margin-top:22px;
+  border:1px solid #e9e8ef;
+  border-radius:18px;
+  padding:22px;
+}
+
+.result-summary h2{
+  margin-top:0;
+}
+
+.result-summary ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.result-summary li{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #f1f1f5;
+}
+
+.result-summary li:last-child{
+  border-bottom:0;
+}
+
+.result-note{
+  margin-top:18px;
+  background:#fff8fb;
+  border:1px solid #ffd4e5;
+  border-radius:16px;
+  padding:18px;
+  font-weight:900;
+  color:#df3f7d;
+}
+
+@media(max-width:700px){
+  .fund-card{
+    padding:24px;
+  }
+
+  .fund-grid,
+  .result-boxes{
+    grid-template-columns:1fr;
+  }
+
+  .steps{
+    gap:24px;
+  }
+
+  .result-hero strong{
+    font-size:36px;
+  }
+}
