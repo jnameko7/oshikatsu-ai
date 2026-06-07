@@ -1,0 +1,1 @@
+q("yearlyForm").addEventListener("submit",e=>{e.preventDefault();const live=num("liveCount")*num("ticketPrice"),goods=num("goodsYear"),beauty=num("beautyYear"),trip=num("tripCountYear")*num("tripPrice"),total=live+goods+beauty+trip;show("yearlyResult",`<strong>年間推し活予算：${yen(total)}</strong><ul><li>月の積立目安：${yen(Math.ceil(total/12))}</li></ul>`);setShare(total,"年間推し活予算")});
