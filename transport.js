@@ -10,13 +10,10 @@ q("transportForm")?.addEventListener("submit",async e=>{
   const extra=num("extraCost");
   const total=fare+hotel+food+local+extra;
   const typeName={shinkansen:"新幹線",plane:"飛行機",bus:"夜行バス",local:"在来線"}[type];
-
   q("plans").style.display="grid";
   q("plans").innerHTML=`<div class="plan"><h3>最安プラン</h3><b style="color:var(--green)">${yen(total)}</b><p>入力金額ベース</p></div><div class="plan"><h3>バランスプラン</h3><b style="color:var(--blue)">${yen(Math.floor(total*1.15))}</b><p>予備費15%込み</p></div><div class="plan"><h3>快適プラン</h3><b style="color:var(--pink)">${yen(Math.floor(total*1.35))}</b><p>余裕費35%込み</p></div>`;
-
   q("routeRows").innerHTML=`<tr><td>交通費（${typeName}）</td><td>${yen(fare)}</td></tr><tr><td>宿泊費</td><td>${yen(hotel)}</td></tr><tr><td>食費</td><td>${yen(food)}</td></tr><tr><td>現地交通費</td><td>${yen(local)}</td></tr><tr><td>その他</td><td>${yen(extra)}</td></tr>`;
   q("routeTable").style.display="table";
-
   show("transportResult",`<div class="big-result"><span>${from} → ${to} の遠征費目安</span><b>${yen(total)}</b></div><p>すべての金額は手入力で修正できます。</p>`);
   setShare(total,"遠征費目安");
   if(q("agreeData")?.checked) await collect({type:"transport",from,to,transportType:type,fare,hotel,food,local,extra,total});
