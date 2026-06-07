@@ -247,3 +247,13 @@
     font-size:36px;
   }
 }
+
+
+/* 支出項目追加で高さが崩れる対策 */
+.form{
+    align-items:start;
+}
+
+.form label{
+    align-self:start;
+}
