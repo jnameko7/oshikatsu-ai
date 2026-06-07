@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>推し活資金AI｜推しを諦めないためのお金管理AI</title>
+  <meta name="description" content="推し活・ライブ遠征・旅行・美容のために、収入と支出から使えるお金を診断する無料ブラウザサービスです。" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="推し活資金AI">
+        <span class="logo-mark">♥</span>
+        <span>
+          <strong>推し活資金AI</strong>
+          <small>推しを諦めないためのお金管理AI</small>
+        </span>
+      </a>
+      <nav class="nav" aria-label="メインナビゲーション">
+        <a href="#tools">診断ツール</a>
+        <a href="#fund">資金診断</a>
+        <a href="#saving">捻出診断</a>
+        <a href="#trip">遠征プランナー</a>
+        <a href="#goal">目標シミュレーター</a>
+      </nav>
+      <a class="header-cta" href="#fund">無料で診断</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">無料ブラウザ版</p>
+            <h1>推しを<br><span>諦めない。</span></h1>
+            <p class="lead">
+              収入と支出をもとに、推し活・ライブ遠征・旅行・美容に使えるお金を見える化。
+              節約できる幅、目標達成までの計画を診断します。
+            </p>
+          </div>
+
+          <div class="hero-tools">
+            <a href="#fund" class="mini-tool">
+              <span>🐷</span>
+              <strong>推し活資金診断</strong>
+              <small>毎月いくら使える？</small>
+            </a>
+            <a href="#saving" class="mini-tool">
+              <span>🧮</span>
+              <strong>娯楽費捻出診断</strong>
+              <small>いくら節約できる？</small>
+            </a>
+            <a href="#trip" class="mini-tool">
+              <span>✈️</span>
+              <strong>遠征プランナー</strong>
+              <small>交通費・宿泊費は？</small>
+            </a>
+            <a href="#goal" class="mini-tool">
+              <span>🚩</span>
+              <strong>目標シミュレーター</strong>
+              <small>いつ達成できる？</small>
+            </a>
+          </div>
+        </div>
+
+        <aside class="result-panel">
+          <div class="panel-head">
+            <h2>あなたの診断結果</h2>
+            <span>サンプル</span>
+          </div>
+          <div class="result-list">
+            <div class="result-row">
+              <span class="icon pink">💖</span>
+              <p>毎月使える推し活予算</p>
+              <strong id="sideMonthly">18,000円</strong>
+            </div>
+            <div class="result-row">
+              <span class="icon purple">💜</span>
+              <p>年間推し活予算</p>
+              <strong id="sideYearly">216,000円</strong>
+            </div>
+            <div class="result-row">
+              <span class="icon blue">✈️</span>
+              <p>年間遠征可能回数</p>
+              <strong id="sideTrips">5回</strong>
+            </div>
+            <div class="result-row">
+              <span class="icon gold">✨</span>
+              <p>削減できる可能性</p>
+              <strong id="sideSaving">月8,500円</strong>
+            </div>
+          </div>
+          <p class="note">※診断結果は参考情報です。契約・予約・購入などの最終判断はご自身で行ってください。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tools" class="section">
+      <div class="container">
+        <div class="section-title">
+          <span></span>
+          <h2>診断ツール一覧</h2>
+        </div>
+
+        <div class="tool-grid">
+          <article id="fund" class="tool-card">
+            <div class="tool-number pink">01</div>
+            <h3>推し活資金診断</h3>
+            <p>収入と支出から、毎月推し活に使える金額を計算します。</p>
+            <form id="fundForm" class="form">
+              <label>手取り月収<input type="number" id="income" value="220000"></label>
+              <label>家賃<input type="number" id="rent" value="60000"></label>
+              <label>食費<input type="number" id="food" value="35000"></label>
+              <label>通信費<input type="number" id="mobile" value="8000"></label>
+              <label>光熱費<input type="number" id="utility" value="12000"></label>
+              <label>サブスク<input type="number" id="subs" value="3000"></label>
+              <label>交通費<input type="number" id="transport" value="10000"></label>
+              <label>その他支出<input type="number" id="other" value="35000"></label>
+              <label>毎月残したい貯金<input type="number" id="save" value="30000"></label>
+              <button type="submit" class="btn pink">診断する</button>
+            </form>
+            <div class="answer" id="fundResult"></div>
+          </article>
+
+          <article id="saving" class="tool-card">
+            <div class="tool-number purple">02</div>
+            <h3>娯楽費捻出診断</h3>
+            <p>支出の中から、推し活・旅行・美容に回せそうな金額を出します。</p>
+            <form id="savingForm" class="form">
+              <label>現在の通信費<input type="number" id="sMobile" value="8000"></label>
+              <label>現在のサブスク<input type="number" id="sSubs" value="5000"></label>
+              <label>現在の食費<input type="number" id="sFood" value="45000"></label>
+              <label>現在のコンビニ代<input type="number" id="sConvenience" value="12000"></label>
+              <button type="submit" class="btn purple">捻出額を見る</button>
+            </form>
+            <div class="answer" id="savingResult"></div>
+          </article>
+
+          <article id="trip" class="tool-card">
+            <div class="tool-number blue">03</div>
+            <h3>遠征プランナー</h3>
+            <p>出発地・目的地・宿泊有無から、遠征費の目安を出します。</p>
+            <form id="tripForm" class="form">
+              <label>出発地
+                <select id="fromCity">
+                  <option value="nagoya">名古屋</option>
+                  <option value="tokyo">東京</option>
+                  <option value="osaka">大阪</option>
+                  <option value="sapporo">札幌</option>
+                  <option value="fukuoka">福岡</option>
+                </select>
+              </label>
+              <label>目的地
+                <select id="toCity">
+                  <option value="tokyo">東京</option>
+                  <option value="osaka">大阪</option>
+                  <option value="nagoya">名古屋</option>
+                  <option value="sapporo">札幌</option>
+                  <option value="fukuoka">福岡</option>
+                </select>
+              </label>
+              <label>宿泊数<input type="number" id="nights" value="1" min="0"></label>
+              <label>1日食費予算<input type="number" id="mealBudget" value="3000"></label>
+              <button type="submit" class="btn blue">プランを見る</button>
+            </form>
+            <div class="answer" id="tripResult"></div>
+          </article>
+
+          <article id="goal" class="tool-card">
+            <div class="tool-number green">04</div>
+            <h3>目標シミュレーター</h3>
+            <p>ライブ・グッズ・美容・旅行の目標達成に必要な積立額を計算します。</p>
+            <form id="goalForm" class="form">
+              <label>目標名<input type="text" id="goalName" value="東京ドーム遠征4回"></label>
+              <label>必要金額<input type="number" id="goalAmount" value="120000"></label>
+              <label>毎月積立できる金額<input type="number" id="monthlySaving" value="10000"></label>
+              <button type="submit" class="btn green">シミュレーション</button>
+            </form>
+            <div class="answer" id="goalResult"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft">
+      <div class="container two-column">
+        <div>
+          <div class="section-title">
+            <span></span>
+            <h2>今後追加するAI機能</h2>
+          </div>
+          <div class="future-grid">
+            <div class="future-card">
+              <strong>AI家計診断</strong>
+              <p>レシートや支出データを分類し、推し活に回せる改善ポイントを表示。</p>
+            </div>
+            <div class="future-card">
+              <strong>レシート読取</strong>
+              <p>写真をアップロードして食費・日用品・娯楽費を自動分類。</p>
+            </div>
+            <div class="future-card">
+              <strong>食費診断</strong>
+              <p>予算別の献立案、買い物リスト、コンビニ率分析を表示。</p>
+            </div>
+          </div>
+        </div>
+
+        <aside id="notice" class="notice-box">
+          <h2>ご利用について</h2>
+          <ul>
+            <li>すべての診断結果は参考情報です。</li>
+            <li>この無料版では入力情報は保存されません。</li>
+            <li>料金・プラン内容は変更される場合があります。</li>
+            <li>契約・予約・購入の最終判断は利用者自身で行ってください。</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section affiliate-section">
+      <div class="container">
+        <div class="section-title">
+          <span></span>
+          <h2>おすすめサービス枠</h2>
+        </div>
+        <div class="affiliate-grid">
+          <a class="affiliate-card" href="#" target="_blank" rel="nofollow sponsored noopener">
+            <span>📱</span>
+            <strong>格安SIMで通信費を見直す</strong>
+            <small>ここにアフィリエイトリンクを入れます</small>
+          </a>
+          <a class="affiliate-card" href="#" target="_blank" rel="nofollow sponsored noopener">
+            <span>🏨</span>
+            <strong>ホテル予約で遠征費を調整</strong>
+            <small>ここにアフィリエイトリンクを入れます</small>
+          </a>
+          <a class="affiliate-card" href="#" target="_blank" rel="nofollow sponsored noopener">
+            <span>🚌</span>
+            <strong>高速バス・交通費を比較</strong>
+            <small>ここにアフィリエイトリンクを入れます</small>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 推し活資金AI</p>
+      <p><a href="#">利用規約</a> / <a href="#">プライバシーポリシー</a></p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
