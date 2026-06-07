@@ -1,0 +1,11 @@
+
+.affiliate-card h3{display:none;}
+.affiliate-name{
+font-size:28px;
+font-weight:700;
+color:#222;
+text-align:center;
+margin-top:40px;
+line-height:1.4;
+}
+.affiliate-card{text-align:center;}
