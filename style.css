@@ -310,3 +310,53 @@
     grid-template-columns:1fr !important;
   }
 }
+
+/* =====予約リンク完全修正版===== */
+
+.affiliate-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:24px !important;
+}
+
+.affiliate-card{
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    align-items:center !important;
+
+    min-height:220px !important;
+    padding:24px !important;
+
+    text-align:center !important;
+}
+
+.affiliate-card .icon{
+    display:block !important;
+    font-size:48px !important;
+    margin-bottom:20px !important;
+}
+
+.affiliate-name{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+
+    font-size:22px !important;
+    font-weight:700 !important;
+    color:#202638 !important;
+    line-height:1.5 !important;
+    margin:0 !important;
+}
+
+@media(max-width:900px){
+    .affiliate-grid{
+        grid-template-columns:repeat(2,1fr) !important;
+    }
+}
+
+@media(max-width:560px){
+    .affiliate-grid{
+        grid-template-columns:1fr !important;
+    }
+}
