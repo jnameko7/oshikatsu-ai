@@ -46,6 +46,38 @@ target="_blank"
 rel="nofollow sponsored noopener">
 <div class="icon">🚄</div>
 <p class="affiliate-name">JR新幹線・特急予約</p>
-</a>
 
-</div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div><div><h3>サービス</h3><p><a href="fund.html">推し活資金診断</a></p><p><a href="saving.html">娯楽費捻出診断</a></p><p><a href="transport.html">遠征プランナー</a></p></div><div><h3>お役立ち情報</h3><p><a href="articles.html">節約術</a></p><p><a href="articles.html">遠征のコツ</a></p></div><div><h3>運営について</h3><p><a href="terms.html">利用規約</a></p><p><a href="privacy.html">プライバシーポリシー</a></p><p><a href="contact.html">お問い合わせ</a></p></div></div></footer><script>function yen(v){return Math.round(Number(v)||0).toLocaleString()+"円"}function n(id){return Number(document.getElementById(id)?.value||0)}function getCustomItems(){const items=[];document.querySelectorAll(".custom-row").forEach(row=>{const name=row.querySelector(".custom-name")?.value.trim()||"追加項目";const amount=Number(row.querySelector(".custom-amount")?.value||0);if(amount>0)items.push({name,amount})});return items}document.getElementById("addItem").addEventListener("click",()=>{const row=document.createElement("div");row.className="custom-row";row.innerHTML='<label class="tool-label">項目名<input type="text" class="custom-name" placeholder="例：グッズ代"></label><label class="tool-label">金額<input type="number" class="custom-amount" value="0"></label><button type="button" class="delete-item">削除</button>';document.getElementById("customItems").appendChild(row)});document.addEventListener("click",e=>{if(e.target.classList.contains("delete-item")){const rows=document.querySelectorAll(".custom-row");if(rows.length<=1){const row=e.target.closest(".custom-row");row.querySelector(".custom-name").value="";row.querySelector(".custom-amount").value=0;return}e.target.closest(".custom-row").remove()}});document.getElementById("transportForm").addEventListener("submit",e=>{e.preventDefault();const from=document.getElementById("fromStation").value;const to=document.getElementById("toStation").value;const type=document.getElementById("transportType").value;const tn={shinkansen:"新幹線",plane:"飛行機",bus:"夜行バス",local:"在来線"}[type];const base=[{name:"交通費（"+tn+"）",amount:n("fare")},{name:"宿泊費",amount:n("hotel")},{name:"食費",amount:n("foodCost")},{name:"現地交通費",amount:n("localCost")},{name:"その他",amount:n("extraCost")}];const all=[...base,...getCustomItems()];const total=all.reduce((s,i)=>s+i.amount,0);const breakdown=all.filter(i=>i.amount>0).map(i=>`<li><span>${i.name}</span><b>${yen(i.amount)}</b></li>`).join("");const r=document.getElementById("transportResult");r.classList.add("show");r.innerHTML=`<div class="result-main"><p>${from} → ${to} の遠征費目安</p><strong>${yen(total)}</strong></div><div class="result-cards"><div><span>入力金額ベース</span><b>${yen(total)}</b></div><div><span>予備費15%込み</span><b>${yen(total*1.15)}</b></div><div><span>余裕費35%込み</span><b>${yen(total*1.35)}</b></div></div><div class="result-summary"><h2>遠征費内訳</h2><ul>${breakdown}<li><span>合計</span><b>${yen(total)}</b></li></ul></div>`});</script></body></html>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <h2>♥ 推し活資金AI</h2>
+      <p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p>
+    </div>
+
+    <div>
+      <h3>サービス</h3>
+      <p><a href="fund.html">推し活資金診断</a></p>
+      <p><a href="saving.html">娯楽費捻出診断</a></p>
+      <p><a href="transport.html">遠征プランナー</a></p>
+    </div>
+
+    <div>
+      <h3>お役立ち情報</h3>
+      <p><a href="articles.html">節約術</a></p>
+      <p><a href="articles.html">遠征のコツ</a></p>
+    </div>
+
+    <div>
+      <h3>運営について</h3>
+      <p><a href="terms.html">利用規約</a></p>
+      <p><a href="privacy.html">プライバシーポリシー</a></p>
+      <p><a href="contact.html">お問い合わせ</a></p>
+    </div>
+  </div>
+</footer>
+</body></html>
