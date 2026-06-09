@@ -1,1 +1,268 @@
-.rakuten-hotel-box{width:100%;max-width:960px;margin:0 auto;background:#fff;border:1px solid #e9e8ef;border-radius:22px;box-shadow:0 18px 45px rgba(36,30,68,.08);padding:28px;clear:both}.rakuten-hotel-box *{box-sizing:border-box}.rakuten-hotel-box h2{margin:0 0 8px;text-align:center;font-size:24px}.rakuten-hotel-lead{text-align:center;color:#6e7587;font-weight:800;margin:0 0 22px}.rakuten-hotel-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.rakuten-hotel-label{display:grid;gap:6px;font-size:13px;font-weight:900}.rakuten-hotel-label input{width:100%;height:54px;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:15px;background:#fff}.rakuten-hotel-btn{grid-column:1/-1;width:100%;border:0;border-radius:12px;padding:15px;background:linear-gradient(135deg,#ef5b91,#ff80ad);color:#fff;font-weight:900;cursor:pointer}.rakuten-hotel-result{display:none;margin-top:24px}.rakuten-hotel-result.show{display:block}.hotel-summary{text-align:center;background:linear-gradient(#fff8fb,#fff);border:1px solid #ffd4e5;border-radius:20px;padding:24px}.hotel-summary p{margin:0 0 8px;font-weight:900}.hotel-summary strong{display:block;color:#ef5b91;font-size:36px}.hotel-list{display:grid;gap:14px;margin-top:18px}.hotel-card{width:100%;display:grid;grid-template-columns:110px minmax(0,1fr) 130px;gap:16px;align-items:center;border:1px solid #e9e8ef;border-radius:18px;background:#fff;padding:16px}.hotel-card img{width:110px;height:82px;object-fit:cover;border-radius:12px}.hotel-card h3{margin:0 0 4px;font-size:18px;line-height:1.4}.hotel-card p{margin:0;color:#6e7587;font-weight:800;font-size:13px}.hotel-price{text-align:right}.hotel-price b{display:block;color:#ef5b91;font-size:22px}.hotel-price a{display:inline-flex;margin-top:8px;border-radius:10px;padding:9px 12px;background:#202638;color:#fff;font-weight:900;text-decoration:none;font-size:13px}.hotel-error{margin-top:18px;padding:18px;border:1px dashed #ffd4e5;border-radius:14px;background:#fff8fb;color:#df3f7d;font-weight:900}@media(max-width:760px){.rakuten-hotel-box{padding:22px}.rakuten-hotel-form,.hotel-card{grid-template-columns:1fr}.hotel-card img{width:100%;height:180px}.hotel-price{text-align:left}}
+/* 楽天ホテル検索＋交通手段提案 */
+.rakuten-hotel-box,
+.transport-suggest-box{
+  width:100%;
+  max-width:960px;
+  margin:0 auto 34px;
+  background:#fff;
+  border:1px solid #e9e8ef;
+  border-radius:22px;
+  box-shadow:0 18px 45px rgba(36,30,68,.08);
+  padding:28px;
+  clear:both;
+}
+
+.rakuten-hotel-box *,
+.transport-suggest-box *{
+  box-sizing:border-box;
+}
+
+.rakuten-hotel-box h2,
+.transport-suggest-box h2{
+  margin:0 0 8px;
+  text-align:center;
+  font-size:24px;
+}
+
+.rakuten-hotel-lead,
+.transport-suggest-lead{
+  text-align:center;
+  color:#6e7587;
+  font-weight:800;
+  margin:0 0 22px;
+}
+
+.rakuten-hotel-form,
+.transport-suggest-form{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.rakuten-hotel-label,
+.transport-suggest-label{
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.rakuten-hotel-label input,
+.rakuten-hotel-label select,
+.transport-suggest-label input,
+.transport-suggest-label select{
+  width:100%;
+  height:54px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:12px;
+  font-size:15px;
+  background:#fff;
+}
+
+.rakuten-hotel-btn,
+.transport-suggest-btn{
+  grid-column:1/-1;
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.rakuten-hotel-btn{
+  background:linear-gradient(135deg,#ef5b91,#ff80ad);
+}
+
+.transport-suggest-btn{
+  background:linear-gradient(135deg,#4aa3df,#69c6ff);
+}
+
+.rakuten-hotel-result,
+.transport-suggest-result{
+  display:none;
+  margin-top:24px;
+}
+
+.rakuten-hotel-result.show,
+.transport-suggest-result.show{
+  display:block;
+}
+
+.hotel-summary,
+.traffic-summary{
+  text-align:center;
+  background:linear-gradient(#fff8fb,#fff);
+  border:1px solid #ffd4e5;
+  border-radius:20px;
+  padding:24px;
+}
+
+.hotel-summary p,
+.traffic-summary p{
+  margin:0 0 8px;
+  font-weight:900;
+}
+
+.hotel-summary strong,
+.traffic-summary strong{
+  display:block;
+  color:#ef5b91;
+  font-size:34px;
+  line-height:1.35;
+}
+
+.hotel-list{
+  display:grid;
+  gap:14px;
+  margin-top:18px;
+}
+
+.hotel-card{
+  width:100%;
+  display:grid;
+  grid-template-columns:110px minmax(0,1fr) 130px;
+  gap:16px;
+  align-items:center;
+  border:1px solid #e9e8ef;
+  border-radius:18px;
+  background:#fff;
+  padding:16px;
+}
+
+.hotel-card img{
+  width:110px;
+  height:82px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.hotel-card h3{
+  margin:0 0 4px;
+  font-size:18px;
+  line-height:1.4;
+}
+
+.hotel-card p{
+  margin:0;
+  color:#6e7587;
+  font-weight:800;
+  font-size:13px;
+}
+
+.hotel-price{
+  text-align:right;
+}
+
+.hotel-price b{
+  display:block;
+  color:#ef5b91;
+  font-size:22px;
+}
+
+.hotel-price a,
+.traffic-link-card a{
+  display:inline-flex;
+  margin-top:8px;
+  border-radius:10px;
+  padding:9px 12px;
+  background:#202638;
+  color:#fff;
+  font-weight:900;
+  text-decoration:none;
+  font-size:13px;
+}
+
+.hotel-error{
+  margin-top:18px;
+  padding:18px;
+  border:1px dashed #ffd4e5;
+  border-radius:14px;
+  background:#fff8fb;
+  color:#df3f7d;
+  font-weight:900;
+}
+
+.traffic-cards{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+
+.traffic-card{
+  border:1px solid #e9e8ef;
+  border-radius:18px;
+  background:#fff;
+  padding:18px;
+  text-align:center;
+}
+
+.traffic-card span{
+  display:block;
+  color:#6e7587;
+  font-size:13px;
+  font-weight:900;
+}
+
+.traffic-card b{
+  display:block;
+  color:#ef5b91;
+  font-size:22px;
+  margin-top:6px;
+}
+
+.traffic-card small{
+  display:block;
+  color:#6e7587;
+  font-weight:800;
+  line-height:1.6;
+}
+
+.traffic-link-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+
+.traffic-link-card{
+  border:1px solid #ffd4e5;
+  border-radius:16px;
+  background:#fffafb;
+  padding:18px;
+  text-align:center;
+  font-weight:900;
+}
+
+.traffic-link-card span{
+  display:block;
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+@media(max-width:760px){
+  .rakuten-hotel-box,
+  .transport-suggest-box{
+    padding:22px;
+  }
+
+  .rakuten-hotel-form,
+  .transport-suggest-form,
+  .hotel-card,
+  .traffic-cards,
+  .traffic-link-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hotel-card img{
+    width:100%;
+    height:180px;
+  }
+
+  .hotel-price{
+    text-align:left;
+  }
+}
