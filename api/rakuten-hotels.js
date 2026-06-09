@@ -1,8 +1,26 @@
 export default async function handler(req, res) {
-  res.status(200).json({
-    appIdExists: !!process.env.RAKUTEN_APP_ID,
-    appIdLength: process.env.RAKUTEN_APP_ID
-      ? process.env.RAKUTEN_APP_ID.length
-      : 0
-  });
+  const appId = process.env.RAKUTEN_APP_ID;
+  const accessKey = process.env.RAKUTEN_ACCESS_KEY;
+
+  const keyword = req.query.keyword || "東京";
+
+  const url =
+    `https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426` +
+    `?applicationId=${encodeURIComponent(appId)}` +
+    `&accessKey=${encodeURIComponent(accessKey)}` +
+    `&keyword=${encodeURIComponent(keyword)}` +
+    `&hits=5` +
+    `&format=json` +
+    `&formatVersion=2`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({
+      error: "hotel search failed"
+    });
+  }
 }
