@@ -17,6 +17,14 @@ function setTomorrowDefaults(){
 }
 
 function priceTextByRates(twoPersonCharge,onePersonCharge,adultNum){
+  const twoRoomCharge=Number(twoPersonCharge)||0;
+
+  return {
+    main:`二名一室利用料金 ${twoRoomCharge?yenHotel(twoRoomCharge):"料金未取得"}`,
+    sub:"楽天表示料金をそのまま表示しています",
+    numeric:twoRoomCharge||0
+  };
+}
   const adults=Number(adultNum)||2;
   const twoTotal=Number(twoPersonCharge)||0;
   const oneTotal=Number(onePersonCharge)||0;
@@ -83,8 +91,8 @@ async function searchRakutenHotels(){
     const totals=hotels.map(item=>priceTextByRates(item.twoPersonCharge,item.onePersonCharge,adults).numeric).filter(n=>n>0);
     const avgTotal=totals.length?Math.round(totals.reduce((a,b)=>a+b,0)/totals.length):0;
     const cheapTotal=totals.length?Math.min(...totals):0;
-    const avgPer=avgTotal?Math.ceil(avgTotal/adults):0;
-    const cheapPer=cheapTotal?Math.ceil(cheapTotal/adults):0;
+    const avgPer=0;
+    const cheapPer=0;
 
     let advice="ホテル候補を取得しました。";
     if(budget&&avgTotal){
@@ -104,7 +112,7 @@ async function searchRakutenHotels(){
       return `<div class="hotel-card">${img?`<img src="${img}" alt="${h.hotelName}">`:`<div></div>`}<div><h3>${h.hotelName}</h3><p>${station} / ${review}</p><p>${address}</p><p>${h.hotelSpecial||""}</p><p>${oneLine} / ${twoLine}</p></div><div class="hotel-price"><b>${txt.main}</b><small>${txt.sub}</small><a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a></div></div>`;
     }).join("");
 
-    result.innerHTML=`<div class="hotel-summary"><p>${keyword} のホテル検索結果</p><strong>${adults}名利用 平均 ${avgTotal?yenHotel(avgTotal):"料金未取得"}</strong><p>${avgPer?`1名あたり平均：約${yenHotel(avgPer)}`:"1名あたり平均：料金未取得"}</p><p>${advice}</p><p>最安目安：${cheapTotal?yenHotel(cheapTotal):"料金未取得"} / 1名あたり：約${cheapPer?yenHotel(cheapPer):"料金未取得"}</p></div><div class="hotel-list">${cards}</div>`;
+    result.innerHTML=`<div class="hotel-summary"><p>${keyword} のホテル検索結果</p><strong>二名一室利用 平均 ${avgTotal?yenHotel(avgTotal):"料金未取得"}</strong><p>${advice}</p><p>最安目安：${cheapTotal?yenHotel(cheapTotal):"料金未取得"}（楽天表示料金）</p></div><div class="hotel-list">${cards}</div>`;
   }catch(err){
     result.innerHTML='<div class="hotel-error">ホテル検索に失敗しました。API設定を確認してください。</div>';
   }
