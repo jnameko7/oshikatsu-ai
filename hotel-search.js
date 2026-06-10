@@ -62,12 +62,15 @@ async function searchRakutenHotels(){
       result.innerHTML='<div class="hotel-error">条件に合うホテルが見つかりませんでした。予算を上げるか、検索キーワードを広めにしてください。</div>';
       return;
     }
-    const prices=hotels.map(h=>Number(h.hotelMinCharge||0)).filter(n=>n>0);
-　　const avgPer=prices.length?Math.round(prices.reduce((a,b)=>a+b,0)/prices.length):0;
-　　const cheapPer=prices.length?Math.min(...prices):0;
-　　const avgTotal=avgPer*adults;
-　　const cheapestTotal=cheapPer*adults;
-    if(budget&&avgTotal){
+   const prices=hotels.map(h=>Number(h.hotelMinCharge||0)).filter(n=>n>0);
+   const avgPer=prices.length?Math.round(prices.reduce((a,b)=>a+b,0)/prices.length):0;
+   const cheapPer=prices.length?Math.min(...prices):0;
+   const avgTotal=avgPer*adults;
+   const cheapestTotal=cheapPer*adults;
+
+let advice="ホテル候補を取得しました。";
+
+if(budget&&avgTotal){
       advice=avgTotal<=budget?`${adults}名利用の宿泊予算内で探せる可能性があります。`:"平均宿泊費が予算を超えています。人数・日程・エリア調整がおすすめです。";
     }
     const cards=hotels.map(h=>{
