@@ -9,7 +9,7 @@ function routeCosts(from,to){
   }else if((from.includes("大阪")&&to.includes("東京"))||(from.includes("東京")&&to.includes("大阪"))){
     costs={bus:5500,shinkansen:14500,plane:15000,local:9000};
   }else if(to.includes("福岡")||from.includes("福岡")){
-    costs={bus:9000,shinkansen=23000,plane:18000,local:16000};
+    costs={bus:9000,shinkansen:23000,plane:18000,local:16000};
   }else if(to.includes("札幌")||from.includes("札幌")){
     costs={bus:0,shinkansen:0,plane:20000,local:0};
   }
@@ -21,24 +21,10 @@ function transportName(key){
   return {auto:"おすすめ自動",bus:"夜行・高速バス",shinkansen:"新幹線・特急",plane:"飛行機",local:"在来線"}[key]||"交通手段";
 }
 
-function mealPlanCost(mealType,mealsPerDay,people,days){
-  const meals=Number(mealsPerDay)||2;
-  const totalMeals=meals*days*people;
-
-  if(mealType==="restaurant"){
-    return {total:totalMeals*1500, detail:`外食 ${totalMeals}食 × 1,500円`};
-  }
-
-  if(mealType==="convenience"){
-    return {total:totalMeals*1000, detail:`コンビニ食 ${totalMeals}食 × 1,000円`};
-  }
-
-  const restaurantMeals=Math.ceil(totalMeals/2);
-  const convenienceMeals=totalMeals-restaurantMeals;
-  return {
-    total:restaurantMeals*1500+convenienceMeals*1000,
-    detail:`外食 ${restaurantMeals}食 × 1,500円 / コンビニ食 ${convenienceMeals}食 × 1,000円`
-  };
+function foodCostPerDay(mode){
+  if(mode==="save")return 1500;
+  if(mode==="rich")return 3500;
+  return 2500;
 }
 
 function chooseTransport(costs,budget,preferred){
@@ -51,20 +37,6 @@ function chooseTransport(costs,budget,preferred){
   return {key:sorted[0][0],price:sorted[0][1]};
 }
 
-function suggestHotelCost(budget,transportTotal,foodTotal,reserve,people,nights,goodsMin){
-  if(nights<=0)return 0;
-
-  const remaining=budget-transportTotal-foodTotal-reserve-goodsMin;
-  const perPersonPerNight=Math.floor(remaining/(people*nights));
-
-  if(perPersonPerNight<=0)return 0;
-
-  if(perPersonPerNight<4000)return perPersonPerNight*people*nights;
-  if(perPersonPerNight>9000)return 9000*people*nights;
-
-  return perPersonPerNight*people*nights;
-}
-
 function buildPlanner(){
   const budget=numBudget("tripBudget");
   const from=document.getElementById("plannerFrom").value||"出発地";
@@ -72,33 +44,20 @@ function buildPlanner(){
   const preferred=document.getElementById("preferredTransport").value||"auto";
   const people=numBudget("plannerPeople")||1;
   const nights=numBudget("plannerNights");
-  const days=nights+1;
-  const mealType=document.getElementById("mealType").value||"mixed";
-  const mealsPerDay=numBudget("mealsPerDay")||2;
-  const hotelMode=document.getElementById("hotelCostMode").value||"auto";
-  const manualHotel=numBudget("manualHotelInput");
+  const foodMode=document.getElementById("foodMode").value||"normal";
   const reserve=numBudget("reserveCost");
-  const goodsMin=numBudget("goodsMinTarget");
   const result=document.getElementById("budgetPlannerResult");
 
   const costs=routeCosts(from,to);
   const chosen=chooseTransport(costs,budget,preferred);
 
   const transportTotal=chosen.price*people;
-  const meal=mealPlanCost(mealType,mealsPerDay,people,days);
-  const hotelSuggested=suggestHotelCost(budget,transportTotal,meal.total,reserve,people,nights,goodsMin);
-  const hotelTotal=hotelMode==="manual"?manualHotel:hotelSuggested;
-
-  const baseTotal=transportTotal+hotelTotal+meal.total+reserve;
+  const hotelPerPerson=people>=2?5000:7000;
+  const hotelTotal=nights>0?hotelPerPerson*people*nights:0;
+  const foodTotal=foodCostPerDay(foodMode)*people*(nights+1);
+  const baseTotal=transportTotal+hotelTotal+foodTotal+reserve;
   const goods=Math.max(0,budget-baseTotal);
   const shortage=Math.max(0,baseTotal-budget);
-
-  const hotelPerPersonNight=(hotelTotal&&people&&nights)?Math.round(hotelTotal/people/nights):0;
-  const hotelMessage=nights===0
-    ?"日帰りのため宿泊費は0円です。"
-    : hotelMode==="manual"
-      ?"自分で入力した宿泊費を使っています。"
-      : `予算から逆算した宿泊費提案です。1名1泊あたり約${yenBudget(hotelPerPersonNight)}までを目安に探せます。`;
 
   const otherOptions=Object.entries(costs).filter(([k,v])=>v>0).map(([k,v])=>{
     return `<div class="budget-card"><span>${transportName(k)}</span><b>${yenBudget(v*people)}</b><small>${people}人分の目安</small></div>`;
@@ -118,8 +77,8 @@ function buildPlanner(){
 
     <div class="budget-cards">
       <div class="budget-card"><span>交通費目安</span><b>${yenBudget(transportTotal)}</b><small>${transportName(chosen.key)} / ${people}人分</small></div>
-      <div class="budget-card"><span>宿泊費提案</span><b>${yenBudget(hotelTotal)}</b><small>${hotelMessage}</small></div>
-      <div class="budget-card"><span>理想食費</span><b>${yenBudget(meal.total)}</b><small>${meal.detail}</small></div>
+      <div class="budget-card"><span>宿泊費目安</span><b>${yenBudget(hotelTotal)}</b><small>${nights}泊 / ${people}人分</small></div>
+      <div class="budget-card"><span>食費目安</span><b>${yenBudget(foodTotal)}</b><small>${foodMode==="save"?"節約":foodMode==="rich"?"しっかり":"普通"}プラン</small></div>
     </div>
 
     <div class="adjust-box">
@@ -128,11 +87,10 @@ function buildPlanner(){
       <div class="adjust-grid">
         <label>交通費<input type="number" id="manualTransport" value="${transportTotal}"></label>
         <label>宿泊費<input type="number" id="manualHotel" value="${hotelTotal}"></label>
-        <label>食費<input type="number" id="manualFood" value="${meal.total}"></label>
+        <label>食費<input type="number" id="manualFood" value="${foodTotal}"></label>
         <label>予備費<input type="number" id="manualReserve" value="${reserve}"></label>
       </div>
       <button class="submit-btn" type="button" id="manualRecalc">手動金額で再計算 →</button>
-      <button class="mini-btn" type="button" id="applyHotelBudget">この宿泊費を楽天ホテル検索に反映する</button>
     </div>
 
     <div class="result-summary">
@@ -141,16 +99,15 @@ function buildPlanner(){
         <li><span>遠征予算</span><b>${yenBudget(budget)}</b></li>
         <li><span>交通費</span><b>${yenBudget(transportTotal)}</b></li>
         <li><span>宿泊費</span><b>${yenBudget(hotelTotal)}</b></li>
-        <li><span>食費</span><b>${yenBudget(meal.total)}</b></li>
+        <li><span>食費</span><b>${yenBudget(foodTotal)}</b></li>
         <li><span>予備費</span><b>${yenBudget(reserve)}</b></li>
-        <li><span>最低確保したいグッズ代</span><b>${yenBudget(goodsMin)}</b></li>
         <li><span>グッズ代に使える残額</span><b>${yenBudget(goods)}</b></li>
       </ul>
     </div>
 
     <div class="price-disclaimer">
       <strong>金額について</strong>
-      <p>交通費・宿泊費・食費は想定金額です。正確な金額は、ホテル・交通機関・予約サイトで必ずご確認ください。宿泊費提案は、予算から逆算した「探す時の目安」です。</p>
+      <p>交通費・宿泊費・食費は想定金額です。正確な金額は、ホテル・交通機関・予約サイトで必ずご確認ください。下の楽天ホテル検索や予約リンクから確認できます。</p>
     </div>
 
     <div class="result-summary">
@@ -160,15 +117,6 @@ function buildPlanner(){
   `;
 
   document.getElementById("manualRecalc").onclick=manualRecalc;
-  document.getElementById("applyHotelBudget").onclick=()=>{
-    const hotelBudget=document.getElementById("hotelBudget");
-    const hotelKeyword=document.getElementById("hotelKeyword");
-    const hotelAdultNum=document.getElementById("hotelAdultNum");
-    if(hotelBudget)hotelBudget.value=Math.max(0,Math.round(hotelTotal/Math.max(people,1)));
-    if(hotelKeyword)hotelKeyword.value=to;
-    if(hotelAdultNum)hotelAdultNum.value=String(people);
-    location.hash="hotelBudget";
-  };
 }
 
 function manualRecalc(){
