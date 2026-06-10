@@ -16,6 +16,20 @@ function setTomorrowDefaults(){
   if(!checkout.value)checkout.value=toDate(dayAfter);
 }
 
+function ensureHotelSortControls(){
+  const form=document.querySelector(".rakuten-hotel-form");
+  const button=document.getElementById("hotelSearchBtn");
+  if(!form||!button||document.getElementById("hotelSort"))return;
+  const sortLabel=document.createElement("label");
+  sortLabel.className="rakuten-hotel-label";
+  sortLabel.innerHTML='並び替え<select id="hotelSort"><option value="cheap" selected>安い順</option><option value="expensive">高い順</option><option value="review">評価順</option></select>';
+  const hitsLabel=document.createElement("label");
+  hitsLabel.className="rakuten-hotel-label";
+  hitsLabel.innerHTML='表示件数<select id="hotelHits"><option value="5">5件</option><option value="10">10件</option><option value="20" selected>20件</option></select>';
+  form.insertBefore(sortLabel,button);
+  form.insertBefore(hitsLabel,button);
+}
+
 function priceTextByRates(twoPersonCharge,onePersonCharge,adultNum){
   const adults=Number(adultNum)||2;
   const perPerson=Number(twoPersonCharge)||0;
@@ -33,7 +47,19 @@ function hotelDisclaimer(){
 }
 
 function trafficDisclaimer(){
-  return `<div class="price-disclaimer"><strong>交通費のご確認について</strong><p>当サイトの交通費は、出発地・目的地・交通手段から作成した想定金額です。実際の運賃・空席・時刻・割引・繁忙期料金は各予約サイトや公式サイトで変動します。正確な金額を知りたい場合は、各予約ページにアクセスして必ずご確認ください。</p></div>`;
+  return `<div class="price-disclaimer"><strong>交通費のご確認について</strong><p>当サイトの交通費は、出発地・目的地・交通手段から作成した想定金額です。楽天トラベルやエアトリ等のアフィリエイトリンクだけでは、夜行バス・航空券・新幹線のリアルタイム料金を自動取得できません。実際の運賃・空席・時刻・割引・繁忙期料金は各予約サイトや公式サイトで変動します。正確な金額を知りたい場合は、各予約ページにアクセスして必ずご確認ください。</p></div>`;
+}
+
+function sortHotels(items, adults, sortType){
+  return [...items].sort((a,b)=>{
+    const pa=priceTextByRates(a.twoPersonCharge,a.onePersonCharge,adults).numeric || 999999999;
+    const pb=priceTextByRates(b.twoPersonCharge,b.onePersonCharge,adults).numeric || 999999999;
+    const ra=Number(a.hotel.reviewAverage||0);
+    const rb=Number(b.hotel.reviewAverage||0);
+    if(sortType==="expensive") return pb-pa;
+    if(sortType==="review") return rb-ra;
+    return pa-pb;
+  });
 }
 
 async function searchRakutenHotels(){
@@ -43,43 +69,40 @@ async function searchRakutenHotels(){
   const checkoutDate=document.getElementById("hotelCheckoutDate")?.value||"";
   const adultNum=document.getElementById("hotelAdultNum")?.value||"2";
   const adults=Number(adultNum)||2;
+  const sortType=document.getElementById("hotelSort")?.value||"cheap";
+  const hits=document.getElementById("hotelHits")?.value||"20";
   const result=document.getElementById("rakutenHotelResult");
   if(!result)return;
   result.classList.add("show");
   result.innerHTML='<div class="hotel-error">ホテル情報を検索中です...</div>';
   try{
-    const params=new URLSearchParams({keyword,hits:"5"});
+    const params=new URLSearchParams({keyword,hits});
     if(checkinDate)params.set("checkinDate",checkinDate);
     if(checkoutDate)params.set("checkoutDate",checkoutDate);
     if(budget>0)params.set("maxCharge",String(budget));
-
     const res=await fetch(`/api/rakuten-hotel-rates?${params.toString()}`);
     const data=await res.json();
-
     if(data.errors||data.error){
       result.innerHTML='<div class="hotel-error">ホテル検索に失敗しました。検索条件を変えて再度お試しください。</div>';
       return;
     }
-
-    const hotels=(data.hotels||[]).filter(item=>item.hotel&&item.hotel.hotelName);
+    let hotels=(data.hotels||[]).filter(item=>item.hotel&&item.hotel.hotelName);
+    hotels=sortHotels(hotels,adults,sortType);
     if(!hotels.length){
       result.innerHTML='<div class="hotel-error">条件に合うホテルが見つかりませんでした。予算を上げるか、検索キーワードを広めにしてください。</div>';
       return;
     }
-
     const totals=hotels.map(item=>priceTextByRates(item.twoPersonCharge,item.onePersonCharge,adults).numeric).filter(n=>n>0);
     const perPersons=hotels.map(item=>priceTextByRates(item.twoPersonCharge,item.onePersonCharge,adults).perPerson).filter(n=>n>0);
-
     const avgTotal=totals.length?Math.round(totals.reduce((a,b)=>a+b,0)/totals.length):0;
     const cheapTotal=totals.length?Math.min(...totals):0;
     const avgPer=perPersons.length?Math.round(perPersons.reduce((a,b)=>a+b,0)/perPersons.length):0;
     const cheapPer=perPersons.length?Math.min(...perPersons):0;
-
-    let advice="ホテル候補を取得しました。";
+    const sortLabel={cheap:"安い順",expensive:"高い順",review:"評価順"}[sortType]||"安い順";
+    let advice=`${hotels.length}件を${sortLabel}で表示しています。`;
     if(budget&&avgTotal){
       advice=avgTotal<=budget ? `${adults}名利用の宿泊予算内で探せる可能性があります。` : "平均宿泊費が予算を超えています。日程・人数・エリア調整がおすすめです。";
     }
-
     const cards=hotels.map(item=>{
       const h=item.hotel;
       const txt=priceTextByRates(item.twoPersonCharge,item.onePersonCharge,adults);
@@ -92,7 +115,6 @@ async function searchRakutenHotels(){
       const perLine=item.twoPersonCharge?`楽天表示料金（1名あたり目安） ${yenHotel(item.twoPersonCharge)}`:"楽天表示料金は取得できませんでした";
       return `<div class="hotel-card">${img?`<img src="${img}" alt="${h.hotelName}">`:`<div></div>`}<div><h3>${h.hotelName}</h3><p>${station} / ${review}</p><p>${address}</p><p>${h.hotelSpecial||""}</p><p>${oneLine} / ${perLine}</p></div><div class="hotel-price"><b>${txt.main}</b><small>${txt.sub}</small><a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a></div></div>`;
     }).join("");
-
     result.innerHTML=`${hotelDisclaimer()}<div class="hotel-summary"><p>${keyword} のホテル検索結果</p><strong>${adults}名利用想定 平均 ${avgTotal?yenHotel(avgTotal):"料金未取得"}</strong><p>${avgPer?`楽天表示料金（1名あたり平均）：約${yenHotel(avgPer)}`:"楽天表示料金（1名あたり平均）：料金未取得"}</p><p>${advice}</p><p>最安想定額：${cheapTotal?yenHotel(cheapTotal):"料金未取得"}（1名あたり目安：約${cheapPer?yenHotel(cheapPer):"料金未取得"}）</p></div><div class="hotel-list">${cards}</div>`;
   }catch(err){
     result.innerHTML='<div class="hotel-error">ホテル検索に失敗しました。API設定を確認してください。</div>';
@@ -110,24 +132,22 @@ function suggestTraffic(){
   else if((from.includes("大阪")&&to.includes("東京"))||(from.includes("東京")&&to.includes("大阪"))){bus=5500;shinkansen=14500;plane=15000;local=9000;}
   else if(to.includes("福岡")||from.includes("福岡")){bus=9000;shinkansen=23000;plane=18000;local=16000;}
   else if(to.includes("札幌")||from.includes("札幌")){bus=0;shinkansen=0;plane=20000;local=0;}
-
   const opts=[
     {name:"夜行・高速バス",icon:"🚌",price:bus,note:"最安重視。宿代を浮かせたい人向け"},
     {name:"新幹線・特急",icon:"🚄",price:shinkansen,note:"時間と快適さのバランス重視"},
     {name:"飛行機",icon:"✈️",price:plane,note:"長距離遠征向け。早割確認がおすすめ"},
     {name:"在来線",icon:"🚃",price:local,note:"近距離・節約向け。時間に余裕がある人向け"}
   ].filter(x=>x.price>0);
-
   const ok=opts.filter(x=>x.price<=budget);
   const best=(ok.length?ok:opts).sort((a,b)=>a.price-b.price)[0];
   const cards=opts.map(x=>`<div class="traffic-card"><span>${x.icon} ${x.name}</span><b>${yenHotel(x.price)}</b><small>${x.note}</small></div>`).join("");
-
   result.classList.add("show");
   result.innerHTML=`${trafficDisclaimer()}<div class="traffic-summary"><p>${from} → ${to} の交通手段提案</p><strong>おすすめ：${best.name}</strong><p>入力予算：${yenHotel(budget)} / 目安交通費：${yenHotel(best.price)}</p></div><div class="traffic-cards">${cards}</div><div class="traffic-link-grid"><div class="traffic-link-card"><span>🚌</span>夜行バスを探す<br><a href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+62I63U+AD2+3H18R6" target="_blank" rel="nofollow sponsored noopener">エアトリへ</a></div><div class="traffic-link-card"><span>🚄</span>新幹線を探す<br><a href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+72TM0A+4R8G+BWVTE" target="_blank" rel="nofollow sponsored noopener">予約サイトへ</a></div><div class="traffic-link-card"><span>✈️</span>航空券を探す<br><a href="https://a.r10.to/hgDzCx" target="_blank" rel="nofollow sponsored noopener">航空券比較へ</a></div><div class="traffic-link-card"><span>🏨</span>ホテルも探す<br><a href="https://a.r10.to/hYbXg0" target="_blank" rel="nofollow sponsored noopener">楽天トラベルへ</a></div></div>`;
 }
 
 document.addEventListener("DOMContentLoaded",function(){
   setTomorrowDefaults();
+  ensureHotelSortControls();
   const adultSelect=document.getElementById("hotelAdultNum");
   if(adultSelect && !adultSelect.value){adultSelect.value="2";}
   document.getElementById("hotelSearchBtn")?.addEventListener("click",e=>{e.preventDefault();searchRakutenHotels();});
