@@ -14,38 +14,29 @@
 .breadcrumb{color:#8b93a5;font-size:13px;margin-bottom:24px}
 .tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
 .tool-label{display:grid;gap:6px;font-size:13px;font-weight:900;align-self:start}
-.tool-label input,.tool-label select,.custom-row input{width:100%;height:54px;min-height:54px;max-height:54px;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:15px;background:#fff}
-.custom-block{margin-top:14px;padding:18px;border:1px solid #f2d6e2;border-radius:16px;background:#fffafb}
-.custom-block h3{margin:0 0 12px;font-size:16px}
-.custom-items{display:grid;gap:12px}
-.custom-row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
-.delete-item{height:54px;border:0;border-radius:10px;padding:0 14px;background:#f2f2f6;color:#6e7587;font-weight:900;cursor:pointer}
-.add-item-btn{width:100%;margin-top:14px;border:1px dashed #ef5b91;background:#fff8fb;color:#ef5b91;border-radius:10px;padding:12px;font-weight:900;cursor:pointer}
-.check{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:13px;font-weight:900}
-.check input{width:auto}
-.submit-btn{width:100%;margin-top:24px;border:0;border-radius:10px;padding:15px;color:#fff;font-weight:900;cursor:pointer}
-.submit-blue{background:linear-gradient(135deg,#4aa3df,#69c6ff)}
-.result{display:none;margin-top:30px}
-.result.show{display:block}
+.tool-label input,.tool-label select{width:100%;height:54px;border:1px solid #e5e7eb;border-radius:10px;padding:12px;font-size:15px;background:#fff}
+.submit-btn{width:100%;margin-top:24px;border:0;border-radius:10px;padding:15px;color:#fff;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#4aa3df,#69c6ff)}
+.result{display:none;margin-top:30px}.result.show{display:block}
 .result-main{text-align:center;background:linear-gradient(#fff8fb,#fff);border:1px solid #ffd4e5;border-radius:20px;padding:28px}
-.result-main p{font-weight:900;margin:0 0 8px}
-.result-main strong{display:block;font-size:46px;color:#ef5b91}
-.result-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-.result-cards div{border:1px solid #e9e8ef;border-radius:16px;padding:18px;text-align:center;background:#fff}
-.result-cards span{display:block;color:#6e7587;font-size:13px;font-weight:900}
-.result-cards b{display:block;color:#ef5b91;font-size:24px;margin-top:6px}
+.result-main p{font-weight:900;margin:0 0 8px}.result-main strong{display:block;font-size:42px;color:#ef5b91}
+.budget-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.budget-card{border:1px solid #e9e8ef;border-radius:16px;padding:18px;text-align:center;background:#fff}
+.budget-card span{display:block;color:#6e7587;font-size:13px;font-weight:900}.budget-card b{display:block;color:#ef5b91;font-size:24px;margin-top:6px}.budget-card small{display:block;color:#6e7587;font-weight:800;line-height:1.5}
+.adjust-box{margin-top:22px;border:1px solid #e9e8ef;border-radius:18px;padding:22px;background:#fff}
+.adjust-box h2{margin:0 0 12px;font-size:18px}.adjust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.adjust-grid label{display:grid;gap:6px;font-size:13px;font-weight:900}.adjust-grid input{height:48px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font-size:15px}
 .result-summary{margin-top:22px;border:1px solid #e9e8ef;border-radius:18px;padding:22px;background:#fff}
-.result-summary h2{margin:0 0 12px;font-size:18px}
-.result-summary ul{list-style:none;padding:0;margin:0}
-.result-summary li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #f1f1f5;font-weight:800}
-.result-summary li:last-child{border-bottom:0}
+.result-summary h2{margin:0 0 12px;font-size:18px}.result-summary ul{list-style:none;padding:0;margin:0}
+.result-summary li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #f1f1f5;font-weight:800}.result-summary li:last-child{border-bottom:0}
+.price-disclaimer{margin:22px 0 0;padding:18px;border:1px solid #ffd4e5;border-radius:16px;background:#fff8fb;color:#202638;font-size:13px;font-weight:800;line-height:1.7}
+.price-disclaimer strong{display:block;color:#df3f7d;font-size:15px;margin-bottom:6px}.price-disclaimer p{margin:0}
+.mini-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #ffb6d0;background:#fff8fb;color:#df3f7d;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer;text-decoration:none;margin-top:12px}
 .transport-extra-section{width:min(960px,100%);margin:40px auto 0}
 .affiliate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px}
 .affiliate-card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;min-height:180px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;color:#202638;box-shadow:0 10px 28px rgba(36,30,68,.06);transition:.2s ease}
-.affiliate-card:hover{transform:translateY(-4px);border-color:#ff9cc2}
-.affiliate-card .icon{font-size:46px;line-height:1}
+.affiliate-card:hover{transform:translateY(-4px);border-color:#ff9cc2}.affiliate-card .icon{font-size:46px;line-height:1}
 .affiliate-name{display:block!important;font-size:20px;font-weight:800;color:#202638;text-align:center;line-height:1.5;margin:0}
-@media(max-width:760px){.tool-box{padding:24px}.tool-grid,.result-cards,.affiliate-grid{grid-template-columns:1fr}.custom-row{grid-template-columns:1fr}.delete-item{width:100%}.result-main strong{font-size:36px}}
+@media(max-width:760px){.tool-box{padding:24px}.tool-grid,.budget-cards,.adjust-grid,.affiliate-grid{grid-template-columns:1fr}.result-main strong{font-size:34px}}
 </style>
 </head>
 <body>
@@ -55,37 +46,35 @@
 <section class="tool-box">
 <div class="breadcrumb">ホーム ＞ 遠征プランナー</div>
 <h1>遠征プランナー</h1>
-<p class="tool-lead">交通費・宿泊費・食費などを手入力で整理できます。</p>
-<form id="transportForm">
-<div class="tool-grid">
-<label class="tool-label">出発駅<input type="text" id="fromStation" value="大阪"></label>
-<label class="tool-label">到着駅<input type="text" id="toStation" value="東京"></label>
-<label class="tool-label">交通手段<select id="transportType"><option value="shinkansen">新幹線</option><option value="plane">飛行機</option><option value="bus">夜行バス</option><option value="local">在来線</option></select></label>
-<label class="tool-label">交通費<input type="number" id="fare" value="12800"></label>
-<label class="tool-label">宿泊費<input type="number" id="hotel" value="7600"></label>
-<label class="tool-label">食費<input type="number" id="foodCost" value="2000"></label>
-<label class="tool-label">現地交通費<input type="number" id="localCost" value="0"></label>
-<label class="tool-label">その他<input type="number" id="extraCost" value="0"></label>
-</div>
-<div class="custom-block"><h3>自由に追加できる遠征費</h3><div id="customItems" class="custom-items"><div class="custom-row"><label class="tool-label">項目名<input type="text" class="custom-name" value="グッズ代"></label><label class="tool-label">金額<input type="number" class="custom-amount" value="0"></label><button type="button" class="delete-item">削除</button></div></div><button type="button" id="addItem" class="add-item-btn">＋ 費用項目を追加</button></div>
-<label class="check"><input type="checkbox" id="agreeData">匿名データとして集計・保存することに同意します</label>
-<button class="submit-btn submit-blue" type="submit">プランを作る →</button>
-</form>
-<div id="transportResult" class="result"></div>
-</section>
+<p class="tool-lead">遠征予算から交通費・宿泊費・食費を自動配分し、グッズ代に使える残額を出します。</p>
 
-<section class="transport-extra-section">
-<section class="transport-suggest-box">
-<h2>交通手段 自動提案</h2>
-<p class="transport-suggest-lead">出発地・遠征先・交通費予算から、夜行バス/新幹線/飛行機などの目安を提案します。</p>
-<form class="transport-suggest-form">
-<label class="transport-suggest-label">出発地<input type="text" id="trafficFrom" value="名古屋"></label>
-<label class="transport-suggest-label">遠征先<input type="text" id="trafficTo" value="東京"></label>
-<label class="transport-suggest-label">交通費予算<input type="number" id="trafficBudget" value="12000"></label>
-<button id="trafficSuggestBtn" class="transport-suggest-btn" type="button">交通手段を自動提案する →</button>
+<form id="budgetPlannerForm">
+<div class="tool-grid">
+<label class="tool-label">遠征予算（チケット代除く）<input type="number" id="tripBudget" value="30000"></label>
+<label class="tool-label">出発地<input type="text" id="plannerFrom" value="名古屋"></label>
+<label class="tool-label">目的地<input type="text" id="plannerTo" value="東京"></label>
+<label class="tool-label">交通希望手段<select id="preferredTransport"><option value="auto">おすすめ自動</option><option value="bus">夜行・高速バス</option><option value="shinkansen">新幹線・特急</option><option value="plane">飛行機</option><option value="local">在来線</option></select></label>
+<label class="tool-label">人数<select id="plannerPeople"><option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
+<label class="tool-label">宿泊数<select id="plannerNights"><option value="0">日帰り</option><option value="1" selected>1泊</option><option value="2">2泊</option><option value="3">3泊</option></select></label>
+
+<label class="tool-label">食事タイプ<select id="mealType"><option value="mixed" selected>外食＋コンビニ</option><option value="restaurant">外食中心</option><option value="convenience">コンビニ中心</option></select></label>
+<label class="tool-label">1日何食にする？<select id="mealsPerDay"><option value="1">1食</option><option value="2" selected>2食</option><option value="3">3食</option></select></label>
+
+<label class="tool-label">宿泊費設定<select id="hotelCostMode"><option value="auto" selected>自動提案</option><option value="manual">自分で入力</option></select></label>
+<label class="tool-label">宿泊費を自分で入力<input type="number" id="manualHotelInput" value="0"></label>
+
+<label class="tool-label">予備費<input type="number" id="reserveCost" value="2000"></label>
+<label class="tool-label">グッズ代最低確保額<input type="number" id="goodsMinTarget" value="5000"></label>
+</div>
+<button class="submit-btn" type="submit">予算から遠征プランを作る →</button>
 </form>
-<div id="trafficSuggestResult" class="transport-suggest-result"></div>
-</section>
+
+<div id="budgetPlannerResult" class="result"></div>
+
+<div class="price-disclaimer">
+<strong>ご利用前にご確認ください</strong>
+<p>当サイトの交通費・宿泊費・食費は、入力条件から作成した想定金額です。実際の運賃・宿泊料金・空席状況・割引・キャンペーン・繁忙期料金は各予約サイトで変動します。正確な金額は必ず各予約ページや公式サイトでご確認ください。</p>
+</div>
 </section>
 
 <section class="transport-extra-section">
@@ -124,13 +113,6 @@
 <link rel="stylesheet" href="history.css">
 <script src="history.js"></script>
 <script src="hotel-search.js"></script>
-<script>
-const yen=v=>Math.round(Number(v)||0).toLocaleString()+"円";
-const n=id=>Number(document.getElementById(id)?.value||0);
-function custom(){const a=[];document.querySelectorAll(".custom-row").forEach(r=>{const name=r.querySelector(".custom-name")?.value||"追加項目";const amount=Number(r.querySelector(".custom-amount")?.value||0);if(amount>0)a.push({name,amount})});return a}
-document.getElementById("addItem").onclick=()=>{const r=document.createElement("div");r.className="custom-row";r.innerHTML='<label class="tool-label">項目名<input type="text" class="custom-name" placeholder="例：グッズ代"></label><label class="tool-label">金額<input type="number" class="custom-amount" value="0"></label><button type="button" class="delete-item">削除</button>';document.getElementById("customItems").appendChild(r)};
-document.addEventListener("click",e=>{if(e.target.classList.contains("delete-item")){const rows=document.querySelectorAll(".custom-row");if(rows.length<=1){const r=e.target.closest(".custom-row");r.querySelector(".custom-name").value="";r.querySelector(".custom-amount").value=0}else{e.target.closest(".custom-row").remove()}}});
-document.getElementById("transportForm").onsubmit=e=>{e.preventDefault();const typeName={shinkansen:"新幹線",plane:"飛行機",bus:"夜行バス",local:"在来線"}[document.getElementById("transportType").value];const base=[["交通費（"+typeName+"）",n("fare")],["宿泊費",n("hotel")],["食費",n("foodCost")],["現地交通費",n("localCost")],["その他",n("extraCost")]].map(x=>({name:x[0],amount:x[1]}));const all=[...base,...custom()];const total=all.reduce((s,i)=>s+i.amount,0);const lis=all.filter(i=>i.amount>0).map(i=>`<li><span>${i.name}</span><b>${yen(i.amount)}</b></li>`).join("");const result=document.getElementById("transportResult");result.classList.add("show");result.innerHTML=`<div class="result-main"><p>${document.getElementById("fromStation").value} → ${document.getElementById("toStation").value} の遠征費目安</p><strong>${yen(total)}</strong></div><div class="result-cards"><div><span>入力金額ベース</span><b>${yen(total)}</b></div><div><span>予備費15%込み</span><b>${yen(total*1.15)}</b></div><div><span>余裕費35%込み</span><b>${yen(total*1.35)}</b></div></div><div class="result-summary"><h2>遠征費内訳</h2><ul>${lis}<li><span>合計</span><b>${yen(total)}</b></li></ul></div>`};
-</script>
+<script src="transport-budget-planner.js"></script>
 </body>
 </html>
