@@ -5,7 +5,8 @@ export default async function handler(req, res) {
   const checkinDate = req.query.checkinDate || "";
   const checkoutDate = req.query.checkoutDate || "";
   const maxCharge = req.query.maxCharge || "";
-  const hits = req.query.hits || "5";
+  const requestedHits = Number(req.query.hits || 20);
+  const hits = String(Math.min(Math.max(requestedHits, 1), 20));
 
   async function fetchHotels(adultNum) {
     const params = new URLSearchParams();
@@ -18,9 +19,7 @@ export default async function handler(req, res) {
     if (checkinDate) params.set("checkinDate", checkinDate);
     if (checkoutDate) params.set("checkoutDate", checkoutDate);
     if (maxCharge) params.set("maxCharge", maxCharge);
-
     const url = "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" + params.toString();
-
     const response = await fetch(url, {
       headers: {
         "accessKey": accessKey,
@@ -40,10 +39,8 @@ export default async function handler(req, res) {
     const [oneData, twoData] = await Promise.all([fetchHotels(1), fetchHotels(2)]);
     const oneHotels = (oneData.hotels || []).map(getHotelInfo).filter(h => h.hotelNo);
     const twoHotels = (twoData.hotels || []).map(getHotelInfo).filter(h => h.hotelNo);
-
     const oneMap = new Map();
     oneHotels.forEach(h => oneMap.set(String(h.hotelNo), h));
-
     const merged = twoHotels.map(two => {
       const one = oneMap.get(String(two.hotelNo));
       return {
@@ -52,8 +49,7 @@ export default async function handler(req, res) {
         twoPersonCharge: Number(two.hotelMinCharge || 0)
       };
     });
-
-    res.status(200).json({ keyword, checkinDate, checkoutDate, hotels: merged });
+    res.status(200).json({ keyword, checkinDate, checkoutDate, hits: Number(hits), hotels: merged });
   } catch (err) {
     res.status(500).json({ error: "料金比較検索に失敗しました", message: err.message });
   }
