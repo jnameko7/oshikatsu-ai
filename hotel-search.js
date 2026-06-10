@@ -17,17 +17,22 @@ function setTomorrowDefaults(){
 
 function priceTextByAdult(price,adultNum){
   const adults=Number(adultNum)||1;
-  const total=Number(price)||0;
-  if(!total){
+  const perPerson=Number(price)||0;
+
+  if(!perPerson){
     return {main:"料金未取得",sub:"楽天で料金を確認してください"};
   }
+
+  const total=perPerson*adults;
+
   if(adults>=2){
     return {
       main:`${adults}名利用目安 ${yenHotel(total)}`,
-      sub:`1人あたり 約${yenHotel(Math.ceil(total/adults))}`
+      sub:`1人あたり 約${yenHotel(perPerson)}`
     };
   }
-  return {main:`1名利用目安 ${yenHotel(total)}`,sub:"1人利用の目安料金"};
+
+  return {main:`1名利用目安 ${yenHotel(perPerson)}`,sub:"1人利用の目安料金"};
 }
 
 async function searchRakutenHotels(){
@@ -58,11 +63,10 @@ async function searchRakutenHotels(){
       return;
     }
     const prices=hotels.map(h=>Number(h.hotelMinCharge||0)).filter(n=>n>0);
-    const avgTotal=prices.length?Math.round(prices.reduce((a,b)=>a+b,0)/prices.length):0;
-    const cheapestTotal=prices.length?Math.min(...prices):0;
-    const avgPer=avgTotal?Math.ceil(avgTotal/adults):0;
-    const cheapPer=cheapestTotal?Math.ceil(cheapestTotal/adults):0;
-    let advice="ホテル候補を取得しました。";
+　　const avgPer=prices.length?Math.round(prices.reduce((a,b)=>a+b,0)/prices.length):0;
+　　const cheapPer=prices.length?Math.min(...prices):0;
+　　const avgTotal=avgPer*adults;
+　　const cheapestTotal=cheapPer*adults;
     if(budget&&avgTotal){
       advice=avgTotal<=budget?`${adults}名利用の宿泊予算内で探せる可能性があります。`:"平均宿泊費が予算を超えています。人数・日程・エリア調整がおすすめです。";
     }
