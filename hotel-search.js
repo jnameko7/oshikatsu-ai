@@ -7,7 +7,7 @@ function setTomorrowDefaults(){
   const checkout=document.getElementById("hotelCheckoutDate");
   const adult=document.getElementById("hotelAdultNum");
 
-  if(adult && !adult.value) adult.value="2";
+  if(adult) adult.value="2";
 
   if(!checkin||!checkout)return;
 
@@ -24,13 +24,21 @@ function setTomorrowDefaults(){
   if(!checkout.value)checkout.value=toDate(dayAfter);
 }
 
+/*
+楽天APIの hotelMinCharge は、二名一室検索でも
+「1名あたり料金」として返るケースがあるため、
+二名一室の合計料金として表示する場合は ×2 する。
+*/
 function priceTextByRates(twoPersonCharge,onePersonCharge,adultNum){
-  const twoRoomCharge=Number(twoPersonCharge)||0;
+  const adults=2;
+  const perPerson=Number(twoPersonCharge)||0;
+  const total=perPerson*adults;
 
   return {
-    main:`二名一室利用料金 ${twoRoomCharge?yenHotel(twoRoomCharge):"料金未取得"}`,
-    sub:"楽天表示料金をそのまま表示しています",
-    numeric:twoRoomCharge||0
+    main:`二名一室利用料金 ${total?yenHotel(total):"料金未取得"}`,
+    sub:perPerson?`（1名あたり ${yenHotel(perPerson)}）`:"楽天で料金を確認してください",
+    numeric:total||0,
+    perPerson:perPerson||0
   };
 }
 
@@ -39,7 +47,6 @@ async function searchRakutenHotels(){
   const budget=Number(document.getElementById("hotelBudget")?.value||0);
   const checkinDate=document.getElementById("hotelCheckinDate")?.value||"";
   const checkoutDate=document.getElementById("hotelCheckoutDate")?.value||"";
-  const adultNum=document.getElementById("hotelAdultNum")?.value||"2";
   const result=document.getElementById("rakutenHotelResult");
 
   if(!result)return;
@@ -73,8 +80,14 @@ async function searchRakutenHotels(){
       .map(item=>priceTextByRates(item.twoPersonCharge,item.onePersonCharge,2).numeric)
       .filter(n=>n>0);
 
+    const perPersons=hotels
+      .map(item=>priceTextByRates(item.twoPersonCharge,item.onePersonCharge,2).perPerson)
+      .filter(n=>n>0);
+
     const avgTotal=totals.length?Math.round(totals.reduce((a,b)=>a+b,0)/totals.length):0;
     const cheapTotal=totals.length?Math.min(...totals):0;
+    const avgPer=perPersons.length?Math.round(perPersons.reduce((a,b)=>a+b,0)/perPersons.length):0;
+    const cheapPer=perPersons.length?Math.min(...perPersons):0;
 
     let advice="ホテル候補を取得しました。";
 
@@ -92,13 +105,13 @@ async function searchRakutenHotels(){
       const station=h.nearestStation||"最寄駅情報なし";
       const review=h.reviewAverage?`評価 ${h.reviewAverage}`:"評価情報なし";
       const address=`${h.address1||""}${h.address2||""}`;
-      const oneLine=item.onePersonCharge?`1名利用目安：${yenHotel(item.onePersonCharge)}`:"1名利用目安：取得できませんでした";
-      const twoLine=item.twoPersonCharge?`二名一室利用料金：${yenHotel(item.twoPersonCharge)}`:"二名一室利用料金：取得できませんでした";
+      const oneLine=item.onePersonCharge?`参考：1名利用検索時 ${yenHotel(item.onePersonCharge)}`:"参考：1名利用料金は取得できませんでした";
+      const twoLine=item.twoPersonCharge?`二名一室検索時の1名あたり ${yenHotel(item.twoPersonCharge)}`:"二名一室料金は取得できませんでした";
 
       return `<div class="hotel-card">${img?`<img src="${img}" alt="${h.hotelName}">`:`<div></div>`}<div><h3>${h.hotelName}</h3><p>${station} / ${review}</p><p>${address}</p><p>${h.hotelSpecial||""}</p><p>${oneLine} / ${twoLine}</p></div><div class="hotel-price"><b>${txt.main}</b><small>${txt.sub}</small><a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a></div></div>`;
     }).join("");
 
-    result.innerHTML=`<div class="hotel-summary"><p>${keyword} のホテル検索結果</p><strong>二名一室利用 平均 ${avgTotal?yenHotel(avgTotal):"料金未取得"}</strong><p>${advice}</p><p>最安目安：${cheapTotal?yenHotel(cheapTotal):"料金未取得"}（二名一室利用料金）</p></div><div class="hotel-list">${cards}</div>`;
+    result.innerHTML=`<div class="hotel-summary"><p>${keyword} のホテル検索結果</p><strong>二名一室利用 平均 ${avgTotal?yenHotel(avgTotal):"料金未取得"}</strong><p>${avgPer?`1名あたり平均：約${yenHotel(avgPer)}`:"1名あたり平均：料金未取得"}</p><p>${advice}</p><p>最安目安：${cheapTotal?yenHotel(cheapTotal):"料金未取得"}（1名あたり：約${cheapPer?yenHotel(cheapPer):"料金未取得"}）</p></div><div class="hotel-list">${cards}</div>`;
   }catch(err){
     result.innerHTML='<div class="hotel-error">ホテル検索に失敗しました。API設定を確認してください。</div>';
   }
