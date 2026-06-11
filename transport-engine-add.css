@@ -1,0 +1,23 @@
+/* 交通費エンジン注意書き */
+.price-disclaimer{
+  margin:22px 0 0;
+  padding:18px;
+  border:1px solid #ffd4e5;
+  border-radius:16px;
+  background:#fff8fb;
+  color:#202638;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.7;
+}
+
+.price-disclaimer strong{
+  display:block;
+  color:#df3f7d;
+  font-size:15px;
+  margin-bottom:6px;
+}
+
+.price-disclaimer p{
+  margin:0;
+}
