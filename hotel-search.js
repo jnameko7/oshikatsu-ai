@@ -16,7 +16,7 @@ function setTomorrowDefaults(){
   const checkout = document.getElementById("hotelCheckoutDate");
   const adult = document.getElementById("hotelAdultNum");
 
-  if(adult && !adult.value) adult.value = "1";
+  if(adult && !adult.value) adult.value = "2";
   if(!checkin || !checkout) return;
 
   const today = new Date();
@@ -122,45 +122,16 @@ function matchHotelType(h,type){
   return true;
 }
 
-/*
-  重要：
-  料金は必ず楽天APIの hotelBasicInfo.hotelMinCharge だけを使います。
-  rakutenCharge は使いません。
-  adultNum で割りません。
-  adultNum を掛けません。
-*/
-function getRakutenDisplayPrice(hotel){
-  return Number(hotel.hotelMinCharge || 0);
-}
-
-function priceTextByRakuten(hotel){
-  const charge = getRakutenDisplayPrice(hotel);
-
-  return {
-    main: charge ? `楽天表示料金 ${yenHotel(charge)}〜` : "料金未取得",
-    sub: "楽天APIの hotelMinCharge をそのまま表示",
-    numeric: charge || 0
-  };
-}
-
-function hotelDisclaimer(){
-  return `
-    <div class="price-disclaimer">
-      <strong>宿泊料金について</strong>
-      <p>
-        当サイトの宿泊料金は、楽天トラベルAPIから取得した hotelMinCharge をそのまま表示しています。
-        人数で割ったり、人数分を掛けたりしていません。
-        宿泊日・空室状況・プラン内容・キャンペーンにより実際の予約ページの料金と異なる場合があります。
-        正確な料金は必ず「楽天で見る」から予約ページでご確認ください。
-      </p>
-    </div>
-  `;
+function getDisplayPrice(hotel){
+  const n = Number(hotel.hotelMinCharge || 0);
+  if(!n || n < 1000) return 0;
+  return n;
 }
 
 function sortHotels(items, sortType){
   return [...items].sort((a,b)=>{
-    const pa = getRakutenDisplayPrice(a.hotel) || 999999999;
-    const pb = getRakutenDisplayPrice(b.hotel) || 999999999;
+    const pa = getDisplayPrice(a.hotel) || 999999999;
+    const pb = getDisplayPrice(b.hotel) || 999999999;
     const ra = Number(a.hotel?.reviewAverage || 0);
     const rb = Number(b.hotel?.reviewAverage || 0);
 
@@ -175,9 +146,7 @@ function normalizeHotelItems(data){
   if(!data || !Array.isArray(data.hotels)) return [];
 
   return data.hotels.map(item=>{
-    if(item.hotel){
-      return { hotel: item.hotel };
-    }
+    if(item.hotel) return { hotel: item.hotel };
 
     if(Array.isArray(item)){
       const h = item[0]?.hotelBasicInfo || {};
@@ -191,10 +160,9 @@ function normalizeHotelItems(data){
 
 async function searchRakutenHotels(){
   const baseKeyword = document.getElementById("hotelKeyword")?.value || "東京";
-  const budget = Number(document.getElementById("hotelBudget")?.value || 0);
   const checkinDate = document.getElementById("hotelCheckinDate")?.value || "";
   const checkoutDate = document.getElementById("hotelCheckoutDate")?.value || "";
-  const adultNum = document.getElementById("hotelAdultNum")?.value || "1";
+  const adultNum = document.getElementById("hotelAdultNum")?.value || "2";
   const type = document.getElementById("hotelTypeFilter")?.value || "";
   const sortType = document.getElementById("hotelSort")?.value || "cheap";
   const hits = document.getElementById("hotelHits")?.value || "20";
@@ -209,21 +177,20 @@ async function searchRakutenHotels(){
   result.innerHTML = '<div class="hotel-error">ホテル情報を検索中です...</div>';
 
   try{
-    /*
-      adultNum は検索条件としてAPIに渡すだけ。
-      表示料金の計算には使いません。
-    */
     const params = new URLSearchParams({
       keyword,
       hits,
-      adultNum
+      adultNum,
+      cacheBust: String(Date.now())
     });
 
     if(checkinDate) params.set("checkinDate", checkinDate);
     if(checkoutDate) params.set("checkoutDate", checkoutDate);
-    if(budget > 0) params.set("maxCharge", String(budget));
 
-    const res = await fetch(`/api/rakuten-hotel-rates?${params.toString()}`);
+    const res = await fetch(`/api/rakuten-hotel-rates?${params.toString()}`, {
+      cache: "no-store"
+    });
+
     const data = await res.json();
 
     if(data.errors || data.error){
@@ -240,7 +207,7 @@ async function searchRakutenHotels(){
     }
 
     const prices = hotels
-      .map(item => getRakutenDisplayPrice(item.hotel))
+      .map(item => getDisplayPrice(item.hotel))
       .filter(n => n > 0);
 
     const avg = prices.length ? Math.round(prices.reduce((a,b)=>a+b,0) / prices.length) : 0;
@@ -250,13 +217,14 @@ async function searchRakutenHotels(){
 
     const cards = hotels.map(item=>{
       const h = item.hotel;
-      const txt = priceTextByRakuten(h);
+      const price = getDisplayPrice(h);
       const img = safeHotelImage(h);
       const url = safeHotelUrl(h);
       const station = h.nearestStation || "最寄駅情報なし";
       const review = h.reviewAverage ? `評価 ${h.reviewAverage}` : "評価情報なし";
       const address = `${h.address1 || ""}${h.address2 || ""}`;
       const hotelType = getHotelType(h);
+      const priceMain = price ? `楽天表示料金 ${yenHotel(price)}〜` : "料金は楽天で確認";
 
       return `
         <div class="hotel-card">
@@ -271,8 +239,7 @@ async function searchRakutenHotels(){
           </div>
 
           <div class="hotel-price">
-            <b>${txt.main}</b>
-            <small>${txt.sub}</small>
+            <b>${priceMain}</b>
             <a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a>
           </div>
         </div>
@@ -280,14 +247,11 @@ async function searchRakutenHotels(){
     }).join("");
 
     result.innerHTML = `
-      ${hotelDisclaimer()}
-
       <div class="hotel-summary">
         <p>${baseKeyword} のホテル検索結果</p>
         <strong>平均 ${avg ? yenHotel(avg) : "料金未取得"}</strong>
         <p>最安目安：${cheapest ? yenHotel(cheapest) : "料金未取得"}</p>
         <p>ホテル種別：${typeLabel} / ${hotels.length}件を${sortLabel}で表示</p>
-        <p>※料金は楽天APIの hotelMinCharge をそのまま表示しています。人数割りはしていません。</p>
       </div>
 
       <div class="hotel-list">${cards}</div>
