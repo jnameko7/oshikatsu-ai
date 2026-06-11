@@ -84,6 +84,21 @@ function ensureHotelExtraControls(){
   }
 }
 
+function setDefaultHotelTypeByPeople(){
+  const adult = document.getElementById("hotelAdultNum");
+  const type = document.getElementById("hotelTypeFilter");
+
+  if(!adult || !type) return;
+
+  const people = Number(adult.value) || 1;
+
+  if(people === 1){
+    type.value = "capsule";
+  }else{
+    type.value = "business";
+  }
+}
+
 function hotelTypeKeyword(type){
   return {
     capsule: "カプセルホテル",
@@ -158,6 +173,26 @@ function normalizeHotelItems(data){
   }).filter(item => item.hotel && item.hotel.hotelName);
 }
 
+function priceCautionText(adultNum){
+  const people = Number(adultNum) || 1;
+
+  if(people >= 2){
+    return `
+      <div class="hotel-price-caution">
+        複数人利用時は「${people}名利用時 ○○円/人〜」の表記の場合があります。
+        正確な料金・合計金額は楽天の予約ページでご確認ください。
+      </div>
+    `;
+  }
+
+  return `
+    <div class="hotel-price-caution">
+      料金は宿泊日・空室状況・プラン内容により変動します。
+      正確な料金は楽天の予約ページでご確認ください。
+    </div>
+  `;
+}
+
 async function searchRakutenHotels(){
   const baseKeyword = document.getElementById("hotelKeyword")?.value || "東京";
   const checkinDate = document.getElementById("hotelCheckinDate")?.value || "";
@@ -214,6 +249,7 @@ async function searchRakutenHotels(){
     const cheapest = prices.length ? Math.min(...prices) : 0;
     const sortLabel = {cheap:"安い順", expensive:"高い順", review:"評価順"}[sortType] || "安い順";
     const typeLabel = typeWord || "すべて";
+    const people = Number(adultNum) || 1;
 
     const cards = hotels.map(item=>{
       const h = item.hotel;
@@ -224,7 +260,7 @@ async function searchRakutenHotels(){
       const review = h.reviewAverage ? `評価 ${h.reviewAverage}` : "評価情報なし";
       const address = `${h.address1 || ""}${h.address2 || ""}`;
       const hotelType = getHotelType(h);
-      const priceMain = price ? `楽天表示料金 ${yenHotel(price)}〜` : "料金は楽天で確認";
+      const priceMain = price ? `${people}名利用時 ${yenHotel(price)}/人〜` : "料金は楽天で確認";
 
       return `
         <div class="hotel-card">
@@ -239,6 +275,7 @@ async function searchRakutenHotels(){
           </div>
 
           <div class="hotel-price">
+            ${priceCautionText(adultNum)}
             <b>${priceMain}</b>
             <a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a>
           </div>
@@ -249,8 +286,8 @@ async function searchRakutenHotels(){
     result.innerHTML = `
       <div class="hotel-summary">
         <p>${baseKeyword} のホテル検索結果</p>
-        <strong>平均 ${avg ? yenHotel(avg) : "料金未取得"}</strong>
-        <p>最安目安：${cheapest ? yenHotel(cheapest) : "料金未取得"}</p>
+        <strong>平均 ${avg ? yenHotel(avg) + "/人〜" : "料金未取得"}</strong>
+        <p>最安目安：${cheapest ? yenHotel(cheapest) + "/人〜" : "料金未取得"}</p>
         <p>ホテル種別：${typeLabel} / ${hotels.length}件を${sortLabel}で表示</p>
       </div>
 
@@ -264,6 +301,11 @@ async function searchRakutenHotels(){
 document.addEventListener("DOMContentLoaded", function(){
   setTomorrowDefaults();
   ensureHotelExtraControls();
+  setDefaultHotelTypeByPeople();
+
+  document.getElementById("hotelAdultNum")?.addEventListener("change", function(){
+    setDefaultHotelTypeByPeople();
+  });
 
   document.getElementById("hotelSearchBtn")?.addEventListener("click", e=>{
     e.preventDefault();
