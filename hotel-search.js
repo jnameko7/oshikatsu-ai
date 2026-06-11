@@ -69,13 +69,12 @@ function matchHotelType(h,type){
   return true;
 }
 
-function priceTextByRakuten(price,adultNum){
-  const charge=Number(price)||0;
-  const adults=Number(adultNum)||1;
+function priceTextByRakuten(price){
+  const charge = Number(price) || 0;
   return {
-    main:`楽天表示料金 ${charge?yenHotel(charge):"料金未取得"}`,
-    sub:`検索条件：${adults}名 / 楽天API取得額をそのまま表示`,
-    numeric:charge||0
+    main: charge ? `楽天表示料金 ${yenHotel(charge)}〜` : "料金未取得",
+    sub: "楽天API取得額をそのまま表示",
+    numeric: charge || 0
   };
 }
 
@@ -124,7 +123,7 @@ async function searchRakutenHotels(){
   result.innerHTML='<div class="hotel-error">ホテル情報を検索中です...</div>';
 
   try{
-    const params=new URLSearchParams({keyword,hits,adultNum});
+    const params=new URLSearchParams({keyword,hits});
     if(checkinDate)params.set("checkinDate",checkinDate);
     if(checkoutDate)params.set("checkoutDate",checkoutDate);
     if(budget>0)params.set("maxCharge",String(budget));
@@ -154,7 +153,7 @@ async function searchRakutenHotels(){
     const cards=hotels.map(item=>{
       const h=item.hotel;
       const price=Number(item.rakutenCharge||h.hotelMinCharge||0);
-      const txt=priceTextByRakuten(price,adultNum);
+      const txt=priceTextByRakuten(price);
       const img=safeHotelImage(h);
       const url=safeHotelUrl(h);
       const station=h.nearestStation||"最寄駅情報なし";
