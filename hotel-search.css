@@ -327,4 +327,16 @@
   line-height:1.5;
   margin-top:4px;
 }
+.hotel-price-caution{
+  margin:0 0 8px;
+  padding:8px 10px;
+  border:1px solid #ffd4e5;
+  border-radius:10px;
+  background:#fff8fb;
+  color:#df3f7d;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.5;
+  text-align:left;
+}
 
