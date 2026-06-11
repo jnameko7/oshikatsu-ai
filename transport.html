@@ -29,7 +29,8 @@
 .result-summary h2{margin:0 0 12px;font-size:18px}.result-summary ul{list-style:none;padding:0;margin:0}
 .result-summary li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #f1f1f5;font-weight:800}.result-summary li:last-child{border-bottom:0}
 .price-disclaimer{margin:22px 0 0;padding:18px;border:1px solid #ffd4e5;border-radius:16px;background:#fff8fb;color:#202638;font-size:13px;font-weight:800;line-height:1.7}
-.price-disclaimer strong{display:block;color:#df3f7d;font-size:15px;margin-bottom:6px}.price-disclaimer p{margin:0}
+ .price-disclaimer strong{display:block;color:#df3f7d;font-size:15px;margin-bottom:6px}.price-disclaimer p{margin:0}
+.mini-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #ffb6d0;background:#fff8fb;color:#df3f7d;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer;text-decoration:none;margin-top:12px}
 .transport-extra-section{width:min(960px,100%);margin:40px auto 0}
 .affiliate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px}
 .affiliate-card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;min-height:180px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;color:#202638;box-shadow:0 10px 28px rgba(36,30,68,.06);transition:.2s ease}
@@ -52,11 +53,15 @@
 <label class="tool-label">遠征予算（チケット代除く）<input type="number" id="tripBudget" value="30000"></label>
 <label class="tool-label">出発地<input type="text" id="plannerFrom" value="名古屋"></label>
 <label class="tool-label">目的地<input type="text" id="plannerTo" value="東京"></label>
-<label class="tool-label">交通希望手段<select id="preferredTransport"><option value="auto">おすすめ自動</option><option value="bus">夜行・高速バス</option><option value="shinkansen">新幹線・特急</option><option value="plane">飛行機</option><option value="local">在来線</option></select></label>
+<label class="tool-label">交通希望手段<select id="preferredTransport"><option value="auto">おすすめ自動</option><option value="bus">夜行・高速バス</option><option value="lcc">LCC</option><option value="fsc">FSC</option><option value="shinkansen">新幹線・特急</option><option value="local">在来線</option></select></label>
 <label class="tool-label">人数<select id="plannerPeople"><option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
 <label class="tool-label">宿泊数<select id="plannerNights"><option value="0">日帰り</option><option value="1" selected>1泊</option><option value="2">2泊</option><option value="3">3泊</option></select></label>
-<label class="tool-label">食費タイプ<select id="foodMode"><option value="save">節約</option><option value="normal" selected>普通</option><option value="rich">しっかり</option></select></label>
+<label class="tool-label">食事タイプ<select id="mealType"><option value="mixed" selected>外食＋コンビニ</option><option value="restaurant">外食中心</option><option value="convenience">コンビニ中心</option></select></label>
+<label class="tool-label">1日何食にする？<select id="mealsPerDay"><option value="1">1食</option><option value="2" selected>2食</option><option value="3">3食</option></select></label>
+<label class="tool-label">宿泊費設定<select id="hotelCostMode"><option value="auto" selected>自動提案</option><option value="manual">自分で入力</option></select></label>
+<label class="tool-label">宿泊費を自分で入力<input type="number" id="manualHotelInput" value="0"></label>
 <label class="tool-label">予備費<input type="number" id="reserveCost" value="2000"></label>
+<label class="tool-label">グッズ代最低確保額<input type="number" id="goodsMinTarget" value="5000"></label>
 </div>
 <button class="submit-btn" type="submit">予算から遠征プランを作る →</button>
 </form>
@@ -105,13 +110,8 @@
 <link rel="stylesheet" href="history.css">
 <script src="history.js"></script>
 <script src="hotel-search.js"></script>
-<script src="transport-budget-planner.js"></script>
-<script src="distance-fallback.js"></script>
-<script src="transport-engine.js"></script>
-<script src="transport-disclaimer.js"></script>
-<script src="transport-loader.js"></script>
-<script src="major-routes-template.js"></script>
-<script src="transport-budget-planner.js"></script>
+
+<!-- 交通費ハイブリッドエンジン：この順番で1回だけ読み込み -->
 <script src="distance-fallback.js"></script>
 <script src="transport-engine.js"></script>
 <script src="transport-disclaimer.js"></script>
@@ -123,6 +123,8 @@
 <script src="kansai-routes.js"></script>
 <script src="chugoku-shikoku-routes.js"></script>
 <script src="kyushu-okinawa-routes.js"></script>
+
+<!-- 遠征プランナー本体は必ず最後 -->
 <script src="transport-budget-planner.js"></script>
 </body>
 </html>
