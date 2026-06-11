@@ -188,7 +188,7 @@ function priceCautionText(adultNum, hotelTypeText){
   if(typeText.includes("ビジネス") || typeText.includes("旅館") || typeText.includes("温泉") || typeText.includes("リゾート")){
     return `
       <div class="hotel-price-caution">
-        1名料金と異なる場合があります。実際の料金は予約サイトでご確認ください。
+        表示価格は複数名利用時の1人あたり料金の場合があります。正確な料金は予約サイトでご確認ください。
       </div>
     `;
   }
