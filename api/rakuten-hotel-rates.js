@@ -5,6 +5,7 @@ export default async function handler(req, res) {
   const keyword = req.query.keyword || "東京";
   const checkinDate = req.query.checkinDate || "";
   const checkoutDate = req.query.checkoutDate || "";
+  const maxCharge = req.query.maxCharge || "";
   const adultNum = req.query.adultNum || "2";
   const requestedHits = Number(req.query.hits || 20);
   const hits = String(Math.min(Math.max(requestedHits, 1), 20));
@@ -16,13 +17,11 @@ export default async function handler(req, res) {
   params.set("format", "json");
   params.set("formatVersion", "2");
   params.set("adultNum", String(adultNum));
-
   if (checkinDate) params.set("checkinDate", checkinDate);
   if (checkoutDate) params.set("checkoutDate", checkoutDate);
+  if (maxCharge) params.set("maxCharge", maxCharge);
 
-  const url =
-    "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" +
-    params.toString();
+  const url = "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" + params.toString();
 
   function getHotelInfo(item) {
     if (Array.isArray(item)) return item[0]?.hotelBasicInfo || {};
@@ -32,9 +31,9 @@ export default async function handler(req, res) {
   try {
     const response = await fetch(url, {
       headers: {
-        accessKey: accessKey || "",
-        referer: "https://oshikatsu-ai.vercel.app/",
-        origin: "https://oshikatsu-ai.vercel.app"
+        "accessKey": accessKey || "",
+        "referer": "https://oshikatsu-ai.vercel.app/",
+        "origin": "https://oshikatsu-ai.vercel.app"
       }
     });
 
@@ -45,34 +44,15 @@ export default async function handler(req, res) {
       return;
     }
 
-    const hotels = (data.hotels || [])
-      .map(getHotelInfo)
-      .filter(h => h.hotelName)
-      .map(h => {
-        const rawCharge = Number(h.hotelMinCharge || 0);
-        const safeCharge = rawCharge >= 1000 ? rawCharge : 0;
+    const hotels = (data.hotels || []).map(getHotelInfo).filter(h => h.hotelName).map(h => ({
+      hotel: h,
+      const rawCharge = Number(h.hotelMinCharge || 0);
+      const safeCharge = rawCharge >= 1000 ? rawCharge : 0;
+      rakutenCharge: Number(h.hotelMinCharge || 0)
+    }));
 
-        return {
-          hotel: {
-            ...h,
-            hotelMinCharge: safeCharge
-          },
-          rakutenCharge: safeCharge
-        };
-      });
-
-    res.status(200).json({
-      keyword,
-      checkinDate,
-      checkoutDate,
-      adultNum,
-      hits: Number(hits),
-      hotels
-    });
+    res.status(200).json({ keyword, checkinDate, checkoutDate, adultNum, hits: Number(hits), hotels });
   } catch (err) {
-    res.status(500).json({
-      error: "ホテル検索に失敗しました",
-      message: err.message
-    });
+    res.status(500).json({ error: "ホテル検索に失敗しました", message: err.message });
   }
 }
