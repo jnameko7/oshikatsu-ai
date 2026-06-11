@@ -173,22 +173,29 @@ function normalizeHotelItems(data){
   }).filter(item => item.hotel && item.hotel.hotelName);
 }
 
-function priceCautionText(adultNum){
+function priceCautionText(adultNum, hotelTypeText){
   const people = Number(adultNum) || 1;
+  const typeText = hotelTypeText || "";
 
   if(people >= 2){
     return `
       <div class="hotel-price-caution">
-        複数人利用時は「${people}名利用時 ○○円/人〜」の表記の場合があります。
-        正確な料金・合計金額は楽天の予約ページでご確認ください。
+        複数人利用時の1人あたり料金です。合計額は予約サイトでご確認ください。
+      </div>
+    `;
+  }
+
+  if(typeText.includes("ビジネス") || typeText.includes("旅館") || typeText.includes("温泉") || typeText.includes("リゾート")){
+    return `
+      <div class="hotel-price-caution">
+        1名料金と異なる場合があります。実際の料金は予約サイトでご確認ください。
       </div>
     `;
   }
 
   return `
     <div class="hotel-price-caution">
-      料金は宿泊日・空室状況・プラン内容により変動します。
-      正確な料金は楽天の予約ページでご確認ください。
+      料金は変動します。実際の料金は予約サイトでご確認ください。
     </div>
   `;
 }
@@ -275,7 +282,7 @@ async function searchRakutenHotels(){
           </div>
 
           <div class="hotel-price">
-            ${priceCautionText(adultNum)}
+            ${priceCautionText(adultNum, hotelType)}
             <b>${priceMain}</b>
             <a href="${url}" target="_blank" rel="nofollow sponsored noopener">楽天で見る</a>
           </div>
