@@ -32,21 +32,33 @@ function suggestHotelCost(budget,transportTotal,foodTotal,reserve,people,nights,
   return perPersonPerNight*people*nights;
 }
 
+/*
+  交通手段別カード用：
+  - 大きく表示される通常価格 normal / price / fare / cost は往復にする
+  - 安い日 min / low、高い日 max / high は片道のまま残す
+*/
 function makeRoundTripFareResult(fareResult){
   if(!fareResult || typeof fareResult!=="object")return fareResult;
+
   const copy=JSON.parse(JSON.stringify(fareResult));
-  const priceKeys=["normal","min","max","price","fare","cost","low","high"];
+  const roundTripKeys=["normal","price","fare","cost"];
+
   Object.keys(copy).forEach(key=>{
     const item=copy[key];
+
     if(item && typeof item==="object"){
-      priceKeys.forEach(pk=>{
-        if(typeof item[pk]==="number") item[pk]=item[pk]*2;
+      roundTripKeys.forEach(pk=>{
+        if(typeof item[pk]==="number"){
+          item[pk]=item[pk]*2;
+        }
       });
     }
   });
+
   return copy;
 }
 
+/* 外部カードHTMLの不要文言削除＋安い日/高い日を片道表記へ変更 */
 function cleanTransportCardHTML(html){
   return String(html||"")
     .replace(/主要路線データ\s*\/?\s*信頼度：高/g,"")
@@ -54,14 +66,18 @@ function cleanTransportCardHTML(html){
     .replace(/信頼度：高/g,"")
     .replace(/距離計算による推定料金\s*\/?\s*信頼度：低\s*\/?\s*実料金と大きく異なる場合があります/g,"")
     .replace(/距離計算による推定料金/g,"")
-    .replace(/信頼度：低\s*\/?\s*実料金と大きく異なる場合があります/g,"");
+    .replace(/信頼度：低\s*\/?\s*実料金と大きく異なる場合があります/g,"")
+    .replace(/安い日/g,"安い日（片道）")
+    .replace(/高い日/g,"高い日（片道）");
 }
 
 function buildTransportCards(fareResult){
   const roundTripFareResult=makeRoundTripFareResult(fareResult);
+
   if(typeof allTransportFareCardsHTML==="function"){
     return cleanTransportCardHTML(allTransportFareCardsHTML(roundTripFareResult));
   }
+
   return `<div class="budget-cards"><div class="budget-card"><span>夜行・高速バス</span><b>${yenBudget(roundTripFareResult?.bus?.normal||13000)}</b><small>往復目安</small></div></div>`;
 }
 
@@ -89,6 +105,8 @@ function buildPlanner(){
 
   const fareResult=typeof getTransportFare==="function" ? getTransportFare(from,to) : fallbackFareByDistance(from,to);
   const chosen=chooseTransportByEngine(fareResult,budget,people,preferred);
+
+  /* chosen.price は片道1人分想定。遠征プランナーでは往復×人数で計算 */
   const oneWayPerPerson=Number(chosen.price||0);
   const transportTotal=oneWayPerPerson*2*people;
 
