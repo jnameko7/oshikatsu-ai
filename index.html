@@ -1,1 +1,207 @@
-<!doctype html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>推し活資金AI</title><link rel="stylesheet" href="style.css"></head><body><header class="header"><div class="container header-inner"><a class="logo" href="index.html"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a class="active" href="index.html">ホーム</a><a href="fund.html">診断ツール</a><a href="transport.html">遠征プランナー</a><a href="yearly.html">目標シミュレーター</a><a href="articles.html">お役立ち記事</a></nav><a class="cta" href="fund.html">すべて無料で使えます</a></div></header><main><section class="hero-clean"><div class="container"><div class="hero-stable"><div class="hero-copy"><h1>推しを<br><span>諦めない。</span></h1><p>推し活・ライブ遠征・旅行・美容のために、今使えるお金と目標までの距離を見える化します。</p></div><div class="hero-visual"><img src="hero-main.png" alt="推し活資金AI"></div></div><div class="top-tool-grid"><a class="top-tool-card" href="fund.html"><span class="emoji">🐷</span><strong>推し活資金診断</strong><small>毎月いくら使える？</small></a><a class="top-tool-card" href="saving.html"><span class="emoji">🧮</span><strong>娯楽費捻出診断</strong><small>いくら節約できる？</small></a><a class="top-tool-card" href="transport.html"><span class="emoji">✈️</span><strong>遠征プランナー</strong><small>交通費・宿泊費は？</small></a><a class="top-tool-card" href="yearly.html"><span class="emoji">🚩</span><strong>目標シミュレーター</strong><small>いつ達成できる？</small></a></div><div class="instagram-share-panel"><div><strong>Instagramでシェア</strong><br><span>投稿用テキストをコピーできます。ストーリーズや投稿に貼り付けて使ってください。</span></div><button class="insta-btn" id="copyInstagramTop">インスタ用テキストをコピー</button></div></div></section><section class="section"><div class="container"><div class="ad">AdSense広告枠</div></div></section></main><footer class="footer"><div class="container footer-grid"><div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div><div><h3>サービス</h3><p><a href="fund.html">推し活資金診断</a></p><p><a href="saving.html">娯楽費捻出診断</a></p><p><a href="transport.html">遠征プランナー</a></p></div><div><h3>お役立ち情報</h3><p><a href="articles.html">節約術</a></p><p><a href="articles.html">遠征のコツ</a></p></div><div><h3>運営について</h3><p><a href="terms.html">利用規約</a></p><p><a href="privacy.html">プライバシーポリシー</a></p><p><a href="contact.html">お問い合わせ</a></p></div></div></footer><script src="common.js"></script><script>document.getElementById("copyInstagramTop")?.addEventListener("click",async()=>{const text=`推しを諦めない。\n推し活・ライブ遠征・旅行・美容のためのお金管理AI\n無料診断はこちら → ${location.href.split("#")[0]}`;await navigator.clipboard.writeText(text);alert("Instagram投稿用テキストをコピーしました");});</script></body></html>
+<!doctype html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>推し活資金AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+<div class="container header-inner">
+
+<a class="logo" href="index.html">
+<span class="heart">♥</span>
+<span>
+<strong>推し活資金AI</strong>
+<small>推しを諦めないためのお金管理AI</small>
+</span>
+</a>
+
+<nav class="nav">
+<a class="active" href="index.html">ホーム</a>
+<a href="fund.html">診断ツール</a>
+<a href="transport.html">遠征プランナー</a>
+<a href="yearly.html">目標シミュレーター</a>
+<a href="articles.html">お役立ち記事</a>
+</nav>
+
+<a class="cta" href="fund.html">
+すべて無料で使えます
+</a>
+
+</div>
+</header>
+
+<main>
+
+<section class="hero-clean">
+
+<div class="container">
+
+<div class="hero-stable">
+
+<div class="hero-copy">
+<h1>推しを<br><span>諦めない。</span></h1>
+
+<p>
+推し活・ライブ遠征・旅行・美容のために、
+今使えるお金と目標までの距離を見える化します。
+</p>
+</div>
+
+<div class="hero-visual">
+<img src="hero-main.png" alt="推し活資金AI">
+</div>
+
+</div>
+
+<div class="top-tool-grid">
+
+<a class="top-tool-card" href="fund.html">
+<span class="emoji">🐷</span>
+<strong>推し活資金診断</strong>
+<small>毎月いくら使える？</small>
+</a>
+
+<a class="top-tool-card" href="saving.html">
+<span class="emoji">🧮</span>
+<strong>娯楽費捻出診断</strong>
+<small>いくら節約できる？</small>
+</a>
+
+<a class="top-tool-card" href="transport.html">
+<span class="emoji">✈️</span>
+<strong>遠征プランナー</strong>
+<small>交通費・宿泊費は？</small>
+</a>
+
+<a class="top-tool-card" href="yearly.html">
+<span class="emoji">🚩</span>
+<strong>目標シミュレーター</strong>
+<small>いつ達成できる？</small>
+</a>
+
+</div>
+
+<!-- お役立ち記事 -->
+
+<section class="home-articles">
+
+<div class="section-title-row">
+<h2>お役立ち記事</h2>
+<a href="articles.html">もっと見る →</a>
+</div>
+
+<div id="topArticles" class="top-articles-grid">
+
+<p>記事を読み込み中...</p>
+
+</div>
+
+</section>
+
+</div>
+
+</section>
+
+<section class="section">
+<div class="container">
+<div class="ad">AdSense広告枠</div>
+</div>
+</section>
+
+</main>
+
+<footer class="footer">
+
+<div class="container footer-grid">
+
+<div>
+<h2>♥ 推し活資金AI</h2>
+<p>
+推し活に夢中な人を応援する、
+無料のお金管理・診断ツールです。
+</p>
+</div>
+
+<div>
+<h3>サービス</h3>
+<p><a href="fund.html">推し活資金診断</a></p>
+<p><a href="saving.html">娯楽費捻出診断</a></p>
+<p><a href="transport.html">遠征プランナー</a></p>
+</div>
+
+<div>
+<h3>お役立ち情報</h3>
+<p><a href="articles.html">節約術</a></p>
+<p><a href="articles.html">遠征のコツ</a></p>
+</div>
+
+<div>
+<h3>運営について</h3>
+<p><a href="terms.html">利用規約</a></p>
+<p><a href="privacy.html">プライバシーポリシー</a></p>
+<p><a href="contact.html">お問い合わせ</a></p>
+</div>
+
+</div>
+
+</footer>
+
+<script src="common.js"></script>
+
+<script>
+
+async function loadTopArticles(){
+
+const mount=document.getElementById("topArticles");
+
+if(!mount)return;
+
+try{
+
+const res=await fetch("/api/articles");
+const data=await res.json();
+
+mount.innerHTML=data.contents.slice(0,4).map(article=>`
+
+<a class="article-card-home"
+href="article.html?id=${article.id}">
+
+${article.thumbnail?.url
+? `<img src="${article.thumbnail.url}" alt="${article.title}">`
+: ""}
+
+<div class="article-card-body">
+
+<h3>${article.title}</h3>
+
+<p>
+${(article.description||"").substring(0,60)}
+</p>
+
+</div>
+
+</a>
+
+`).join("");
+
+}catch(e){
+
+mount.innerHTML=
+"<p>記事を取得できませんでした。</p>";
+
+}
+
+}
+
+loadTopArticles();
+
+</script>
+
+</body>
+</html>
