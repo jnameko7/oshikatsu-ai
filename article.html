@@ -1,3 +1,492 @@
-<!doctype html><html lang='ja'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1.0'><title>記事詳細</title><link rel='stylesheet' href='style.css'><script async
-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6088406710027099"
-crossorigin="anonymous"></script></head><body><header class='header'><div class='container header-inner'><a class='logo' href='index.html'><span class='heart'>♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a></div></header><main><section class='section'><div class='container'><div id='articleDetail'><p>記事を読み込み中...</p></div></div></section></main><script src='article.js'></script></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>記事詳細｜推し活資金AI</title>
+  <meta name="description" content="推し活に役立つ記事を紹介します。" />
+  <style>
+    /* =========================================================
+      article.html 専用CSS
+      他ページに影響しないよう、すべて .oa-article-page 配下に限定
+    ========================================================= */
+    :root {
+      --oa-pink: #ff6fae;
+      --oa-pink-dark: #e84691;
+      --oa-pink-soft: #fff3f8;
+      --oa-border: #ffd1e5;
+      --oa-text: #333;
+      --oa-muted: #777;
+      --oa-bg: #fff8fb;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fff8fb 0%, #ffffff 45%, #fff7fb 100%);
+      color: var(--oa-text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .oa-article-page {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 90px;
+    }
+
+    .oa-site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .oa-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--oa-pink-dark);
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: .02em;
+    }
+
+    .oa-logo-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff78b6, #ffb7d5);
+      box-shadow: 0 8px 18px rgba(255, 111, 174, .25);
+    }
+
+    .oa-article-card {
+      overflow: hidden;
+      border: 1px solid var(--oa-border);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 16px 40px rgba(255, 111, 174, .13);
+    }
+
+    .oa-eyecatch-wrap {
+      background: #fff;
+      border-bottom: 1px solid #ffe1ee;
+    }
+
+    .oa-eyecatch {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .oa-article-inner {
+      padding: clamp(22px, 4vw, 42px);
+    }
+
+    .oa-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: var(--oa-pink-dark);
+      background: var(--oa-pink-soft);
+      border: 1px solid var(--oa-border);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .oa-title {
+      margin: 0 0 14px;
+      color: #2f2430;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.35;
+      letter-spacing: .02em;
+    }
+
+    .oa-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-bottom: 30px;
+      color: var(--oa-muted);
+      font-size: 13px;
+    }
+
+    .oa-lead {
+      margin: 0 0 30px;
+      padding: 18px 20px;
+      border: 1px solid var(--oa-border);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff7fb, #fff);
+      color: #5b4450;
+      line-height: 1.9;
+      font-weight: 500;
+    }
+
+    .oa-body {
+      font-size: 16px;
+      line-height: 2;
+      word-break: break-word;
+    }
+
+    .oa-body h2 {
+      position: relative;
+      margin: 46px 0 18px;
+      padding: 16px 18px 16px 20px;
+      border-left: 7px solid var(--oa-pink);
+      border-radius: 14px;
+      background: linear-gradient(90deg, #fff0f7, #fff);
+      color: #332733;
+      font-size: clamp(22px, 3vw, 28px);
+      line-height: 1.45;
+    }
+
+    .oa-body h3 {
+      margin: 34px 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #ff9ac7;
+      color: var(--oa-pink-dark);
+      font-size: clamp(19px, 2.4vw, 23px);
+      line-height: 1.5;
+    }
+
+    .oa-body p { margin: 0 0 1.45em; }
+
+    .oa-body strong {
+      color: #c92f78;
+      background: linear-gradient(transparent 62%, #ffe0ef 62%);
+      font-weight: 800;
+    }
+
+    .oa-body a {
+      color: #d63384;
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    .oa-body ul,
+    .oa-body ol {
+      margin: 24px 0;
+      padding: 18px 24px 18px 36px;
+      border: 1px solid var(--oa-border);
+      border-radius: 18px;
+      background: #fff8fb;
+    }
+
+    .oa-body li { margin: 8px 0; }
+
+    .oa-body blockquote {
+      margin: 28px 0;
+      padding: 18px 22px;
+      border-left: 5px solid #ff9ac7;
+      border-radius: 14px;
+      background: #fff7fb;
+      color: #5a4650;
+    }
+
+    .oa-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 28px 0;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 0 0 1px var(--oa-border);
+    }
+
+    .oa-body th,
+    .oa-body td {
+      padding: 12px 14px;
+      border: 1px solid #ffe1ee;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .oa-body th {
+      background: #fff0f7;
+      color: #c92f78;
+    }
+
+    .oa-affiliate-box {
+      margin: 42px 0 34px;
+      padding: 22px;
+      border: 1px solid var(--oa-border);
+      border-radius: 20px;
+      background: linear-gradient(135deg, #fff7fb, #fff);
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(255, 111, 174, .10);
+    }
+
+    .oa-affiliate-title {
+      margin: 0 0 14px;
+      color: var(--oa-pink-dark);
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .oa-summary-space {
+      margin-bottom: 70px;
+    }
+
+    .oa-error,
+    .oa-loading {
+      padding: 30px;
+      border: 1px solid var(--oa-border);
+      border-radius: 20px;
+      background: #fff;
+      text-align: center;
+      color: #6b5360;
+    }
+
+    @media (max-width: 640px) {
+      .oa-article-page { width: min(100% - 20px, 920px); padding-bottom: 80px; }
+      .oa-article-inner { padding: 20px; }
+      .oa-body { font-size: 15px; line-height: 1.9; }
+      .oa-body ul,
+      .oa-body ol { padding-left: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="oa-article-page">
+    <header class="oa-site-header">
+      <a class="oa-logo" href="./index.html" aria-label="推し活資金AI トップへ">
+        <span class="oa-logo-mark">♥</span>
+        <span>推し活資金AI</span>
+      </a>
+    </header>
+
+    <article id="articleRoot" class="oa-article-card">
+      <div class="oa-loading">記事を読み込み中...</div>
+    </article>
+  </main>
+
+  <script>
+    /* =========================================================
+      article.html 専用JS
+      - SEO説明文を記事本文に表示しない
+      - アフィリエイトHTMLをHTMLとして表示
+      - デザインは .oa-article-page 内だけに限定
+    ========================================================= */
+    const root = document.getElementById('articleRoot');
+    const params = new URLSearchParams(location.search);
+    const articleId = params.get('id');
+
+    const storageKeys = [
+      'oshikatsu_articles',
+      'articles',
+      'blogArticles',
+      'posts',
+      'oshikatsu_posts'
+    ];
+
+    initArticlePage();
+
+    async function initArticlePage() {
+      try {
+        const article = await findArticle(articleId);
+        if (!article) {
+          showError('記事が見つかりませんでした。管理画面で記事IDを確認してください。');
+          return;
+        }
+        renderArticle(article);
+      } catch (error) {
+        console.error(error);
+        showError('記事の読み込みに失敗しました。');
+      }
+    }
+
+    async function findArticle(id) {
+      const localArticle = findArticleFromLocalStorage(id);
+      if (localArticle) return localArticle;
+
+      // API運用している場合にも対応。存在しない場合は自動でスキップ。
+      const apiCandidates = [
+        `/api/articles/${encodeURIComponent(id || '')}`,
+        `/api/article?id=${encodeURIComponent(id || '')}`,
+        `/api/articles?id=${encodeURIComponent(id || '')}`
+      ];
+
+      for (const url of apiCandidates) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (!res.ok) continue;
+          const data = await res.json();
+          if (Array.isArray(data)) return data.find(a => sameId(a, id)) || null;
+          return data.article || data.data || data;
+        } catch (_) {}
+      }
+      return null;
+    }
+
+    function findArticleFromLocalStorage(id) {
+      for (const key of storageKeys) {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        try {
+          const parsed = JSON.parse(raw);
+          const list = Array.isArray(parsed) ? parsed : (parsed.articles || parsed.posts || parsed.data || []);
+          if (Array.isArray(list)) {
+            if (id) {
+              const found = list.find(a => sameId(a, id));
+              if (found) return found;
+            }
+            return list[0] || null;
+          }
+        } catch (_) {}
+      }
+      return null;
+    }
+
+    function sameId(article, id) {
+      if (!article || !id) return false;
+      return String(article.id ?? article.articleId ?? article.slug ?? article.uid) === String(id);
+    }
+
+    function renderArticle(article) {
+      const title = pick(article, ['title', 'name']) || '記事タイトル';
+      const seoDescription = pick(article, ['seoDescription', 'seo_description', 'metaDescription', 'meta_description', 'description']) || '';
+      const lead = pick(article, ['lead', 'intro', 'excerpt', 'summary']) || '';
+      const body = pick(article, ['body', 'content', 'articleBody', 'mainText', 'text']) || '';
+      const image = pick(article, ['image', 'eyecatch', 'eyecatchUrl', 'thumbnail', 'thumbnailUrl', 'imageUrl', 'coverImage']) || '';
+      const category = pick(article, ['category', 'genre']) || '推し活コラム';
+      const date = pick(article, ['date', 'createdAt', 'updatedAt', 'publishedAt']) || '';
+      const affiliateHtml = pick(article, ['affiliateHtml', 'affiliateHTML', 'adHtml', 'adHTML', 'adCode', 'rakutenHtml', 'htmlAd']) || '';
+
+      document.title = `${title}｜推し活資金AI`;
+      setMetaDescription(seoDescription || lead || title);
+
+      // SEO説明文が本文に混ざって保存されていても、先頭から自動除去する
+      const cleanedBody = removeSeoDescriptionFromBody(body, seoDescription);
+
+      root.innerHTML = `
+        ${image ? `<div class="oa-eyecatch-wrap"><img class="oa-eyecatch" src="${escapeAttr(image)}" alt="${escapeAttr(title)}"></div>` : ''}
+        <div class="oa-article-inner">
+          <div class="oa-category">♡ ${escapeHtml(category)}</div>
+          <h1 class="oa-title">${escapeHtml(title)}</h1>
+          <div class="oa-meta">
+            ${date ? `<span>投稿日：${escapeHtml(formatDate(date))}</span>` : ''}
+          </div>
+          ${lead && lead !== seoDescription ? `<p class="oa-lead">${escapeHtml(lead)}</p>` : ''}
+          <div class="oa-body">${formatArticleBody(cleanedBody)}</div>
+          ${affiliateHtml ? `<section class="oa-affiliate-box"><p class="oa-affiliate-title">おすすめリンク</p><div id="affiliateMount"></div></section>` : ''}
+          <div class="oa-summary-space"></div>
+        </div>
+      `;
+
+      if (affiliateHtml) renderAffiliateHtml('affiliateMount', affiliateHtml);
+    }
+
+    function pick(obj, keys) {
+      for (const key of keys) {
+        if (obj && obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== '') return obj[key];
+      }
+      return '';
+    }
+
+    function setMetaDescription(text) {
+      let meta = document.querySelector('meta[name="description"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'description');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', String(text).replace(/<[^>]*>/g, '').slice(0, 160));
+    }
+
+    function removeSeoDescriptionFromBody(body, seo) {
+      let text = String(body || '').trim();
+      const desc = String(seo || '').trim();
+      if (!desc) return text;
+
+      const normalizedText = normalizeText(text);
+      const normalizedDesc = normalizeText(desc);
+
+      if (normalizedText.startsWith(normalizedDesc)) {
+        text = text.slice(desc.length).trim();
+      }
+
+      // 「SEO説明文：〜」のような行も削除
+      text = text.replace(/^SEO説明文[:：].*(\n|$)/, '').trim();
+      text = text.replace(/^メタディスクリプション[:：].*(\n|$)/, '').trim();
+      return text;
+    }
+
+    function normalizeText(value) {
+      return String(value).replace(/\s+/g, '').replace(/<[^>]*>/g, '');
+    }
+
+    function formatArticleBody(input) {
+      const raw = String(input || '').trim();
+      if (!raw) return '<p>本文がありません。</p>';
+
+      // すでにHTMLの場合はそのまま表示。ただしscriptは本文では無効化。
+      if (/<\/?(h2|h3|p|ul|ol|li|table|blockquote|div|br|strong|a)\b/i.test(raw)) {
+        return raw.replace(/<script[\s\S]*?<\/script>/gi, '');
+      }
+
+      const escaped = escapeHtml(raw);
+      return escaped
+        .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+        .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+        .replace(/^#\s+(.+)$/gm, '<h2>$1</h2>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .split(/\n{2,}/)
+        .map(block => {
+          const trimmed = block.trim();
+          if (!trimmed) return '';
+          if (/^<h[23]>/.test(trimmed)) return trimmed;
+          if (/^[-・]\s+/m.test(trimmed)) {
+            const items = trimmed.split('\n').filter(Boolean).map(line => line.replace(/^[-・]\s+/, '').trim());
+            return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
+          }
+          return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+        })
+        .join('');
+    }
+
+    function renderAffiliateHtml(mountId, html) {
+      const mount = document.getElementById(mountId);
+      if (!mount) return;
+      mount.innerHTML = String(html);
+
+      // innerHTMLだけではscriptが動かないため、scriptタグを差し替えて実行
+      const scripts = mount.querySelectorAll('script');
+      scripts.forEach(oldScript => {
+        const newScript = document.createElement('script');
+        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+        newScript.textContent = oldScript.textContent;
+        oldScript.replaceWith(newScript);
+      });
+    }
+
+    function formatDate(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function showError(message) {
+      root.innerHTML = `<div class="oa-error">${escapeHtml(message)}</div>`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replace(/`/g, '&#096;');
+    }
+  </script>
+</body>
+</html>
