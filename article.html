@@ -122,13 +122,33 @@ function renderArticle(article){
 }
 
 function splitIntroAndBody(html){
-  const wrap=document.createElement('div');wrap.innerHTML=String(html||'');
-  const firstH2=wrap.querySelector('h2');
-  if(!firstH2)return {intro:'',body:wrap.innerHTML};
-  const intro=[];
-  while(wrap.firstChild&&wrap.firstChild!==firstH2){intro.push(wrap.firstChild);wrap.removeChild(wrap.firstChild)}
-  const introBox=document.createElement('div');intro.forEach(n=>introBox.appendChild(n));
-  return {intro:introBox.innerHTML.trim(),body:wrap.innerHTML.trim()};
+function splitIntroAndBody(html){
+  const wrap=document.createElement("div");
+  wrap.innerHTML=String(html||"");
+
+  const firstH2=wrap.querySelector("h2");
+
+  if(!firstH2){
+    return {
+      intro:"",
+      body:wrap.innerHTML
+    };
+  }
+
+  const introHtml=[];
+  let node=wrap.firstElementChild;
+
+  while(node && node!==firstH2){
+    introHtml.push(node.outerHTML);
+    const next=node.nextElementSibling;
+    node.remove();
+    node=next;
+  }
+
+  return {
+    intro:introHtml.join(""),
+    body:wrap.innerHTML
+  };
 }
 
 function reflectSlugInUrl(article){
