@@ -111,7 +111,7 @@ function renderArticle(article){
   reflectSlugInUrl(article);
 
   const cleaned=removeSeoDescriptionFromBody(body,seo);
-  const formatted=formatArticleBody(cleaned);
+  const formatted=cleaned;
   const split=splitIntroAndBody(formatted);
   const leadHtml=(lead&&normalizeText(lead)!==normalizeText(seo)&&normalizeText(lead)!==normalizeText(split.intro))?`<div class="oa-lead">${escapeHtml(lead)}</div>`:'';
 
