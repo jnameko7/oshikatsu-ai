@@ -8,43 +8,19 @@
   <style>
     :root{--oa-pink:#ff6fae;--oa-pink-dark:#e84691;--oa-soft:#fff3f8;--oa-border:#ffd1e5;--oa-text:#312633;--oa-muted:#777}
     *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fff8fb 0%,#fff 45%,#fff7fb 100%);color:var(--oa-text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.oa-article-page{width:min(920px,calc(100% - 32px));margin:0 auto;padding:22px 0 90px}.oa-site-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.oa-logo{display:inline-flex;align-items:center;gap:8px;color:var(--oa-pink-dark);font-weight:800;text-decoration:none}.oa-logo-mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#ff78b6,#ffb7d5);box-shadow:0 8px 18px rgba(255,111,174,.25)}.oa-article-card{overflow:hidden;border:1px solid var(--oa-border);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 16px 40px rgba(255,111,174,.13)}.oa-eyecatch-wrap{background:#fff;border-bottom:1px solid #ffe1ee}.oa-eyecatch{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.oa-article-inner{padding:clamp(22px,4vw,42px)}.oa-category{display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;border-radius:999px;color:var(--oa-pink-dark);background:var(--oa-soft);border:1px solid var(--oa-border);font-size:13px;font-weight:700}.oa-title{margin:0 0 14px;color:#2f2430;font-size:clamp(24px,4vw,36px);line-height:1.35;letter-spacing:.02em}.oa-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:28px;color:var(--oa-muted);font-size:13px}.oa-lead{margin:0 0 30px;padding:18px 20px;border:1px solid var(--oa-border);border-radius:18px;background:linear-gradient(135deg,#fff7fb,#fff);color:#5b4450;line-height:1.9;font-weight:500}.oa-body{font-size:16px;line-height:2;word-break:break-word}.oa-body h2{position:relative;margin:46px 0 18px;padding:16px 18px 16px 20px;border-left:7px solid var(--oa-pink);border-radius:14px;background:linear-gradient(90deg,#fff0f7,#fff);color:#332733;font-size:clamp(22px,3vw,28px);line-height:1.45}.oa-body h3{margin:34px 0 14px;padding-bottom:10px;border-bottom:2px dashed #ff9ac7;color:var(--oa-pink-dark);font-size:clamp(19px,2.4vw,23px);line-height:1.5}.oa-body p{margin:0 0 1.45em}.oa-body strong{color:#c92f78;background:linear-gradient(transparent 62%,#ffe0ef 62%);font-weight:800}.oa-body a{color:#d63384;font-weight:700;text-underline-offset:4px}.oa-body ul,.oa-body ol{margin:24px 0;padding:18px 24px 18px 36px;border:1px solid var(--oa-border);border-radius:18px;background:#fff8fb}.oa-body li{margin:8px 0}.oa-body blockquote{margin:28px 0;padding:18px 22px;border-left:5px solid #ff9ac7;border-radius:14px;background:#fff7fb;color:#5a4650}.oa-body table{width:100%;border-collapse:collapse;margin:28px 0;border-radius:14px;box-shadow:0 0 0 1px var(--oa-border)}.oa-body th,.oa-body td{padding:12px 14px;border:1px solid #ffe1ee;text-align:left;vertical-align:top}.oa-body th{background:#fff0f7;color:#c92f78}.oa-affiliate-box{margin:42px 0 34px;padding:22px;border:1px solid var(--oa-border);border-radius:20px;background:linear-gradient(135deg,#fff7fb,#fff);text-align:center;box-shadow:0 10px 24px rgba(255,111,174,.10)}.oa-affiliate-title{margin:0 0 14px;color:var(--oa-pink-dark);font-weight:800;font-size:16px}.oa-bottom-space{height:70px}.oa-image-error{display:grid;place-items:center;min-height:220px;padding:24px;color:#d63384;background:#fff7fb;font-weight:700;text-align:center}.oa-error,.oa-loading{padding:30px;border:1px solid var(--oa-border);border-radius:20px;background:#fff;text-align:center;color:#6b5360}@media(max-width:640px){.oa-article-page{width:min(100% - 20px,920px);padding-bottom:80px}.oa-article-inner{padding:20px}.oa-body{font-size:15px;line-height:1.9}.oa-body ul,.oa-body ol{padding-left:30px}}
+
+    html{scroll-behavior:smooth}
+    .oa-breadcrumb{margin:0 0 18px;color:var(--oa-muted);font-size:13px}.oa-breadcrumb a{color:var(--oa-pink-dark);text-decoration:none;font-weight:700}.oa-breadcrumb span{margin:0 6px}
+    .oa-toc{margin:0 0 30px;padding:20px;border:1px solid var(--oa-border);border-radius:18px;background:#fff8fb;box-shadow:0 8px 20px rgba(255,111,174,.08)}
+    .oa-toc-title{margin-bottom:12px;font-weight:800;color:var(--oa-pink-dark);font-size:18px}.oa-toc ul{margin:0;padding-left:20px}.oa-toc li{margin:8px 0}.oa-toc a{color:#444;text-decoration:none}.oa-toc a:hover{color:var(--oa-pink-dark)}
+    .oa-body h2,.oa-body h3{scroll-margin-top:90px}
+    .oa-related{margin:34px 0 0;padding:22px;border:1px solid var(--oa-border);border-radius:20px;background:#fff8fb}.oa-related-title{margin:0 0 14px;color:var(--oa-pink-dark);font-weight:800;font-size:18px}.oa-related-list{display:grid;gap:10px}.oa-related a{display:block;padding:12px 14px;border-radius:14px;background:#fff;color:#333;text-decoration:none;border:1px solid #ffe1ee;font-weight:700}.oa-related a:hover{color:var(--oa-pink-dark);transform:translateY(-1px)}
   </style>
-  .oa-toc{
-  margin:0 0 30px;
-  padding:20px;
-  border:1px solid var(--oa-border);
-  border-radius:18px;
-  background:#fff8fb;
-}
-
-.oa-toc-title{
-  margin-bottom:12px;
-  font-weight:800;
-  color:var(--oa-pink-dark);
-  font-size:18px;
-}
-
-.oa-toc ul{
-  margin:0;
-  padding-left:20px;
-}
-
-.oa-toc li{
-  margin:8px 0;
-}
-
-.oa-toc a{
-  color:#444;
-  text-decoration:none;
-}
-
-.oa-toc a:hover{
-  color:var(--oa-pink-dark);
-}
 </head>
 <body>
   <main class="oa-article-page">
     <header class="oa-site-header"><a class="oa-logo" href="./index.html"><span class="oa-logo-mark">♥</span><span>推し活資金AI</span></a></header>
+    <nav class="oa-breadcrumb"><a href="./index.html">ホーム</a><span>›</span><span>記事</span></nav>
     <article id="articleRoot" class="oa-article-card"><div class="oa-loading">記事を読み込み中...</div></article>
   </main>
 <script>
@@ -56,8 +32,7 @@ function readStorageKey(key,id){try{const raw=localStorage.getItem(key);if(!raw|
 function extractArticle(data,id){if(!data)return null;if(Array.isArray(data)){if(id){const hit=data.find(x=>sameId(x,id));if(hit)return hit}return data.find(hasArticleContent)||null}if(typeof data==='object'){if(sameId(data,id)&&hasArticleContent(data))return data;for(const k of ['article','data','post','item','currentArticle']){const hit=extractArticle(data[k],id);if(hit)return hit}for(const k of ['articles','posts','items','list','records','contents']){const hit=extractArticle(data[k],id);if(hit)return hit}if(!id&&hasArticleContent(data))return data}return null}
 function sameId(a,id){if(!a||!id||typeof a!=='object')return false;return [a.id,a.articleId,a.article_id,a.slug,a.uid,a.key].some(v=>String(v)===String(id))}
 function hasArticleContent(a){if(!a||typeof a!=='object')return false;return Boolean(pick(a,['title','name'])||pick(a,['body','content','articleBody','mainText','text','html']))}
-function renderArticle(article){const title=pick(article,['title','name'])||'記事タイトル';const seo=pick(article,['seoDescription','seo_description','metaDescription','meta_description','description'])||'';const lead=pick(article,['lead','intro','excerpt','summary'])||'';const body=pick(article,['body','content','articleBody','mainText','text','html'])||'';const image=getArticleImage(article);const category=pick(article,['category','genre'])||'推し活コラム';const date=pick(article,['date','createdAt','updatedAt','publishedAt'])||'';const affiliate=pick(article,['affiliateHtml','affiliateHTML','affiliate_html','adHtml','adHTML','adCode','rakutenHtml','htmlAd','affiliate','adsHtml'])||'';document.title=title+'｜推し活資金AI';setMetaDescription(seo||lead||title);const cleaned=removeSeoDescriptionFromBody(body,seo);root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${lead&&normalizeText(lead)!==normalizeText(seo)?`<p class="oa-lead">${escapeHtml(lead)}</p>`:''}<div id="oaToc"></div>
-<div class="oa-body">${formatArticleBody(cleaned)}</div>${affiliate?`<section class="oa-affiliate-box"><p class="oa-affiliate-title">おすすめリンク</p><div id="affiliateMount"></div></section>`:''}<div class="oa-bottom-space"></div></div>`;if(image)mountEyecatch(image,title);if(affiliate)renderAffiliateHtml('affiliateMount',affiliate)}
+function renderArticle(article){const title=pick(article,['title','name'])||'記事タイトル';const seo=pick(article,['seoDescription','seo_description','metaDescription','meta_description','description'])||'';const lead=pick(article,['lead','intro','excerpt','summary'])||'';const body=pick(article,['body','content','articleBody','mainText','text','html'])||'';const image=getArticleImage(article);const category=pick(article,['category','genre'])||'推し活コラム';const date=pick(article,['date','createdAt','updatedAt','publishedAt'])||'';const affiliate=pick(article,['affiliateHtml','affiliateHTML','affiliate_html','adHtml','adHTML','adCode','rakutenHtml','htmlAd','affiliate','adsHtml'])||'';document.title=title+'｜推し活資金AI';setMetaDescription(seo||lead||title);const cleaned=removeSeoDescriptionFromBody(body,seo);root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${lead&&normalizeText(lead)!==normalizeText(seo)?`<p class="oa-lead">${escapeHtml(lead)}</p>`:''}<div id="oaToc"></div><div class="oa-body">${formatArticleBody(cleaned)}</div>${affiliate?`<section class="oa-affiliate-box"><p class="oa-affiliate-title">おすすめリンク</p><div id="affiliateMount"></div></section>`:''}<div id="relatedMount"></div><div class="oa-bottom-space"></div></div>`;if(image)mountEyecatch(image,title);if(affiliate)renderAffiliateHtml('affiliateMount',affiliate);createToc();renderRelatedArticles(article)}
 
 function getArticleImage(article){let v=pick(article,['image','eyecatch','eyecatchUrl','eyeCatchUrl','thumbnail','thumbnailUrl','imageUrl','coverImage','mainImage','main_image','featuredImage','featured_image','img','photo','heroImage','hero_image','imageData','imageBase64','base64Image']);if(v&&typeof v==='object')v=v.url||v.src||v.href||v.dataUrl||v.dataURL||v.base64||'';return String(v||'').trim()}
 function imageCandidates(src){const s=String(src||'').trim();if(!s)return[];if(/^data:image\//i.test(s)||/^https?:\/\//i.test(s)||/^blob:/i.test(s)||s.startsWith('/'))return[s];const clean=s.replace(/^\.\//,'').replace(/^public\//,'');const names=[clean,'/'+clean,'./'+clean,'images/'+clean,'/images/'+clean,'img/'+clean,'/img/'+clean,'assets/'+clean,'/assets/'+clean,'uploads/'+clean,'/uploads/'+clean,'generated/'+clean,'/generated/'+clean];return[...new Set(names)]}
@@ -70,39 +45,54 @@ function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)ret
 function renderAffiliateHtml(id,html){const mount=document.getElementById(id);if(!mount)return;mount.innerHTML=String(html);mount.querySelectorAll('script').forEach(old=>{const s=document.createElement('script');Array.from(old.attributes).forEach(a=>s.setAttribute(a.name,a.value));s.textContent=old.textContent;old.replaceWith(s)})}
 function formatDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?String(v):d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})}
 function showError(msg){root.innerHTML='<div class="oa-error">'+escapeHtml(msg)+'</div>'}
+
 function createToc(){
   const toc=document.getElementById('oaToc');
   const body=document.querySelector('.oa-body');
-
   if(!toc||!body)return;
-
   const headings=body.querySelectorAll('h2,h3');
-
-  if(headings.length===0){
-    toc.style.display='none';
-    return;
-  }
-
-  let html='<div class="oa-toc">';
-  html+='<div class="oa-toc-title">📖 目次</div><ul>';
-
+  if(headings.length===0){toc.style.display='none';return;}
+  let html='<div class="oa-toc"><div class="oa-toc-title">📖 目次</div><ul>';
   headings.forEach((heading,index)=>{
     const id='toc-'+index;
     heading.id=id;
-
-    html+=`
-      <li style="${heading.tagName==='H3'?'margin-left:16px':''}">
-        <a href="#${id}">
-          ${heading.textContent}
-        </a>
-      </li>
-    `;
+    const indent=heading.tagName==='H3'?'margin-left:16px':'';
+    html+=`<li style="${indent}"><a href="#${id}">${escapeHtml(heading.textContent)}</a></li>`;
   });
-
   html+='</ul></div>';
-
   toc.innerHTML=html;
 }
+
+function getAllStoredArticles(){
+  const keys=['oshikatsu_articles','oshikatsuArticles','oshikatsu_ai_articles','articles','blogArticles','blog_articles','posts','oshikatsu_posts','savedArticles','articleList'];
+  for(const key of keys){
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw)continue;
+      const data=JSON.parse(raw);
+      const list=Array.isArray(data)?data:(Array.isArray(data.articles)?data.articles:Array.isArray(data.posts)?data.posts:Array.isArray(data.items)?data.items:[]);
+      if(list.length)return list;
+    }catch(_){}}
+  return [];
+}
+
+function renderRelatedArticles(current){
+  const mount=document.getElementById('relatedMount');
+  if(!mount)return;
+  const currentId=String(pick(current,['id','articleId','article_id','slug','uid','key'])||'');
+  const list=getAllStoredArticles().filter(a=>hasArticleContent(a)&&String(pick(a,['id','articleId','article_id','slug','uid','key'])||'')!==currentId).slice(0,3);
+  if(list.length===0){mount.innerHTML='';return;}
+  let html='<section class="oa-related"><p class="oa-related-title">関連記事</p><div class="oa-related-list">';
+  list.forEach(a=>{
+    const title=pick(a,['title','name'])||'関連記事';
+    const id=pick(a,['id','articleId','article_id','slug','uid','key'])||'';
+    const href=id?'./article.html?id='+encodeURIComponent(id):'./article.html';
+    html+=`<a href="${href}">${escapeHtml(title)}</a>`;
+  });
+  html+='</div></section>';
+  mount.innerHTML=html;
+}
+
 function escapeHtml(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#096;')}
 </script>
 </body>
