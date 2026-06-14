@@ -175,8 +175,21 @@ function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)ret
 function renderAffiliateHtml(id,html){const mount=document.getElementById(id);if(!mount)return;mount.innerHTML=String(html);mount.querySelectorAll('script').forEach(old=>{const s=document.createElement('script');Array.from(old.attributes).forEach(a=>s.setAttribute(a.name,a.value));s.textContent=old.textContent;old.replaceWith(s)})}
 function pick(obj,keys){for(const k of keys){const v=obj&&obj[k];if(v!==undefined&&v!==null&&String(v).trim()!=='')return v}return''}
 function setMetaDescription(text){let m=document.querySelector('meta[name="description"]');if(!m){m=document.createElement('meta');m.name='description';document.head.appendChild(m)}m.content=String(text).replace(/<[^>]*>/g,'').slice(0,160)}
-function removeSeoDescriptionFromBody(body,seo){let text=String(body||'').trim();const desc=String(seo||'').trim();if(desc&&normalizeText(text).startsWith(normalizeText(desc)))text=text.slice(desc.length).trim();return text.replace(/^SEO説明文[:：].*(\n|$)/,'').replace(/^メタディスクリプション[:：].*(\n|$)/,'').trim()}
-function normalizeText(v){return String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,'')}
+function removeSeoDescriptionFromBody(body,seo){
+  let text=String(body||'').trim();
+
+  if(/<\/?(p|h2|h3|div|ul|ol|li|strong|br)\b/i.test(text)){
+    return text
+      .replace(/<p>\s*SEO説明文[:：].*?<\/p>/i,'')
+      .replace(/<p>\s*メタディスクリプション[:：].*?<\/p>/i,'')
+      .trim();
+  }
+
+  return text
+    .replace(/^SEO説明文[:：].*(\n|$)/,'')
+    .replace(/^メタディスクリプション[:：].*(\n|$)/,'')
+    .trim();
+}function normalizeText(v){return String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,'')}
 function formatDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?String(v):d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})}
 function showError(msg){root.innerHTML='<div class="oa-error">'+escapeHtml(msg)+'</div>'}
 function escapeHtml(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
