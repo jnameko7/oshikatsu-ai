@@ -1,8 +1,6 @@
 {
   "rewrites": [
-    {
-      "source": "/article.html/:slug",
-      "destination": "/article.html"
-    }
+    { "source": "/article.html/:slug", "destination": "/article.html" },
+    { "source": "/column/:slug", "destination": "/article.html" }
   ]
 }
