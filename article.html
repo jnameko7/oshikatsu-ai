@@ -5,50 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>記事詳細｜推し活資金AI</title>
   <meta name="description" content="推し活に役立つ記事を紹介します。" />
-  <link rel="stylesheet" href="/style.css">
   <style>
     :root{--oa-pink:#ff6fae;--oa-pink-dark:#e84691;--oa-soft:#fff3f8;--oa-border:#ffd1e5;--oa-text:#312633;--oa-muted:#777}
-    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fff8fb 0%,#fff 45%,#fff7fb 100%);color:var(--oa-text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.oa-article-page{width:min(920px,calc(100% - 32px));margin:0 auto;padding:22px 0 90px}.oa-site-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.oa-logo{display:inline-flex;align-items:center;gap:8px;color:var(--oa-pink-dark);font-weight:800;text-decoration:none}.oa-logo-mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#ff78b6,#ffb7d5);box-shadow:0 8px 18px rgba(255,111,174,.25)}.oa-article-card{overflow:hidden;border:1px solid var(--oa-border);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 16px 40px rgba(255,111,174,.13)}.oa-eyecatch-wrap{background:#fff;border-bottom:1px solid #ffe1ee}.oa-eyecatch{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.oa-article-inner{padding:clamp(22px,4vw,42px)}.oa-category{display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;border-radius:999px;color:var(--oa-pink-dark);background:var(--oa-soft);border:1px solid var(--oa-border);font-size:13px;font-weight:700}.oa-title{margin:0 0 14px;color:#2f2430;font-size:clamp(24px,4vw,36px);line-height:1.35;letter-spacing:.02em}.oa-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:28px;color:var(--oa-muted);font-size:13px}.oa-lead{margin:0 0 30px;padding:18px 20px;border:1px solid var(--oa-border);border-radius:18px;background:linear-gradient(135deg,#fff7fb,#fff);color:#5b4450;line-height:1.9;font-weight:500}.oa-body{font-size:16px;line-height:2;word-break:break-word}.oa-body h2{position:relative;margin:46px 0 18px;padding:16px 18px 16px 20px;border-left:7px solid var(--oa-pink);border-radius:14px;background:linear-gradient(90deg,#fff0f7,#fff);color:#332733;font-size:clamp(22px,3vw,28px);line-height:1.45}.oa-body h3{margin:34px 0 14px;padding-bottom:10px;border-bottom:2px dashed #ff9ac7;color:var(--oa-pink-dark);font-size:clamp(19px,2.4vw,23px);line-height:1.5}.oa-body p{margin:0 0 1.45em}.oa-body strong{color:#c92f78;background:linear-gradient(transparent 62%,#ffe0ef 62%);font-weight:800}.oa-body a{color:#d63384;font-weight:700;text-underline-offset:4px}.oa-body ul,.oa-body ol{margin:24px 0;padding:18px 24px 18px 36px;border:1px solid var(--oa-border);border-radius:18px;background:#fff8fb}.oa-body li{margin:8px 0}.oa-body blockquote{margin:28px 0;padding:18px 22px;border-left:5px solid #ff9ac7;border-radius:14px;background:#fff7fb;color:#5a4650}.oa-body table{width:100%;border-collapse:collapse;margin:28px 0;border-radius:14px;box-shadow:0 0 0 1px var(--oa-border)}.oa-body th,.oa-body td{padding:12px 14px;border:1px solid #ffe1ee;text-align:left;vertical-align:top}.oa-body th{background:#fff0f7;color:#c92f78}.oa-affiliate-box{margin:42px 0 34px;text-align:center}.oa-affiliate-title{display:none}.oa-auto-affiliate{margin:42px auto;text-align:center}.oa-auto-affiliate img,.oa-auto-affiliate iframe{max-width:100%;height:auto}.oa-bottom-space{height:70px}.oa-error,.oa-loading{padding:30px;border:1px solid var(--oa-border);border-radius:20px;background:#fff;text-align:center;color:#6b5360}@media(max-width:640px){.oa-article-page{width:min(100% - 20px,920px);padding-bottom:80px}.oa-article-inner{padding:20px}.oa-body{font-size:15px;line-height:1.9}.oa-body ul,.oa-body ol{padding-left:30px}}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fff8fb 0%,#fff 45%,#fff7fb 100%);color:var(--oa-text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.oa-article-page{width:min(920px,calc(100% - 32px));margin:0 auto;padding:22px 0 90px}.oa-site-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.oa-logo{display:inline-flex;align-items:center;gap:8px;color:var(--oa-pink-dark);font-weight:800;text-decoration:none}.oa-logo-mark{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#ff78b6,#ffb7d5);box-shadow:0 8px 18px rgba(255,111,174,.25)}.oa-article-card{overflow:hidden;border:1px solid var(--oa-border);border-radius:24px;background:rgba(255,255,255,.96);box-shadow:0 16px 40px rgba(255,111,174,.13)}.oa-eyecatch-wrap{background:#fff;border-bottom:1px solid #ffe1ee}.oa-eyecatch{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.oa-article-inner{padding:clamp(22px,4vw,42px)}.oa-category{display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;border-radius:999px;color:var(--oa-pink-dark);background:var(--oa-soft);border:1px solid var(--oa-border);font-size:13px;font-weight:700}.oa-title{margin:0 0 14px;color:#2f2430;font-size:clamp(24px,4vw,36px);line-height:1.35;letter-spacing:.02em}.oa-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:28px;color:var(--oa-muted);font-size:13px}.oa-lead{margin:0 0 30px;padding:18px 20px;border:1px solid var(--oa-border);border-radius:18px;background:linear-gradient(135deg,#fff7fb,#fff);color:#5b4450;line-height:1.9;font-weight:500}.oa-body{font-size:16px;line-height:2;word-break:break-word}.oa-body h2{position:relative;margin:46px 0 18px;padding:16px 18px 16px 20px;border-left:7px solid var(--oa-pink);border-radius:14px;background:linear-gradient(90deg,#fff0f7,#fff);color:#332733;font-size:clamp(22px,3vw,28px);line-height:1.45}.oa-body h3{margin:34px 0 14px;padding-bottom:10px;border-bottom:2px dashed #ff9ac7;color:var(--oa-pink-dark);font-size:clamp(19px,2.4vw,23px);line-height:1.5}.oa-body p{margin:0 0 1.45em}.oa-body strong{color:#c92f78;background:linear-gradient(transparent 62%,#ffe0ef 62%);font-weight:800}.oa-body a{color:#d63384;font-weight:700;text-underline-offset:4px}.oa-body ul,.oa-body ol{margin:24px 0;padding:18px 24px 18px 36px;border:1px solid var(--oa-border);border-radius:18px;background:#fff8fb}.oa-body li{margin:8px 0}.oa-body blockquote{margin:28px 0;padding:18px 22px;border-left:5px solid #ff9ac7;border-radius:14px;background:#fff7fb;color:#5a4650}.oa-body table{width:100%;border-collapse:collapse;margin:28px 0;border-radius:14px;box-shadow:0 0 0 1px var(--oa-border)}.oa-body th,.oa-body td{padding:12px 14px;border:1px solid #ffe1ee;text-align:left;vertical-align:top}.oa-body th{background:#fff0f7;color:#c92f78}.oa-affiliate-box{margin:42px 0 34px;padding:22px;border:1px solid var(--oa-border);border-radius:20px;background:linear-gradient(135deg,#fff7fb,#fff);text-align:center;box-shadow:0 10px 24px rgba(255,111,174,.10)}.oa-affiliate-title{margin:0 0 14px;color:var(--oa-pink-dark);font-weight:800;font-size:16px}.oa-bottom-space{height:70px}.oa-image-error{display:grid;place-items:center;min-height:220px;padding:24px;color:#d63384;background:#fff7fb;font-weight:700;text-align:center}.oa-error,.oa-loading{padding:30px;border:1px solid var(--oa-border);border-radius:20px;background:#fff;text-align:center;color:#6b5360}@media(max-width:640px){.oa-article-page{width:min(100% - 20px,920px);padding-bottom:80px}.oa-article-inner{padding:20px}.oa-body{font-size:15px;line-height:1.9}.oa-body ul,.oa-body ol{padding-left:30px}}
   
 .oa-toc{margin:0 0 30px;padding:20px 22px;border:1px solid var(--oa-border);border-radius:20px;background:linear-gradient(135deg,#fff7fb,#fff);box-shadow:0 10px 26px rgba(255,111,174,.10)}.oa-toc-title{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:var(--oa-pink-dark);font-size:18px;font-weight:900}.oa-toc-list{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:toc}.oa-toc-list li{counter-increment:toc;margin:0}.oa-toc-list a{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #ffe1ee;border-radius:14px;background:#fff;color:#3f3038;text-decoration:none;font-weight:700;line-height:1.5;transition:.18s}.oa-toc-list a::before{content:counter(toc);display:inline-grid;place-items:center;flex:0 0 26px;width:26px;height:26px;border-radius:999px;background:linear-gradient(135deg,#ff78b6,#ffb7d5);color:#fff;font-size:13px;font-weight:900}.oa-toc-list a:hover{transform:translateY(-1px);border-color:#ff9ac7;color:var(--oa-pink-dark);box-shadow:0 8px 18px rgba(255,111,174,.13)}html{scroll-behavior:smooth}.oa-body h2,.oa-body h3{scroll-margin-top:90px}
 
-/* 共通ヘッダー利用時の記事ページ余白調整 */
-.oa-article-page{padding-top:34px!important}
-.footer{margin-top:40px}
-@media(max-width:1000px){.header{position:sticky}.oa-article-page{padding-top:24px!important}}
+/* 導入文を目次の上に表示 */
+.oa-intro-body{margin:0 0 30px;padding:18px 20px;border:1px solid var(--oa-border);border-radius:18px;background:linear-gradient(135deg,#fff7fb,#fff);color:#5b4450;line-height:1.9;font-weight:500}
+.oa-intro-body p{margin:0 0 1em}.oa-intro-body p:last-child{margin-bottom:0}
+
 </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container header-inner">
-      <a class="logo" href="/index.html">
-        <span class="heart">♥</span>
-        <span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span>
-      </a>
-      <nav class="nav">
-        <a href="/index.html">ホーム</a>
-        <a href="/fund.html">診断ツール</a>
-        <a href="/transport.html">遠征プランナー</a>
-        <a href="/yearly.html">目標シミュレーター</a>
-        <a href="/kakeibo.html">推し活家計簿</a>
-        <a class="active" href="/articles.html">お役立ち記事</a>
-      </nav>
-      <a class="cta" href="/fund.html">すべて無料で使えます</a>
-    </div>
-  </header>
-
   <main class="oa-article-page">
+    <header class="oa-site-header"><a class="oa-logo" href="./index.html"><span class="oa-logo-mark">♥</span><span>推し活資金AI</span></a></header>
     <article id="articleRoot" class="oa-article-card"><div class="oa-loading">記事を読み込み中...</div></article>
   </main>
-
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div>
-      <div><h3>サービス</h3><p><a href="/fund.html">推し活資金診断</a></p><p><a href="/saving.html">娯楽費捻出診断</a></p><p><a href="/transport.html">遠征プランナー</a></p><p><a href="/kakeibo.html">推し活家計簿</a></p></div>
-      <div><h3>お役立ち情報</h3><p><a href="/articles.html">節約術</a></p><p><a href="/articles.html">遠征のコツ</a></p></div>
-      <div><h3>運営について</h3><p><a href="/terms.html">利用規約</a></p><p><a href="/privacy.html">プライバシーポリシー</a></p><p><a href="/contact.html">お問い合わせ</a></p></div>
-    </div>
-  </footer>
 <script>
 const root=document.getElementById('articleRoot');const params=new URLSearchParams(location.search);const articleId=params.get('id')||params.get('slug')||'';initArticlePage();
 async function initArticlePage(){try{const article=await findArticle(articleId);if(!article||!hasArticleContent(article)){showError('記事が見つかりませんでした。管理画面で記事IDを確認してください。');return}renderArticle(article)}catch(e){console.error(e);showError('記事の読み込みに失敗しました。')}}
@@ -56,14 +29,14 @@ async function findArticle(id){const local=findArticleFromLocalStorage(id);if(lo
 function findArticleFromLocalStorage(id){const preferred=['oshikatsu_articles','oshikatsuArticles','oshikatsu_ai_articles','articles','blogArticles','blog_articles','posts','oshikatsu_posts','savedArticles','articleList'];for(const key of preferred){const found=readStorageKey(key,id);if(found)return found}for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(preferred.includes(key))continue;const found=readStorageKey(key,id);if(found)return found}return null}
 function readStorageKey(key,id){try{const raw=localStorage.getItem(key);if(!raw||raw.length<2)return null;const data=JSON.parse(raw);return extractArticle(data,id)}catch(_){return null}}
 function extractArticle(data,id){if(!data)return null;if(Array.isArray(data)){if(id){const hit=data.find(x=>sameId(x,id));if(hit)return hit}return data.find(hasArticleContent)||null}if(typeof data==='object'){if(sameId(data,id)&&hasArticleContent(data))return data;for(const k of ['article','data','post','item','currentArticle']){const hit=extractArticle(data[k],id);if(hit)return hit}for(const k of ['articles','posts','items','list','records','contents']){const hit=extractArticle(data[k],id);if(hit)return hit}if(!id&&hasArticleContent(data))return data}return null}
-function sameId(a,id){if(!a||!id||typeof a!=='object')return false;return [a.id,a.articleId,a.article_id,a.slug,a.urlSlug,a.url_slug,a.permalink,a.path,a.uid,a.key].some(v=>String(v).replace(/^\//,'')===String(id).replace(/^\//,''))}
+function sameId(a,id){if(!a||!id||typeof a!=='object')return false;return [a.id,a.articleId,a.article_id,a.slug,a.uid,a.key].some(v=>String(v)===String(id))}
 function hasArticleContent(a){if(!a||typeof a!=='object')return false;return Boolean(pick(a,['title','name'])||pick(a,['body','content','articleBody','mainText','text','html']))}
-function renderArticle(article){const title=pick(article,['title','name'])||'記事タイトル';const seo=pick(article,['seoDescription','seo_description','metaDescription','meta_description','description'])||'';const lead=pick(article,['lead','intro','excerpt','summary'])||'';const body=pick(article,['body','content','articleBody','mainText','text','html','contentHtml','articleHtml','bodyHtml','rawBody','markdown','value'])||'';const image=getArticleImage(article);const category=pick(article,['category','genre'])||'推し活コラム';const date=pick(article,['date','createdAt','updatedAt','publishedAt'])||'';const affiliate=pick(article,['affiliateHtml','affiliateHTML','affiliate_html','adHtml','adHTML','adCode','rakutenHtml','htmlAd','affiliate','adsHtml'])||'';document.title=title+'｜推し活資金AI';setMetaDescription(seo||lead||title);const cleaned=removeSeoDescriptionFromBody(body,seo);root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${lead&&normalizeText(lead)!==normalizeText(seo)?`<p class="oa-lead">${escapeHtml(lead)}</p>`:''}<div id="oaToc"></div><div class="oa-body">${formatArticleBody(cleaned)}</div><div class="oa-bottom-space"></div></div>`;if(image)mountEyecatch(image,title);createToc();if(affiliate)insertAffiliateBlocks(affiliate)}
+function renderArticle(article){const title=pick(article,['title','name'])||'記事タイトル';const seo=pick(article,['seoDescription','seo_description','metaDescription','meta_description','description'])||'';const lead=pick(article,['lead','intro','excerpt','summary'])||'';const body=pick(article,['body','content','articleBody','mainText','text','html','contentHtml','articleHtml','bodyHtml','rawBody','markdown','value'])||'';const image=getArticleImage(article);const category=pick(article,['category','genre'])||'推し活コラム';const date=pick(article,['date','createdAt','updatedAt','publishedAt'])||'';const affiliate=pick(article,['affiliateHtml','affiliateHTML','affiliate_html','adHtml','adHTML','adCode','rakutenHtml','htmlAd','affiliate','adsHtml'])||'';document.title=title+'｜推し活資金AI';setMetaDescription(seo||lead||title);const cleaned=removeSeoDescriptionFromBody(body,seo);root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${lead&&normalizeText(lead)!==normalizeText(seo)?`<p class="oa-lead">${escapeHtml(lead)}</p>`:''}<div id="oaToc"></div><div class="oa-body">${formatArticleBody(cleaned)}</div>${affiliate?`<section class="oa-affiliate-box"><p class="oa-affiliate-title">おすすめリンク</p><div id="affiliateMount"></div></section>`:''}<div class="oa-bottom-space"></div></div>`;if(image)mountEyecatch(image,title);if(affiliate)renderAffiliateHtml('affiliateMount',affiliate);createToc()}
+
 
 function getArticleImage(article){let v=pick(article,['image','eyecatch','eyecatchUrl','eyeCatchUrl','thumbnail','thumbnailUrl','imageUrl','coverImage','mainImage','main_image','featuredImage','featured_image','img','photo','heroImage','hero_image','imageData','imageBase64','base64Image','ogImage','og_image']);if(v&&typeof v==='object')v=v.url||v.src||v.href||v.dataUrl||v.dataURL||v.base64||'';v=String(v||'').trim();if(v&&!/^data:image\//i.test(v)&&/^[A-Za-z0-9+/=]+$/.test(v)&&v.length>500){v='data:image/png;base64,'+v}return v}
 function imageCandidates(src){const s=String(src||'').trim();if(!s)return[];if(/^data:image\//i.test(s)||/^https?:\/\//i.test(s)||/^blob:/i.test(s)||s.startsWith('/'))return[s];const clean=s.replace(/^\.\//,'').replace(/^public\//,'');const names=[clean,'/'+clean,'./'+clean,'images/'+clean,'/images/'+clean,'img/'+clean,'/img/'+clean,'assets/'+clean,'/assets/'+clean,'uploads/'+clean,'/uploads/'+clean,'generated/'+clean,'/generated/'+clean,'static/'+clean,'/static/'+clean];return[...new Set(names)]}
 function mountEyecatch(src,title){const img=document.getElementById('oaEyecatch');if(!img)return;const list=imageCandidates(src);let i=0;img.onerror=()=>{i++;if(i<list.length){img.src=list[i]}else{const wrap=img.closest('.oa-eyecatch-wrap');if(wrap){wrap.innerHTML='<div class="oa-image-error">画像ファイルが見つかりません。画像をサイト内にアップロードし直してください。</div>'}}};img.alt=title;img.src=list[0]}
-
 
 function createToc(){const toc=document.getElementById('oaToc');const body=document.querySelector('.oa-body');if(!toc||!body)return;const headings=body.querySelectorAll('h2');if(headings.length===0){toc.style.display='none';return}let html='<nav class="oa-toc" aria-label="記事の目次"><div class="oa-toc-title">📖 目次</div><ol class="oa-toc-list">';headings.forEach((heading,index)=>{const id='toc-'+index;heading.id=id;html+=`<li><a href="#${id}">${escapeHtml(heading.textContent)}</a></li>`});html+='</ol></nav>';toc.innerHTML=html}
 function pick(obj,keys){for(const k of keys){const v=obj&&obj[k];if(v!==undefined&&v!==null&&String(v).trim()!=='')return v}return''}
@@ -72,52 +45,6 @@ function removeSeoDescriptionFromBody(body,seo){let text=String(body||'').trim()
 function normalizeText(v){return String(v||'').replace(/<[^>]*>/g,'').replace(/\s+/g,'')}
 function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)return'<p>本文がありません。</p>';if(/<\/?(h2|h3|p|ul|ol|li|table|blockquote|div|br|strong|a|img)\b/i.test(raw))return raw.replace(/<script[\s\S]*?<\/script>/gi,'');const escaped=escapeHtml(raw);return escaped.replace(/^###\s+(.+)$/gm,'<h3>$1</h3>').replace(/^##\s+(.+)$/gm,'<h2>$1</h2>').replace(/^#\s+(.+)$/gm,'<h2>$1</h2>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').split(/\n{2,}/).map(block=>{const t=block.trim();if(!t)return'';if(/^<h[23]>/.test(t))return t;if(/^[-・]\s+/m.test(t)){const items=t.split('\n').filter(Boolean).map(l=>l.replace(/^[-・]\s+/,'').trim());return'<ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>'}return'<p>'+t.replace(/\n/g,'<br>')+'</p>'}).join('')}
 function renderAffiliateHtml(id,html){const mount=document.getElementById(id);if(!mount)return;mount.innerHTML=String(html);mount.querySelectorAll('script').forEach(old=>{const s=document.createElement('script');Array.from(old.attributes).forEach(a=>s.setAttribute(a.name,a.value));s.textContent=old.textContent;old.replaceWith(s)})}
-function insertAffiliateBlocks(html){
-  const body=document.querySelector('.oa-body');
-  if(!body||!String(html||'').trim())return;
-
-  const children=Array.from(body.children).filter(el=>!el.classList.contains('oa-auto-affiliate'));
-  const h2s=children.filter(el=>el.tagName==='H2');
-  if(children.length===0||h2s.length===0)return;
-
-  const spots=[];
-  // 導入下：導入文が全部終わった後、最初のH2の直前
-  spots.push({mode:'before',target:h2s[0]});
-
-  // 本文中央：長文記事だけ、中央付近のH2の直前。文章の途中には入れない
-  const plainText=body.textContent.replace(/\s+/g,'');
-  if(h2s.length>=4||plainText.length>=3500){
-    const middleH2=h2s[Math.floor(h2s.length/2)];
-    if(middleH2&&middleH2!==h2s[0])spots.push({mode:'before',target:middleH2});
-  }
-
-  // まとめ下：まとめ見出しのセクション本文が終わった後
-  const summaryHeading=h2s.find(el=>/まとめ|総まとめ|結論|最後に/.test(el.textContent));
-  if(summaryHeading){
-    let summaryTarget=summaryHeading;
-    const startIndex=children.indexOf(summaryHeading);
-    for(let i=startIndex+1;i<children.length;i++){
-      if(children[i].tagName==='H2')break;
-      summaryTarget=children[i];
-    }
-    spots.push({mode:'after',target:summaryTarget});
-  }
-
-  const used=new Set();
-  let count=0;
-  spots.forEach(spot=>{
-    if(!spot.target||used.has(spot.target))return;
-    used.add(spot.target);
-    count++;
-    const box=document.createElement('div');
-    box.className='oa-auto-affiliate';
-    box.innerHTML=`<div id="oaAffiliateAuto${count}"></div>`;
-    if(spot.mode==='before')spot.target.insertAdjacentElement('beforebegin',box);
-    else spot.target.insertAdjacentElement('afterend',box);
-    renderAffiliateHtml('oaAffiliateAuto'+count,html);
-  });
-}
-
 function formatDate(v){const d=new Date(v);return Number.isNaN(d.getTime())?String(v):d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})}
 function showError(msg){root.innerHTML='<div class="oa-error">'+escapeHtml(msg)+'</div>'}
 function escapeHtml(v){return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}function escapeAttr(v){return escapeHtml(v).replace(/`/g,'&#096;')}
