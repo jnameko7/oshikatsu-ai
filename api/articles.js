@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const limit = req.query.limit || "20";
+  const limit = req.query.limit || "100";
   const offset = req.query.offset || "0";
 
   const url =
@@ -28,7 +28,26 @@ export default async function handler(req, res) {
       return res.status(response.status).json(data);
     }
 
-    return res.status(200).json(data);
+    const now = new Date();
+
+    const filteredContents = (data.contents || []).filter(article => {
+      const publishDate =
+        article.publishDate ||
+        article["予約公開日時"] ||
+        article.publishedAt ||
+        article.createdAt;
+
+      if (!publishDate) return true;
+
+      return new Date(publishDate) <= now;
+    });
+
+    return res.status(200).json({
+      ...data,
+      contents: filteredContents,
+      totalCount: filteredContents.length
+    });
+
   } catch (err) {
     return res.status(500).json({
       error: "記事取得に失敗しました",
