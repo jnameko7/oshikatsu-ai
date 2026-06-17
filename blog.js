@@ -1,76 +1,133 @@
-async function loadBlog() {
-  const list = document.getElementById("blogList");
+async function loadArticles() {
 
-  if (!list) return;
+  const mount =
+    document.getElementById("blogList") ||
+    document.getElementById("articleList");
 
-  list.innerHTML = "<p>記事を読み込み中...</p>";
+  if (!mount) return;
 
   try {
 
-    const res = await fetch("/api/articles");
-    const data = await res.json();
+    let data;
 
-    if (!data.contents || data.contents.length === 0) {
-      list.innerHTML = "<p>まだ記事がありません。</p>";
-      return;
+    try {
+
+      const res = await fetch("/api/articles", {
+        cache: "no-store"
+      });
+
+      if (!res.ok) throw new Error();
+
+      data = await res.json();
+
+    } catch (_) {
+
+      const res = await fetch("/articles.json", {
+        cache: "no-store"
+      });
+
+      data = await res.json();
+
     }
 
-    list.innerHTML = data.contents.map(article => {
+    const today = new Date().toISOString().slice(0,10);
 
-      const image = article.thumbnail?.url || "";
-      const description = article.description || "";
+    const articles =
+      Array.isArray(data)
+        ? data
+        : (
+            data.contents ||
+            data.articles ||
+            data.posts ||
+            data.items ||
+            []
+          );
 
-      const date =
-        article.publishedAt
-          ? article.publishedAt.slice(0,10)
-          : "";
+    mount.innerHTML = articles
 
-      return `
-        <article class="blog-card">
+      .filter(a => !a.publishDate || a.publishDate <= today)
 
-          ${
-            image
-            ? `<img class="blog-card-image"
-                   src="${image}"
-                   alt="${article.title}">`
-            : ""
-          }
+      .map(a => {
 
-          <div class="blog-card-body">
+        const title =
+          a.title || "記事タイトル";
 
-            <span class="blog-category">
-              推し活お役立ち記事
-            </span>
+        const category =
+          a.category || "推し活コラム";
 
-            <h2>${article.title}</h2>
+        const summary =
+          a.summary ||
+          a.description ||
+          "";
 
-            <p>${description}</p>
+        const slug =
+          a.slug ||
+          a.urlSlug ||
+          a.url_slug ||
+          a.permalink ||
+          a.id;
 
-            <div class="blog-date">
-              ${date}
-            </div>
+        const img =
+          a.thumbnail?.url ||
+          a.image?.url ||
+          a.eyecatch?.url ||
+          "";
 
-            <a
-              class="blog-read"
-              href="article.html?id=${article.id}"
-            >
-              記事を読む
-            </a>
+        return `
 
-          </div>
+<article class="blog-card">
 
-        </article>
-      `;
+${img
+? `<img class="blog-thumb" src="${img}" alt="${title}">`
+: `<div class="blog-card-thumb">💗</div>`
+}
 
-    }).join("");
+<div class="blog-card-body">
 
-  } catch (e) {
+<span class="blog-category">
+${category}
+</span>
+
+<h2>
+${title}
+</h2>
+
+<p>
+${summary}
+</p>
+
+<a class="blog-read"
+href="/article/${encodeURIComponent(
+String(slug)
+.replace(/^\/+|\/+$/g,"")
+.replace(/\.html?$/i,"")
+)}">
+
+読む →
+
+</a>
+
+</div>
+
+</article>
+
+`;
+
+      })
+
+      .join("");
+
+  }
+
+  catch (e) {
 
     console.error(e);
 
-    list.innerHTML =
-      "<p>記事データを読み込めませんでした。</p>";
+    mount.innerHTML =
+      "<p>記事を取得できませんでした。</p>";
+
   }
+
 }
 
-loadBlog();
+loadArticles();
