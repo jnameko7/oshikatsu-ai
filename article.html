@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>記事詳細｜推し活資金AI</title>
   <meta name="description" content="推し活に役立つ記事を紹介します。" />
+  <link id="canonicalLink" rel="canonical" href="https://www.oshikatsu-kakeibo.com/article" />
+  <meta property="og:type" content="article" />
+  <meta id="ogTitle" property="og:title" content="記事詳細｜推し活資金AI" />
+  <meta id="ogDescription" property="og:description" content="推し活に役立つ記事を紹介します。" />
+  <meta id="ogUrl" property="og:url" content="https://www.oshikatsu-kakeibo.com/article" />
   <link rel="stylesheet" href="/style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6088406710027099" crossorigin="anonymous"></script>
   <style>
@@ -28,16 +33,16 @@
 <body>
   <header class="header">
     <div class="container header-inner">
-      <a class="logo" href="/index.html"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a>
+      <a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a>
       <nav class="nav">
-        <a href="/index.html">ホーム</a>
-        <a href="/fund.html">診断ツール</a>
-        <a href="/transport.html">遠征プランナー</a>
-        <a href="/yearly.html">目標シミュレーター</a>
-        <a href="/kakeibo.html">推し活家計簿</a>
-        <a class="active" href="/articles.html">お役立ち記事</a>
+        <a href="/">ホーム</a>
+        <a href="/fund">診断ツール</a>
+        <a href="/transport">遠征プランナー</a>
+        <a href="/yearly">目標シミュレーター</a>
+        <a href="/kakeibo">推し活家計簿</a>
+        <a class="active" href="/articles">お役立ち記事</a>
       </nav>
-      <a class="cta" href="/fund.html">すべて無料で使えます</a>
+      <a class="cta" href="/fund">すべて無料で使えます</a>
     </div>
   </header>
 
@@ -48,13 +53,14 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div>
-      <div><h3>サービス</h3><p><a href="/fund.html">推し活資金診断</a></p><p><a href="/saving.html">娯楽費捻出診断</a></p><p><a href="/transport.html">遠征プランナー</a></p><p><a href="/kakeibo.html">推し活家計簿</a></p></div>
-      <div><h3>お役立ち情報</h3><p><a href="/articles.html">節約術</a></p><p><a href="/articles.html">遠征のコツ</a></p></div>
-      <div><h3>運営について</h3><p><a href="/terms.html">利用規約</a></p><p><a href="/privacy.html">プライバシーポリシー</a></p><p><a href="/contact.html">お問い合わせ</a></p></div>
+      <div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div>
+      <div><h3>お役立ち情報</h3><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p></div>
+      <div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p></div>
     </div>
   </footer>
 
 <script>
+const SITE_ORIGIN='https://www.oshikatsu-kakeibo.com';
 const root=document.getElementById('articleRoot');
 const params=new URLSearchParams(location.search);
 const articleId=getRequestedArticleKey();
@@ -96,7 +102,7 @@ function getRequestedArticleKey(){
   if(last&&last!=='article.html'&&last!=='article')return last.replace(/\.html?$/i,'');
   return '';
 }
-function normalizeSlug(v){return decodeURIComponent(String(v||'')).trim().replace(/^https?:\/\/[^/]+/,'').replace(/^\/?article\.html\/?/i,'').replace(/^\?slug=/i,'').replace(/^\?id=/i,'').replace(/^\/+|\/+$/g,'').replace(/\.html?$/i,'').toLowerCase()}
+function normalizeSlug(v){return decodeURIComponent(String(v||'')).trim().replace(/^https?:\/\/[^/]+/,'').replace(/^\/?article\.html\/?/i,'').replace(/^\/?article\/?/i,'').replace(/^\?slug=/i,'').replace(/^\?id=/i,'').replace(/^\/+|\/+$/g,'').replace(/\.html?$/i,'').toLowerCase()}
 function sameId(a,id){if(!a||!id||typeof a!=='object')return false;const target=normalizeSlug(id);const values=[a.id,a.articleId,a.article_id,a.slug,a.urlSlug,a.url_slug,a.permalink,a.path,a.url,a.uid,a.key];return values.some(v=>v!==undefined&&v!==null&&(String(v)===String(id)||normalizeSlug(v)===target))}
 function hasArticleContent(a){if(!a||typeof a!=='object')return false;return Boolean(pick(a,['title','name'])&&(pick(a,['body','content','articleBody','mainText','text','html','contentHtml','articleHtml','bodyHtml','rawBody','markdown','value'])||pick(a,['lead','intro','excerpt','summary','description'])))}
 
@@ -112,13 +118,14 @@ function renderArticle(article){
   document.title=title+'｜推し活資金AI';
   setMetaDescription(seo||lead||title);
   reflectSlugInUrl(article);
+  setSeoTags(article,title,seo||lead||title,image);
 
   const cleaned=removeSeoDescriptionFromBody(body,seo);
   const formatted=cleaned;
   const split=splitIntroAndBody(formatted);
   const leadHtml=(lead&&normalizeText(lead)!==normalizeText(seo)&&normalizeText(lead)!==normalizeText(split.intro))?`<div class="oa-lead">${escapeHtml(lead)}</div>`:'';
 
-  root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb" aria-label="パンくずリスト"><a href="/index.html">ホーム</a><span>＞</span><a href="/articles.html">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><a class="oa-back-link" href="/articles.html">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
+  root.innerHTML=`${image?`<div class="oa-eyecatch-wrap"><img id="oaEyecatch" class="oa-eyecatch" alt="${escapeAttr(title)}"></div>`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb" aria-label="パンくずリスト"><a href="/">ホーム</a><span>＞</span><a href="/articles">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><a class="oa-back-link" href="/articles">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
   if(image)mountEyecatch(image,title);
   createToc();
   autoLinkArticleBody();
@@ -160,7 +167,7 @@ function reflectSlugInUrl(article){
   if(!slug||!history.replaceState)return;
   const clean=normalizeSlug(slug);
   if(!clean)return;
-  const desired='/article.html/'+encodeURIComponent(clean);
+  const desired='/article/'+encodeURIComponent(clean);
   if(location.pathname!==desired)history.replaceState(null,'',desired+location.hash);
 }
 function getArticleImage(article){let v=pick(article,['image','eyecatch','eyecatchUrl','eyeCatchUrl','thumbnail','thumbnailUrl','imageUrl','coverImage','mainImage','main_image','featuredImage','featured_image','img','photo','heroImage','hero_image','imageData','imageBase64','base64Image','ogImage','og_image']);if(v&&typeof v==='object')v=v.url||v.src||v.href||v.dataUrl||v.dataURL||v.base64||'';v=String(v||'').trim();if(v&&!/^data:image\//i.test(v)&&/^[A-Za-z0-9+/=]+$/.test(v)&&v.length>500)v='data:image/png;base64,'+v;return v}
@@ -179,11 +186,11 @@ function insertAffiliateBlocks(html){
 
 function autoLinkArticleBody(){
   const targets=[
-    {text:'推し活資金AI',url:'/fund.html'},
-    {text:'遠征プランナー',url:'/transport.html'},
-    {text:'推し活家計簿',url:'/kakeibo.html'},
-    {text:'目標シミュレーター',url:'/yearly.html'},
-    {text:'娯楽費捻出診断',url:'/saving.html'}
+    {text:'推し活資金AI',url:'/fund'},
+    {text:'遠征プランナー',url:'/transport'},
+    {text:'推し活家計簿',url:'/kakeibo'},
+    {text:'目標シミュレーター',url:'/yearly'},
+    {text:'娯楽費捻出診断',url:'/saving'}
   ];
   const used=new Set();
   [document.querySelector('.oa-intro-body'),document.querySelector('.oa-body')].forEach(container=>{
@@ -253,14 +260,32 @@ function relatedCardHtml(article){
 
 function buildArticleUrl(article){
   const slug=pick(article,['slug','urlSlug','url_slug','permalink']);
-  if(slug)return '/article.html/'+encodeURIComponent(normalizeSlug(slug));
+  if(slug)return '/article/'+encodeURIComponent(normalizeSlug(slug));
   const id=pick(article,['id','articleId','article_id','uid','key']);
-  return id?'/article.html?id='+encodeURIComponent(id):'/articles.html';
+  return id?'/article?id='+encodeURIComponent(id):'/articles';
 }
 
 function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)return'';if(/<\/?(h2|h3|p|ul|ol|li|table|blockquote|div|br|strong|a|img)\b/i.test(raw))return raw.replace(/<script[\s\S]*?<\/script>/gi,'');const escaped=escapeHtml(raw);return escaped.replace(/^###\s+(.+)$/gm,'<h3>$1</h3>').replace(/^##\s+(.+)$/gm,'<h2>$1</h2>').replace(/^#\s+(.+)$/gm,'<h2>$1</h2>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').split(/\n{2,}/).map(block=>{const t=block.trim();if(!t)return'';if(/^<h[23]>/.test(t))return t;if(/^[-・]\s+/m.test(t)){const items=t.split('\n').filter(Boolean).map(l=>l.replace(/^[-・]\s+/,'').trim());return'<ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>'}return'<p>'+t.replace(/\n/g,'<br>')+'</p>'}).join('')}
 function renderAffiliateHtml(id,html){const mount=document.getElementById(id);if(!mount)return;mount.innerHTML=String(html);mount.querySelectorAll('script').forEach(old=>{const s=document.createElement('script');Array.from(old.attributes).forEach(a=>s.setAttribute(a.name,a.value));s.textContent=old.textContent;old.replaceWith(s)})}
 function pick(obj,keys){for(const k of keys){const v=obj&&obj[k];if(v!==undefined&&v!==null&&String(v).trim()!=='')return v}return''}
+
+function setSeoTags(article,title,description,image){
+  const slug=normalizeSlug(pick(article,['slug','urlSlug','url_slug','permalink'])||pick(article,['id','articleId','article_id','uid','key'])||getRequestedArticleKey());
+  const path=slug?'/article/'+encodeURIComponent(slug):'/article';
+  const url=SITE_ORIGIN+path;
+  let canonical=document.getElementById('canonicalLink');
+  if(!canonical){canonical=document.createElement('link');canonical.id='canonicalLink';canonical.rel='canonical';document.head.appendChild(canonical)}
+  canonical.href=url;
+  const ogUrl=document.getElementById('ogUrl');if(ogUrl)ogUrl.content=url;
+  const ogTitle=document.getElementById('ogTitle');if(ogTitle)ogTitle.content=title+'｜推し活資金AI';
+  const ogDesc=document.getElementById('ogDescription');if(ogDesc)ogDesc.content=String(description||title).replace(/<[^>]*>/g,'').slice(0,160);
+  if(image){
+    let ogImage=document.getElementById('ogImage');
+    if(!ogImage){ogImage=document.createElement('meta');ogImage.id='ogImage';ogImage.setAttribute('property','og:image');document.head.appendChild(ogImage)}
+    ogImage.content=/^https?:\/\//i.test(image)?image:SITE_ORIGIN+'/'+String(image).replace(/^\/+/, '');
+  }
+}
+
 function setMetaDescription(text){let m=document.querySelector('meta[name="description"]');if(!m){m=document.createElement('meta');m.name='description';document.head.appendChild(m)}m.content=String(text).replace(/<[^>]*>/g,'').slice(0,160)}
 function removeSeoDescriptionFromBody(body,seo){
   let text=String(body||'').trim();

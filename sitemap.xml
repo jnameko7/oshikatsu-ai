@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/index.html</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/fund.html</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/transport.html</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/yearly.html</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/kakeibo.html</loc>
-</url>
-
-<url>
-<loc>https://oshikatsu-ai.vercel.app/articles.html</loc>
-</url>
-
+  <url><loc>https://www.oshikatsu-kakeibo.com/</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/fund</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/saving</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/transport</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/yearly</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/kakeibo</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/articles</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/terms</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/privacy</loc></url>
+  <url><loc>https://www.oshikatsu-kakeibo.com/contact</loc></url>
 </urlset>
