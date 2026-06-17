@@ -1,4 +1,5 @@
 async function loadArticles() {
+
   const mount =
     document.getElementById("blogList") ||
     document.getElementById("articleList");
@@ -6,9 +7,11 @@ async function loadArticles() {
   if (!mount) return;
 
   try {
+
     let data;
 
     try {
+
       const res = await fetch("/api/articles", {
         cache: "no-store"
       });
@@ -16,22 +19,38 @@ async function loadArticles() {
       if (!res.ok) throw new Error();
 
       data = await res.json();
+
     } catch (_) {
+
       const res = await fetch("/articles.json");
+
       data = await res.json();
+
     }
 
-    const today = new Date().toISOString().slice(0, 10);
+    const today = new Date().toISOString().slice(0,10);
 
     const articles = Array.isArray(data)
       ? data
-      : (data.contents || data.articles || data.posts || []);
+      : (
+          data.contents ||
+          data.articles ||
+          data.posts ||
+          []
+        );
 
     mount.innerHTML = articles
+
       .filter(a => !a.publishDate || a.publishDate <= today)
+
       .map(a => {
-        const title = a.title || "記事タイトル";
-        const category = a.category || "推し活コラム";
+
+        const title =
+          a.title || "記事タイトル";
+
+        const category =
+          a.category || "推し活コラム";
+
         const summary =
           a.summary ||
           a.description ||
@@ -51,33 +70,61 @@ async function loadArticles() {
           "";
 
         return `
-<article class="article-card">
 
-${img
-? `<img class="article-thumb" src="${img}" alt="${title}">`
-: ""}
+<article class="blog-card">
 
-<span class="tag">${category}</span>
+${
+img
+? `<img class="blog-thumb"
+src="${img}"
+alt="${title}">`
+: `<div class="blog-card-thumb">
+💗
+</div>`
+}
 
-<h3>${title}</h3>
+<div class="blog-card-body">
 
-<p>${summary}</p>
+<span class="blog-category">
+${category}
+</span>
 
-<a class="btn pink" href="/article.html/${encodeURIComponent(slug)}">
-読む
+<h2>
+${title}
+</h2>
+
+<p>
+${summary}
+</p>
+
+<a class="blog-read"
+href="article.html?id=${encodeURIComponent(slug)}">
+
+読む →
+
 </a>
 
+</div>
+
 </article>
+
 `;
+
       })
+
       .join("");
 
-  } catch (e) {
+  }
+
+  catch (e) {
+
     console.error(e);
 
     mount.innerHTML =
       "<p>記事を取得できませんでした。</p>";
+
   }
+
 }
 
 loadArticles();
