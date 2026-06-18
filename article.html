@@ -41,11 +41,16 @@ async function initArticlePage(){
   }catch(e){console.error(e);renderError('記事の読み込み中にエラーが発生しました。');}
 }
 function getRequestedArticleKey(){
-  const direct=params.get('slug')||params.get('urlSlug')||params.get('url_slug')||params.get('permalink')||params.get('id')||'';
-  if(direct)return direct;
+  const id=params.get('id');
+  if(id&&id.trim())return normalizeSlug(id);
+
+  const slug=params.get('slug')||params.get('urlSlug')||params.get('url_slug')||params.get('permalink')||'';
+  if(slug&&slug.trim())return normalizeSlug(slug);
+
   const parts=location.pathname.split('/').filter(Boolean);
   const last=decodeURIComponent(parts[parts.length-1]||'');
-  if(last&&last!=='article'&&last!=='article.html')return last.replace(/\.html?$/i,'');
+  if(last&&last!=='article'&&last!=='article.html')return normalizeSlug(last.replace(/\.html?$/i,''));
+
   return '';
 }
 async function findArticle(id){
@@ -118,12 +123,10 @@ function createToc(){const mount=document.getElementById('oaToc');const heads=[.
 function autoLinkArticleBody(){/* 将来用。今は本文を壊さないため空。 */}
 function setSeoTags(article,title,desc,image){
   const slug=normalizeSlug(
-    pick(article,['slug','urlSlug','url_slug','permalink','id'])||requestedKey
-  );
+    pick(article,['slug','urlSlug','url_slug','permalink','id'])
+  )||normalizeSlug(requestedKey);
 
-  const url =
-    'https://www.oshikatsu-kakeibo.com/article?id=' +
-    encodeURIComponent(slug);
+  const url='https://www.oshikatsu-kakeibo.com/article?id='+encodeURIComponent(slug);
 
   setOrCreate('link','canonicalLink','href',url);
   setMetaProp('og:title',title);
