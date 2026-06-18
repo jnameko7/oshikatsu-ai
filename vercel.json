@@ -1,4 +1,19 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "oshikatsu-ai.vercel.app"
+        }
+      ],
+      "destination": "https://www.oshikatsu-kakeibo.com/$1",
+      "permanent": true
+    }
+  ]
+}
+{
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
