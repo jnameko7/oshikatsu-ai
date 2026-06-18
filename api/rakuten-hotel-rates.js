@@ -1,6 +1,11 @@
 export default async function handler(req, res) {
   const appId = process.env.RAKUTEN_APP_ID;
-  const accessKey = process.env.RAKUTEN_ACCESS_KEY;
+
+  if (!appId) {
+    return res.status(200).json({
+      error: "RAKUTEN_APP_ID が設定されていません"
+    });
+  }
 
   const keyword = req.query.keyword || "東京";
   const checkinDate = req.query.checkinDate || "";
@@ -21,54 +26,42 @@ export default async function handler(req, res) {
   if (checkoutDate) params.set("checkoutDate", checkoutDate);
 
   const url =
-    "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" +
+    "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?" +
     params.toString();
 
   function getHotelInfo(item) {
     if (Array.isArray(item)) return item[0]?.hotelBasicInfo || {};
-    return item?.hotelBasicInfo || item || {};
+    return item?.hotelBasicInfo || item?.hotel || item || {};
   }
 
   function cleanCharge(value) {
     const n = Number(value || 0);
-
-    // 楽天API側で 1円・数百円などが返る場合があるため非表示にする
     if (!n || n < 1000) return 0;
-
     return n;
   }
 
   try {
-    const response = await fetch(url, {
-      headers: {
-        accessKey: accessKey || "",
-        referer: "https://oshikatsu-ai.vercel.app/",
-        origin: "https://oshikatsu-ai.vercel.app"
-      }
-    });
-
+    const response = await fetch(url);
     const data = await response.json();
 
-    if (data.errors || data.error) {
-      res.status(200).json(data);
-      return;
+    if (!response.ok || data.errors || data.error) {
+      return res.status(200).json({
+        error: "楽天APIエラー",
+        detail: data
+      });
     }
 
     const hotels = (data.hotels || [])
       .map(getHotelInfo)
       .filter(h => h.hotelName)
-      .map(h => {
-        const fixedCharge = cleanCharge(h.hotelMinCharge);
+      .map(h => ({
+        hotel: {
+          ...h,
+          hotelMinCharge: cleanCharge(h.hotelMinCharge)
+        }
+      }));
 
-        return {
-          hotel: {
-            ...h,
-            hotelMinCharge: fixedCharge
-          }
-        };
-      });
-
-    res.status(200).json({
+    return res.status(200).json({
       keyword,
       checkinDate,
       checkoutDate,
@@ -76,8 +69,9 @@ export default async function handler(req, res) {
       hits: Number(hits),
       hotels
     });
+
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       error: "ホテル検索に失敗しました",
       message: err.message
     });
