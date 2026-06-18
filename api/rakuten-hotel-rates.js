@@ -33,9 +33,8 @@ export default async function handler(req, res) {
     const response = await fetch(url, {
   cache: "no-store",
   headers: {
-    referer: "https://www.oshikatsu-kakeibo.com/",
-    origin: "https://www.oshikatsu-kakeibo.com",
-    "user-agent": "oshikatsu-kakeibo"
+    referer: "https://www.oshikatsu-kakeibo.com",
+    origin: "https://www.oshikatsu-kakeibo.com"
   }
 });
     const text = await response.text();
