@@ -9,7 +9,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
     { "source": "/fund", "destination": "/fund.html" },
