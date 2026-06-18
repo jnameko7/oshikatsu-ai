@@ -2,81 +2,61 @@ export default async function handler(req, res) {
   const appId = process.env.RAKUTEN_APP_ID;
   const accessKey = process.env.RAKUTEN_ACCESS_KEY;
 
+  const keyword = req.query.keyword || "東京";
+
   if (!appId || !accessKey) {
     return res.status(200).json({
-      error: "RAKUTEN_APP_ID または RAKUTEN_ACCESS_KEY が設定されていません"
+      error: "env_missing",
+      message: "RAKUTEN_APP_ID または RAKUTEN_ACCESS_KEY が未設定です",
+      hasAppId: !!appId,
+      hasAccessKey: !!accessKey
     });
   }
 
-  const keyword = req.query.keyword || "東京";
-  const checkinDate = req.query.checkinDate || "";
-  const checkoutDate = req.query.checkoutDate || "";
-  const adultNum = req.query.adultNum || "2";
-  const requestedHits = Number(req.query.hits || 20);
-  const hits = String(Math.min(Math.max(requestedHits, 1), 20));
-
   const params = new URLSearchParams();
-  params.set("applicationId", appId);
-  params.set("accessKey", accessKey);
+  params.set("applicationId", appId.trim());
+  params.set("accessKey", accessKey.trim());
   params.set("keyword", keyword);
-  params.set("hits", hits);
   params.set("format", "json");
   params.set("formatVersion", "2");
-  params.set("adultNum", String(adultNum));
-
-  if (checkinDate) params.set("checkinDate", checkinDate);
-  if (checkoutDate) params.set("checkoutDate", checkoutDate);
+  params.set("hits", "5");
+  params.set("adultNum", "2");
 
   const url =
-    "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?" +
+    "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" +
     params.toString();
 
-  function getHotelInfo(item) {
-    if (Array.isArray(item)) return item[0]?.hotelBasicInfo || {};
-    return item?.hotelBasicInfo || item?.hotel || item || {};
-  }
-
-  function cleanCharge(value) {
-    const n = Number(value || 0);
-
-    if (!n || n < 1000) return 0;
-
-    return n;
-  }
-
   try {
-    const response = await fetch(url);
-    const data = await response.json();
+    const response = await fetch(url, {
+      headers: {
+        "Referer": "https://www.oshikatsu-kakeibo.com/",
+        "Origin": "https://www.oshikatsu-kakeibo.com"
+      }
+    });
+
+    const text = await response.text();
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { raw: text };
+    }
 
     if (!response.ok || data.errors || data.error) {
       return res.status(200).json({
-        error: "楽天APIエラー",
-        detail: data
+        error: "rakuten_api_error",
+        status: response.status,
+        detail: data,
+        appIdLength: appId.length,
+        accessKeyLength: accessKey.length
       });
     }
 
-    const hotels = (data.hotels || [])
-      .map(getHotelInfo)
-      .filter(h => h.hotelName)
-      .map(h => ({
-        hotel: {
-          ...h,
-          hotelMinCharge: cleanCharge(h.hotelMinCharge)
-        }
-      }));
-
-    return res.status(200).json({
-      keyword,
-      checkinDate,
-      checkoutDate,
-      adultNum,
-      hits: Number(hits),
-      hotels
-    });
-
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(500).json({
-      error: "ホテル検索に失敗しました",
+      error: "fetch_failed",
       message: err.message
     });
   }
