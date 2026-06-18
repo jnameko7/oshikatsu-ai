@@ -79,8 +79,8 @@ async function loadTopArticles(){
     const data=await res.json();
     const list=Array.isArray(data)?data:(data.contents||data.articles||data.posts||data.items||[]);
     mount.innerHTML=list.slice(0,4).map(article=>{
-      const slug=article.slug||article.urlSlug||article.url_slug||article.id;
-      const href=slug?`/article/${encodeURIComponent(String(slug).replace(/\.html?$/i,''))}`:`/article?id=${encodeURIComponent(article.id||'')}`;
+    const id=article.id||article.slug||article.urlSlug||article.url_slug||article.permalink;
+    const href=`/article.html?id=${encodeURIComponent(id)}`;
       const img=article.thumbnail?.url||article.image?.url||article.eyecatch?.url||article.thumbnailUrl||article.imageUrl||'';
       const desc=(article.description||article.summary||article.excerpt||'').substring(0,60);
       return `<a class="article-card-home" href="${href}">${img?`<img src="${img}" alt="${article.title}">`:""}<div class="article-card-body"><h3>${article.title}</h3><p>${desc}</p></div></a>`;
