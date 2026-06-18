@@ -1,63 +1,80 @@
 export default async function handler(req, res) {
-  const appId = process.env.RAKUTEN_APP_ID;
-  const accessKey = process.env.RAKUTEN_ACCESS_KEY;
+  const appId = String(process.env.RAKUTEN_APP_ID || "").trim();
+  const accessKey = String(process.env.RAKUTEN_ACCESS_KEY || "").trim();
 
   const keyword = req.query.keyword || "東京";
+  const checkinDate = req.query.checkinDate || "";
+  const checkoutDate = req.query.checkoutDate || "";
+  const adultNum = req.query.adultNum || "2";
+  const hits = String(Math.min(Math.max(Number(req.query.hits || 20), 1), 20));
 
   if (!appId || !accessKey) {
     return res.status(200).json({
-      error: "env_missing",
-      message: "RAKUTEN_APP_ID または RAKUTEN_ACCESS_KEY が未設定です",
-      hasAppId: !!appId,
-      hasAccessKey: !!accessKey
+      hotels: [],
+      error: "楽天APIキー未設定",
+      message: "RAKUTEN_APP_ID または RAKUTEN_ACCESS_KEY が未設定です"
     });
   }
 
-  const params = new URLSearchParams();
-  params.set("applicationId", appId.trim());
-  params.set("accessKey", accessKey.trim());
-  params.set("keyword", keyword);
-  params.set("format", "json");
-  params.set("formatVersion", "2");
-  params.set("hits", "5");
-  params.set("adultNum", "2");
+  const params = new URLSearchParams({
+    applicationId: appId,
+    accessKey: accessKey,
+    keyword,
+    hits,
+    format: "json",
+    formatVersion: "2",
+    adultNum: String(adultNum)
+  });
 
-  const url =
-    "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" +
-    params.toString();
+  if (checkinDate) params.set("checkinDate", checkinDate);
+  if (checkoutDate) params.set("checkoutDate", checkoutDate);
 
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "Referer": "https://www.oshikatsu-kakeibo.com/",
-        "Origin": "https://www.oshikatsu-kakeibo.com"
-      }
-    });
+  const urls = [
+    "https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?" + params.toString(),
+    "https://openapi.rakuten.co.jp/engine/api/Travel/KeywordHotelSearch/20170426?" + params.toString()
+  ];
 
-    const text = await response.text();
+  function getHotelInfo(item) {
+    if (Array.isArray(item)) return item[0]?.hotelBasicInfo || {};
+    return item?.hotelBasicInfo || item?.hotel || item || {};
+  }
 
-    let data;
+  function cleanCharge(value) {
+    const n = Number(value || 0);
+    return !n || n < 1000 ? 0 : n;
+  }
+
+  for (const url of urls) {
     try {
-      data = JSON.parse(text);
-    } catch {
-      data = { raw: text };
-    }
+      const response = await fetch(url, { cache: "no-store" });
+      const data = await response.json();
 
-    if (!response.ok || data.errors || data.error) {
-      return res.status(200).json({
-        error: "rakuten_api_error",
-        status: response.status,
-        detail: data,
-        appIdLength: appId.length,
-        accessKeyLength: accessKey.length
-      });
-    }
+      if (response.ok && !data.error && !data.errors) {
+        const hotels = (data.hotels || [])
+          .map(getHotelInfo)
+          .filter(h => h.hotelName)
+          .map(h => ({
+            hotel: {
+              ...h,
+              hotelMinCharge: cleanCharge(h.hotelMinCharge)
+            }
+          }));
 
-    return res.status(200).json(data);
-  } catch (err) {
-    return res.status(500).json({
-      error: "fetch_failed",
-      message: err.message
-    });
+        return res.status(200).json({
+          keyword,
+          checkinDate,
+          checkoutDate,
+          adultNum,
+          hits: Number(hits),
+          hotels
+        });
+      }
+    } catch (e) {}
   }
+
+  return res.status(200).json({
+    hotels: [],
+    error: "楽天APIエラー",
+    message: "楽天APIに接続できませんでした。APIキーまたは楽天側仕様を確認してください。"
+  });
 }
