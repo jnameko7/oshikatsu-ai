@@ -1,4 +1,4 @@
-// articles.js 修正版：記事一覧のリンクを /article/スラッグ に統一
+// articles.js 緊急安定版：記事リンクを article.html?id=スラッグ に戻して全記事を確実に開く
 (function(){
   const candidates=['articleList','articlesList','articles','blogList','blogArticles','posts','contents'];
   const root=candidates.map(id=>document.getElementById(id)).find(Boolean)||document.querySelector('[data-articles]')||document.querySelector('.articles-grid')||document.querySelector('.blog-grid');
@@ -32,7 +32,7 @@
   }
   function buildArticleUrl(article){
     const slug=pick(article,['slug','urlSlug','url_slug','permalink','id','articleId','article_id','uid','key']);
-    return slug?'/article/'+encodeURIComponent(normalizeSlug(slug)):'/articles';
+    return slug?'/article.html?id='+encodeURIComponent(normalizeSlug(slug)):'/articles.html';
   }
   function getImage(article){let v=pick(article,['image','eyecatch','eyecatchUrl','eyeCatchUrl','thumbnail','thumbnailUrl','imageUrl','coverImage','mainImage','featuredImage','ogImage']);if(v&&typeof v==='object')v=v.url||v.src||v.href||'';return String(v||'').trim();}
   function pick(obj,keys){for(const k of keys){const v=obj&&obj[k];if(v!==undefined&&v!==null&&String(v).trim()!=='')return v;}return'';}
