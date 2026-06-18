@@ -503,14 +503,31 @@ border-radius:10px;
 text-decoration:none;
 font-weight:bold;
 }
-/* 記事本文の画像だけ */
-.oa-body p img,
-.article-body p img{
+/* ===== 記事本文の画像 ===== */
+
+.oa-body img,
+.article-body img{
     display:block;
-    max-width:100%;
+    width:100%;
+    max-width:700px;
     height:auto;
     margin:30px auto;
     border-radius:20px;
+    object-fit:contain;
+}
+
+/* ===== アフィリエイト広告 ===== */
+
+.affiliate-box{
+    text-align:center;
+    margin:32px 0;
+}
+
+.affiliate-box img{
+    width:auto !important;
+    max-width:300px !important;
+    height:auto !important;
+    border-radius:0 !important;
 }
 
 /* アフィリエイト広告 */
