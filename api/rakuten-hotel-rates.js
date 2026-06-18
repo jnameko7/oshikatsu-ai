@@ -1,9 +1,10 @@
 export default async function handler(req, res) {
   const appId = process.env.RAKUTEN_APP_ID;
+  const accessKey = process.env.RAKUTEN_ACCESS_KEY;
 
-  if (!appId) {
+  if (!appId || !accessKey) {
     return res.status(200).json({
-      error: "RAKUTEN_APP_ID が設定されていません"
+      error: "RAKUTEN_APP_ID または RAKUTEN_ACCESS_KEY が設定されていません"
     });
   }
 
@@ -16,6 +17,7 @@ export default async function handler(req, res) {
 
   const params = new URLSearchParams();
   params.set("applicationId", appId);
+  params.set("accessKey", accessKey);
   params.set("keyword", keyword);
   params.set("hits", hits);
   params.set("format", "json");
@@ -36,7 +38,9 @@ export default async function handler(req, res) {
 
   function cleanCharge(value) {
     const n = Number(value || 0);
+
     if (!n || n < 1000) return 0;
+
     return n;
   }
 
