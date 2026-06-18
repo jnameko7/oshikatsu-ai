@@ -25,19 +25,10 @@
       ],
       "destination": "/article/:slug",
       "permanent": true
-    },
-    { "source": "/articles.html", "destination": "/articles", "permanent": true },
-    { "source": "/fund.html", "destination": "/fund", "permanent": true },
-    { "source": "/saving.html", "destination": "/saving", "permanent": true },
-    { "source": "/transport.html", "destination": "/transport", "permanent": true },
-    { "source": "/yearly.html", "destination": "/yearly", "permanent": true },
-    { "source": "/kakeibo.html", "destination": "/kakeibo", "permanent": true },
-    { "source": "/terms.html", "destination": "/terms", "permanent": true },
-    { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
-    { "source": "/contact.html", "destination": "/contact", "permanent": true }
+    }
   ],
   "rewrites": [
-    { "source": "/article/:path*", "destination": "/article.html" }
+    { "source": "/article/:path*", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
     { "source": "/fund", "destination": "/fund.html" },
     { "source": "/saving", "destination": "/saving.html" },
