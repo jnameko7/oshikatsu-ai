@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/article/:slug",
+      "destination": "/article?id=:slug",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
