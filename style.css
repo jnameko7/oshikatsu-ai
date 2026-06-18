@@ -503,42 +503,31 @@ border-radius:10px;
 text-decoration:none;
 font-weight:bold;
 }
-/* ===== 記事本文の画像 ===== */
-
-.oa-body img,
-.article-body img{
-    display:block;
-    width:100%;
-    max-width:700px;
-    height:auto;
-    margin:30px auto;
-    border-radius:20px;
-    object-fit:contain;
+/* 記事本文の通常画像 */
+.oa-body img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:30px auto;
+  border-radius:20px;
 }
 
-/* ===== アフィリエイト広告 ===== */
-
-.affiliate-box{
-    text-align:center;
-    margin:32px 0;
-}
-
+/* 楽天・A8などの広告画像だけ小さく固定 */
+.oa-body a[href*="hb.afl.rakuten.co.jp"] img,
+.oa-body img[src*="hbb.afl.rakuten.co.jp"],
+.oa-body a[href*="px.a8.net"] img,
+.oa-body img[src*="www18.a8.net"],
 .affiliate-box img{
-    width:auto !important;
-    max-width:300px !important;
-    height:auto !important;
-    border-radius:0 !important;
+  width:auto !important;
+  max-width:300px !important;
+  height:auto !important;
+  border-radius:0 !important;
+  object-fit:contain !important;
+  margin:20px auto !important;
 }
 
-/* アフィリエイト広告 */
+/* 広告枠 */
 .affiliate-box{
-    text-align:center;
-    margin:32px 0;
-}
-
-.affiliate-box img{
-    width:auto !important;
-    max-width:300px !important;
-    height:auto !important;
-    border-radius:0 !important;
+  text-align:center;
+  margin:32px 0;
 }
