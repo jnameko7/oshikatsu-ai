@@ -1,34 +1,8 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "oshikatsu-ai.vercel.app" }
-      ],
-      "destination": "https://www.oshikatsu-kakeibo.com/$1",
-      "permanent": true
-    },
-    {
-      "source": "/article",
-      "has": [
-        { "type": "query", "key": "id", "value": "(?<slug>.*)" }
-      ],
-      "destination": "/article/:slug",
-      "permanent": true
-    },
-    {
-      "source": "/article.html",
-      "has": [
-        { "type": "query", "key": "id", "value": "(?<slug>.*)" }
-      ],
-      "destination": "/article/:slug",
-      "permanent": true
-    }
-  ],
   "rewrites": [
-    { "source": "/article/:path*", "destination": "/article.html" },
+    { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
     { "source": "/fund", "destination": "/fund.html" },
     { "source": "/saving", "destination": "/saving.html" },
