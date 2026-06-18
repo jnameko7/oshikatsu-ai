@@ -30,7 +30,13 @@ export default async function handler(req, res) {
     params.toString();
 
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(url, {
+  cache: "no-store",
+  headers: {
+    "Referer": "https://www.oshikatsu-kakeibo.com/",
+    "User-Agent": "oshikatsu-kakeibo"
+  }
+});
     const text = await response.text();
 
     let data;
