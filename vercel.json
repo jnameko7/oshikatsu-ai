@@ -37,8 +37,7 @@
     { "source": "/contact.html", "destination": "/contact", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/article/:slug", "destination": "/article.html" },
-    { "source": "/article", "destination": "/article.html" },
+    { "source": "/article/:path*", "destination": "/article.html" }
     { "source": "/articles", "destination": "/articles.html" },
     { "source": "/fund", "destination": "/fund.html" },
     { "source": "/saving", "destination": "/saving.html" },
