@@ -1,22 +1,27 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+
   "redirects": [
     {
       "source": "/article/:slug",
       "destination": "/article?id=:slug",
-      "permanent": false
+      "permanent": true
     }
   ],
+
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+
     { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
+
     { "source": "/fund", "destination": "/fund.html" },
     { "source": "/saving", "destination": "/saving.html" },
     { "source": "/transport", "destination": "/transport.html" },
     { "source": "/yearly", "destination": "/yearly.html" },
     { "source": "/kakeibo", "destination": "/kakeibo.html" },
+
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/contact", "destination": "/contact.html" }
