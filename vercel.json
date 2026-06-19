@@ -2,17 +2,10 @@
   "cleanUrls": true,
   "trailingSlash": false,
 
-  "redirects": [
-    {
-      "source": "/article/:slug",
-      "destination": "/article?id=:slug",
-      "permanent": true
-    }
-  ],
-
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
 
+    { "source": "/article/:slug", "destination": "/article.html" },
     { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
 
