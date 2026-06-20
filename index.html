@@ -86,7 +86,7 @@ article.url_slug||
 article.permalink||
 article.id;
 
-    const href=`/article/${encodeURIComponent(slug)}`;
+    const href=`/article?id=${encodeURIComponent(slug)}`;
       const img=article.thumbnail?.url||article.image?.url||article.eyecatch?.url||article.thumbnailUrl||article.imageUrl||'';
       const desc=(article.description||article.summary||article.excerpt||'').substring(0,60);
       return `<a class="article-card-home" href="${href}">${img?`<img src="${img}" alt="${article.title}">`:""}<div class="article-card-body"><h3>${article.title}</h3><p>${desc}</p></div></a>`;
