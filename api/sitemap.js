@@ -2,27 +2,15 @@ export default async function handler(req, res) {
   const siteUrl = "https://www.oshikatsu-kakeibo.com";
   const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
   const apiKey = process.env.MICROCMS_API_KEY;
+  const limit = 100;
 
-  const staticPages = [
-    "",
-    "fund",
-    "saving",
-    "transport",
-    "yearly",
-    "kakeibo",
-    "articles",
-    "terms",
-    "privacy",
-    "contact"
-  ];
-
-  let articles = [];
+  let totalCount = 0;
 
   try {
     if (serviceDomain && apiKey) {
       const url =
         `https://${serviceDomain}.microcms.io/api/v1/articles` +
-        `?limit=100&orders=-publishedAt`;
+        `?limit=1&offset=0&orders=-publishedAt`;
 
       const response = await fetch(url, {
         headers: {
@@ -32,42 +20,40 @@ export default async function handler(req, res) {
 
       if (response.ok) {
         const data = await response.json();
-        articles = data.contents || [];
+        totalCount = Number(data.totalCount || 0);
       }
     }
 
-    const staticUrls = staticPages.map(page => {
-      return `${siteUrl}/${page}`;
-    });
+    const articleSitemapCount = Math.max(1, Math.ceil(totalCount / limit));
 
-    const articleUrls = articles
-      .map(article => {
-        const slug =
-          article.slug ||
-          article.urlSlug ||
-          article.url_slug ||
-          article.permalink ||
-          article.id;
-
-        if (!slug) return null;
-
-        return `${siteUrl}/article?id=${encodeURIComponent(String(slug).trim())}`;
-      })
-      .filter(Boolean);
-
-    const urls = [...staticUrls, ...articleUrls];
+    const sitemapUrls = [
+      `${siteUrl}/sitemap-pages.xml`,
+      ...Array.from(
+        { length: articleSitemapCount },
+        (_, i) => `${siteUrl}/sitemap-articles-${i + 1}.xml`
+      )
+    ];
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => `  <url>
-    <loc>${url}</loc>
-  </url>`).join("\n")}
-</urlset>`;
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(url => `  <sitemap>
+    <loc>${escapeXml(url)}</loc>
+  </sitemap>`).join("\n")}
+</sitemapindex>`;
 
     res.setHeader("Content-Type", "application/xml; charset=utf-8");
     res.status(200).send(xml);
 
   } catch (error) {
-    res.status(500).send("sitemap生成に失敗しました");
+    res.status(500).send("sitemap index 生成に失敗しました: " + error.message);
   }
+}
+
+function escapeXml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }

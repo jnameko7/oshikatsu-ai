@@ -8,8 +8,8 @@ export default async function handler(req, res) {
     });
   }
 
-  const limit = req.query.limit || "100";
-  const offset = req.query.offset || "0";
+  const limit = String(Math.min(Math.max(Number(req.query.limit || 100), 1), 100));
+  const offset = String(Math.max(Number(req.query.offset || 0), 0));
 
   const url =
     `https://${serviceDomain}.microcms.io/api/v1/articles` +
@@ -44,8 +44,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       ...data,
-      contents: filteredContents,
-      totalCount: filteredContents.length
+      contents: filteredContents
     });
 
   } catch (err) {
