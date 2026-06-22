@@ -582,3 +582,33 @@ box-shadow:0 2px 8px rgba(0,0,0,.08);
 background:#ff77aa;
 color:#fff;
 }
+/* 記事本文 */
+.article-content,
+#articleDetail article{
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+/* 記事内画像 */
+#articleDetail img,
+.article-content img{
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    margin: 30px auto;
+}
+
+/* スマホ対応 */
+@media (max-width:768px){
+
+    #articleDetail article{
+        padding: 0 15px;
+    }
+
+    #articleDetail img{
+        border-radius: 15px;
+    }
+
+}
