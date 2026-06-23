@@ -154,5 +154,45 @@ function escapeAttr(s){return escapeHtml(s);}
 function formatDate(v){const d=new Date(v);if(isNaN(d))return String(v||'');return d.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'});}
 function renderError(msg){root.innerHTML='<div class="oa-error">'+escapeHtml(msg)+'</div>';}
 </script>
+  <script>
+async function loadAffiliateCards() {
+  const cards = document.querySelectorAll(".affiliate-card");
+
+  for (const card of cards) {
+    const url = card.dataset.url;
+    if (!url) continue;
+
+    card.innerHTML = "商品情報を取得中...";
+
+    try {
+      const res = await fetch(`/api/product-preview?url=${encodeURIComponent(url)}`);
+      const item = await res.json();
+
+      card.innerHTML = `
+        <div class="product-card">
+          ${item.image ? `<img src="${item.image}" alt="${item.title}">` : ""}
+          <div class="product-info">
+            <h3>${item.title || "商品情報"}</h3>
+            <p class="product-price">
+              ${item.price ? `${item.price}円` : "価格はリンク先で確認"}
+            </p>
+            <a href="${item.url}" target="_blank" rel="nofollow sponsored noopener">
+              ${item.buttonText || "商品を見る"}
+            </a>
+          </div>
+        </div>
+      `;
+    } catch (e) {
+      card.innerHTML = `
+        <a href="${url}" target="_blank" rel="nofollow sponsored noopener">
+          商品を見る
+        </a>
+      `;
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadAffiliateCards);
+</script>
 </body>
 </html>
