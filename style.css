@@ -612,48 +612,90 @@ color:#fff;
     }
 
 }
-/* ===== タグ機能 ===== */
+/* ===== タグ機能（記事一覧・記事詳細・関連記事） ===== */
+.article-tag-filter-wrap{
+  max-width:900px;
+  margin:0 auto 24px;
+}
 
-.tag-filter-area{
+.article-tag-filter-title{
+  margin:0 0 10px;
+  color:#6e7587;
+  font-size:13px;
+  font-weight:900;
+}
+
+.article-tag-filter{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  margin:20px 0 30px;
 }
 
-.tag-filter-btn{
-  border:none;
-  background:#fff0f6;
+.article-tag-filter button,
+.article-tag-button{
+  border:1px solid #ffd2e6;
+  background:#fff;
   color:#df3f7d;
   padding:8px 14px;
   border-radius:999px;
   cursor:pointer;
-  font-weight:700;
-  transition:.2s;
+  font-size:13px;
+  font-weight:900;
+  transition:.2s ease;
 }
 
-.tag-filter-btn:hover{
+.article-tag-filter button:hover,
+.article-tag-filter button.active,
+.article-tag-button:hover,
+.article-tag-button.active{
   background:#ff77aa;
   color:#fff;
+  border-color:#ff77aa;
 }
 
-.tag-filter-btn.active{
-  background:#ff77aa;
-  color:#fff;
-}
-
-.article-tags{
+.article-tags,
+.oa-tags{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
+  gap:7px;
   margin-top:12px;
 }
 
-.article-tag{
+.article-tag,
+.oa-tag{
+  display:inline-flex;
+  align-items:center;
+  width:fit-content;
   background:#fff0f6;
   color:#df3f7d;
+  border:1px solid #ffd2e6;
   border-radius:999px;
   padding:4px 10px;
   font-size:12px;
-  font-weight:700;
+  font-weight:900;
+  line-height:1.4;
+}
+
+.oa-tags{
+  margin:0 0 18px;
+}
+
+.oa-related-body .article-tags{
+  margin-top:10px;
+}
+
+@media(max-width:640px){
+  .article-tag-filter-wrap{
+    margin-bottom:20px;
+  }
+
+  .article-tag-filter{
+    gap:8px;
+  }
+
+  .article-tag-filter button,
+  .article-tag-button{
+    padding:7px 12px;
+    font-size:12px;
+  }
 }

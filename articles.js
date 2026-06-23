@@ -1,4 +1,4 @@
-// articles.js：記事一覧検索＋20件ページ分け＋/article?id=スラッグ統一
+// articles.js：記事一覧検索＋タグ表示/絞り込み＋20件ページ分け＋/article?id=スラッグ統一
 (function () {
   const root = document.getElementById("articleList");
   const searchInput = document.getElementById("articleSearchInput");
@@ -6,10 +6,13 @@
 
   if (!root) return;
 
+  injectTagStyles();
+
   const PER_PAGE = 20;
   let allArticles = [];
   let filteredArticles = [];
   let currentPage = 1;
+  let selectedTag = "";
 
   loadArticles();
 
@@ -21,6 +24,7 @@
       allArticles = collectArticles(data);
       filteredArticles = allArticles;
 
+      renderTagFilterArea();
       render();
     } catch (e) {
       console.warn(e);
@@ -55,19 +59,70 @@
     });
   }
 
-  function runSearch() {
-    const keyword = String(searchInput.value || "").trim().toLowerCase();
+  function renderTagFilterArea() {
+    const tools = document.querySelector(".article-tools");
+    if (!tools || document.getElementById("articleTagFilter")) return;
 
-    if (!keyword) {
-      filteredArticles = allArticles;
-      render();
+    tools.insertAdjacentHTML(
+      "beforeend",
+      '<div id="articleTagFilter" class="article-tag-filter" aria-live="polite"></div>'
+    );
+
+    renderTagFilterButtons();
+  }
+
+  function renderTagFilterButtons() {
+    const mount = document.getElementById("articleTagFilter");
+    if (!mount) return;
+
+    const tags = getAllTags();
+
+    if (!tags.length) {
+      mount.innerHTML = "";
       return;
     }
 
+    mount.innerHTML = `
+      <div class="article-tag-filter-title">タグで絞り込み</div>
+      <div class="article-tag-filter-buttons">
+        <button type="button" class="article-tag-button ${!selectedTag ? "active" : ""}" data-tag="">すべて</button>
+        ${tags.map(tag => `
+          <button type="button" class="article-tag-button ${selectedTag === tag ? "active" : ""}" data-tag="${escapeAttr(tag)}">${escapeHtml(tag)}</button>
+        `).join("")}
+      </div>
+      ${selectedTag ? `<p class="article-tag-active">「${escapeHtml(selectedTag)}」の記事を表示中</p>` : ""}
+    `;
+
+    mount.querySelectorAll(".article-tag-button").forEach(button => {
+      button.addEventListener("click", function () {
+        selectedTag = String(button.dataset.tag || "");
+        currentPage = 1;
+        runSearch();
+        renderTagFilterButtons();
+      });
+    });
+  }
+
+  function getAllTags() {
+    const set = new Set();
+    allArticles.forEach(article => {
+      getTags(article).forEach(tag => set.add(tag));
+    });
+    return Array.from(set);
+  }
+
+  function runSearch() {
+    const keyword = String(searchInput && searchInput.value || "").trim().toLowerCase();
+
     filteredArticles = allArticles.filter(article => {
+      const tags = getTags(article);
       const categoryText = Array.isArray(article.category)
         ? article.category.join(" ")
         : String(article.category || "");
+
+      const tagMatch = !selectedTag || tags.includes(selectedTag);
+
+      if (!keyword) return tagMatch;
 
       const text = [
         article.title,
@@ -77,10 +132,11 @@
         article.lead,
         article.slug,
         article.id,
-        categoryText
+        categoryText,
+        tags.join(" ")
       ].join(" ").toLowerCase();
 
-      return text.includes(keyword);
+      return tagMatch && text.includes(keyword);
     });
 
     render();
@@ -94,7 +150,22 @@
       ? list.map(cardHtml).join("")
       : "<p>該当する記事がありません。</p>";
 
+    bindCardTagButtons();
     renderPagination();
+    renderTagFilterButtons();
+  }
+
+  function bindCardTagButtons() {
+    root.querySelectorAll(".article-card-tag").forEach(button => {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        selectedTag = String(button.dataset.tag || "");
+        currentPage = 1;
+        runSearch();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
   }
 
   function renderPagination() {
@@ -139,6 +210,10 @@
     const date = pick(article, ["date", "createdAt", "updatedAt", "publishedAt", "publishedAtCustom"]) || "";
     const img = getImage(article);
     const href = buildArticleUrl(article);
+    const tags = getTags(article);
+    const tagsHtml = tags.length
+      ? `<div class="article-card-tags">${tags.map(tag => `<button type="button" class="article-card-tag" data-tag="${escapeAttr(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>`
+      : "";
 
     return `
       <a class="article-card blog-card" href="${escapeAttr(href)}">
@@ -148,9 +223,33 @@
           <h2>${escapeHtml(title)}</h2>
           ${date ? `<p class="article-date">${escapeHtml(formatDate(date))}</p>` : ""}
           ${desc ? `<p>${escapeHtml(desc)}</p>` : ""}
+          ${tagsHtml}
         </div>
       </a>
     `;
+  }
+
+  function getTags(article) {
+    const raw = article && article.tags;
+    if (!raw) return [];
+
+    if (Array.isArray(raw)) {
+      return raw.map(tagToText).filter(Boolean);
+    }
+
+    if (typeof raw === "string") {
+      return raw.split(/[、,\s]+/).map(tagToText).filter(Boolean);
+    }
+
+    return [tagToText(raw)].filter(Boolean);
+  }
+
+  function tagToText(value) {
+    if (!value) return "";
+    if (typeof value === "object") {
+      return String(value.name || value.label || value.title || value.value || value.id || "").trim();
+    }
+    return String(value || "").trim();
   }
 
   function buildArticleUrl(article) {
@@ -240,5 +339,25 @@
 
   function escapeAttr(value) {
     return escapeHtml(value);
+  }
+
+  function injectTagStyles() {
+    if (document.getElementById("articleTagStyle")) return;
+
+    const style = document.createElement("style");
+    style.id = "articleTagStyle";
+    style.textContent = `
+      .article-tools{display:grid;gap:14px;margin-bottom:22px}
+      .article-tag-filter{display:grid;gap:10px}
+      .article-tag-filter-title{font-size:13px;font-weight:900;color:#7a4d62}
+      .article-tag-filter-buttons{display:flex;flex-wrap:wrap;gap:8px}
+      .article-tag-button,.article-card-tag{appearance:none;border:1px solid #ffd1e5;border-radius:999px;background:#fff3f8;color:#d63384;font-weight:800;cursor:pointer;line-height:1.2;transition:.15s ease}
+      .article-tag-button{padding:8px 12px;font-size:13px}
+      .article-card-tag{padding:5px 9px;font-size:12px}
+      .article-tag-button:hover,.article-card-tag:hover,.article-tag-button.active{background:#ff6fae;color:#fff;border-color:#ff6fae}
+      .article-tag-active{margin:0;color:#7a4d62;font-size:13px;font-weight:700}
+      .article-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+    `;
+    document.head.appendChild(style);
   }
 })();
