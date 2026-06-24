@@ -1,109 +1,92 @@
 export default async function handler(req, res) {
-const siteUrl = "https://www.oshikatsu-kakeibo.com";
-const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
-const apiKey = process.env.MICROCMS_API_KEY;
+  const siteUrl = "https://www.oshikatsu-kakeibo.com";
+  const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
+  const apiKey = process.env.MICROCMS_API_KEY;
 
-const page = Math.max(Number(req.query.page || 1), 1);
-const limit = 100;
-const offset = (page - 1) * limit;
+  const page = Math.max(Number(req.query.page || 1), 1);
+  const limit = 100;
+  const offset = (page - 1) * limit;
 
-let articles = [];
+  let articles = [];
 
-try {
-if (serviceDomain && apiKey) {
-const url =
-`https://${serviceDomain}.microcms.io/api/v1/articles` +
-`?limit=${limit}&offset=${offset}&orders=-publishedAt`;
+  try {
+    if (serviceDomain && apiKey) {
+      const url =
+        `https://${serviceDomain}.microcms.io/api/v1/articles` +
+        `?limit=${limit}&offset=${offset}&orders=-publishedAt`;
 
-```
-  const response = await fetch(url, {
-    headers: {
-      "X-MICROCMS-API-KEY": apiKey
+      const response = await fetch(url, {
+        headers: {
+          "X-MICROCMS-API-KEY": apiKey
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const now = new Date();
+
+        articles = (data.contents || []).filter(article => {
+          const publishDate =
+            article.publishDate ||
+            article["予約公開日時"] ||
+            article.publishedAt ||
+            article.createdAt;
+
+          if (!publishDate) return true;
+
+          return new Date(publishDate) <= now;
+        });
+      }
     }
-  });
 
-  if (response.ok) {
-    const data = await response.json();
-    const now = new Date();
+    const urls = articles
+      .map(article => {
+        const slug =
+          article.slug ||
+          article.urlSlug ||
+          article.url_slug ||
+          article.permalink ||
+          article.id;
 
-    articles = (data.contents || []).filter(article => {
-      const publishDate =
-        article.publishDate ||
-        article["予約公開日時"] ||
-        article.publishedAt ||
-        article.createdAt;
+        if (!slug) return null;
 
-      if (!publishDate) return true;
+        const lastmod =
+          article.updatedAt ||
+          article.revisedAt ||
+          article.publishedAt ||
+          article.createdAt ||
+          "";
 
-      const d = new Date(publishDate);
-      if (Number.isNaN(d.getTime())) return true;
+        return {
+          loc: `${siteUrl}/article?id=${encodeURIComponent(String(slug).trim())}`,
+          lastmod
+        };
+      })
+      .filter(Boolean);
 
-      return d <= now;
-    });
-  }
-}
-
-const urls = articles
-  .map(article => {
-    const rawSlug =
-      article.slug ||
-      article.urlSlug ||
-      article.url_slug ||
-      article.permalink ||
-      article.id;
-
-    const slug = String(rawSlug || "").trim();
-
-    if (!slug) return null;
-
-    const rawLastmod =
-      article.updatedAt ||
-      article.revisedAt ||
-      article.publishedAt ||
-      article.createdAt ||
-      "";
-
-    const lastmodDate = rawLastmod ? new Date(rawLastmod) : null;
-    const lastmod =
-      lastmodDate && !Number.isNaN(lastmodDate.getTime())
-        ? lastmodDate.toISOString()
-        : "";
-
-    return {
-      loc: `${siteUrl}/article?id=${encodeURIComponent(slug)}`,
-      lastmod
-    };
-  })
-  .filter(Boolean);
-
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-```
-
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(item => `  <url>
     <loc>${escapeXml(item.loc)}</loc>${item.lastmod ? `
-    <lastmod>${escapeXml(item.lastmod)}</lastmod>` : ""}
+    <lastmod>${escapeXml(new Date(item.lastmod).toISOString())}</lastmod>` : ""}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>`).join("\n")}
 </urlset>`;
 
-```
-res.setHeader("Content-Type", "application/xml; charset=utf-8");
-res.status(200).send(xml);
-```
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    res.status(200).send(xml);
 
-} catch (error) {
-res.setHeader("Content-Type", "text/plain; charset=utf-8");
-res.status(500).send("記事サイトマップ生成に失敗しました: " + error.message);
-}
+  } catch (error) {
+    res.status(500).send("記事サイトマップ生成に失敗しました: " + error.message);
+  }
 }
 
 function escapeXml(value) {
-return String(value || "")
-.replace(/&/g, "&")
-.replace(/</g, "<")
-.replace(/>/g, ">")
-.replace(/"/g, """)
-.replace(/'/g, "'");
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
