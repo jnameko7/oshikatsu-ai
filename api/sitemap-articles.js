@@ -35,7 +35,10 @@ const url =
 
       if (!publishDate) return true;
 
-      return new Date(publishDate) <= now;
+      const d = new Date(publishDate);
+      if (Number.isNaN(d.getTime())) return true;
+
+      return d <= now;
     });
   }
 }
@@ -53,12 +56,18 @@ const urls = articles
 
     if (!slug) return null;
 
-    const lastmod =
+    const rawLastmod =
       article.updatedAt ||
       article.revisedAt ||
       article.publishedAt ||
       article.createdAt ||
       "";
+
+    const lastmodDate = rawLastmod ? new Date(rawLastmod) : null;
+    const lastmod =
+      lastmodDate && !Number.isNaN(lastmodDate.getTime())
+        ? lastmodDate.toISOString()
+        : "";
 
     return {
       loc: `${siteUrl}/article?id=${encodeURIComponent(slug)}`,
@@ -73,7 +82,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(item => `  <url>
     <loc>${escapeXml(item.loc)}</loc>${item.lastmod ? `
-    <lastmod>${escapeXml(new Date(item.lastmod).toISOString())}</lastmod>` : ""}
+    <lastmod>${escapeXml(item.lastmod)}</lastmod>` : ""}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>`).join("\n")}
@@ -85,6 +94,7 @@ res.status(200).send(xml);
 ```
 
 } catch (error) {
+res.setHeader("Content-Type", "text/plain; charset=utf-8");
 res.status(500).send("記事サイトマップ生成に失敗しました: " + error.message);
 }
 }
