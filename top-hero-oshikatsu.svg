@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img" aria-label="推し活グッズとぬいぐるみ">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7fb"/><stop offset="1" stop-color="#ffd5e3"/></linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fba"/><stop offset="1" stop-color="#f75084"/></linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffe6ef"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#e9759b" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="900" height="520" fill="url(#bg)"/>
+  <circle cx="695" cy="255" r="245" fill="#fff" opacity=".42"/>
+  <path d="M55 380c95-115 180-160 300-127 128 35 186-99 310-95 115 4 167 95 167 188 0 105-83 156-212 151-134-6-214-38-330-25C160 487 10 434 55 380z" fill="#fff" opacity=".5"/>
+  <g opacity=".9">
+    <path d="M120 92l13 27 29 4-21 21 5 29-26-14-26 14 5-29-21-21 29-4z" fill="#ffd66b" opacity=".55"/>
+    <path d="M785 82l10 20 22 3-16 16 4 22-20-11-20 11 4-22-16-16 22-3z" fill="#ff8fba" opacity=".5"/>
+    <path d="M505 70l9 18 20 3-15 14 4 20-18-10-18 10 4-20-15-14 20-3z" fill="#ff9fc2" opacity=".75"/>
+    <path d="M760 392l9 18 20 3-15 14 4 20-18-10-18 10 4-20-15-14 20-3z" fill="#9fd7ff" opacity=".55"/>
+    <path d="M175 418l8 16 18 3-13 12 3 18-16-9-16 9 3-18-13-12 18-3z" fill="#ffc2d6" opacity=".8"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="235" y="135" width="245" height="300" rx="24" fill="#fffdfc" transform="rotate(-7 357 285)"/>
+    <path d="M270 185h168" stroke="#ffd2e1" stroke-width="8" stroke-linecap="round" transform="rotate(-7 357 285)"/>
+    <path d="M280 224h142M280 252h125M280 280h150" stroke="#f6b5ca" stroke-width="5" stroke-linecap="round" opacity=".72" transform="rotate(-7 357 285)"/>
+    <text x="305" y="333" font-family="sans-serif" font-size="28" font-weight="900" fill="#f06f9b" transform="rotate(-7 357 285)">推しとの</text>
+    <text x="292" y="370" font-family="sans-serif" font-size="28" font-weight="900" fill="#f06f9b" transform="rotate(-7 357 285)">思い出は</text>
+    <text x="322" y="407" font-family="sans-serif" font-size="28" font-weight="900" fill="#f06f9b" transform="rotate(-7 357 285)">一生モノ♡</text>
+    <g fill="#d9a583" transform="rotate(-7 357 285)">
+      <rect x="246" y="161" width="15" height="24" rx="7"/><rect x="246" y="204" width="15" height="24" rx="7"/><rect x="246" y="247" width="15" height="24" rx="7"/><rect x="246" y="290" width="15" height="24" rx="7"/><rect x="246" y="333" width="15" height="24" rx="7"/>
+    </g>
+  </g>
+  <g filter="url(#shadow)" transform="translate(115 90) rotate(-8)">
+    <rect x="0" y="0" width="205" height="130" rx="18" fill="#fff"/>
+    <rect x="15" y="15" width="175" height="90" rx="12" fill="#2b2640"/>
+    <g fill="#ff6fa0" opacity=".8"><circle cx="48" cy="58" r="15"/><circle cx="83" cy="48" r="10"/><circle cx="116" cy="62" r="14"/><circle cx="150" cy="45" r="11"/></g>
+    <path d="M30 88c48-35 95-34 150-1" stroke="#ffb8d0" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(475 92) rotate(7)">
+    <rect x="0" y="0" width="88" height="310" rx="44" fill="url(#pink)"/>
+    <rect x="16" y="14" width="56" height="230" rx="28" fill="#ffbdd3" opacity=".75"/>
+    <rect x="18" y="245" width="52" height="38" rx="16" fill="#fff" opacity=".82"/>
+    <circle cx="44" cy="264" r="8" fill="#f75084"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(375 330) rotate(-4)">
+    <rect x="0" y="0" width="165" height="125" rx="20" fill="#ffabc7"/>
+    <rect x="25" y="22" width="115" height="26" rx="9" fill="#fff" opacity=".75"/>
+    <g fill="#fff" opacity=".82">
+      <rect x="28" y="65" width="24" height="18" rx="6"/><rect x="62" y="65" width="24" height="18" rx="6"/><rect x="96" y="65" width="24" height="18" rx="6"/>
+      <rect x="28" y="92" width="24" height="18" rx="6"/><rect x="62" y="92" width="24" height="18" rx="6"/><rect x="96" y="92" width="42" height="18" rx="6"/>
+    </g>
+  </g>
+  <g filter="url(#shadow)" transform="translate(610 140)">
+    <ellipse cx="125" cy="260" rx="135" ry="45" fill="#f6a7bd" opacity=".3"/>
+    <circle cx="125" cy="118" r="86" fill="#ffc2d6"/>
+    <circle cx="61" cy="60" r="38" fill="#ffc2d6"/><circle cx="189" cy="60" r="38" fill="#ffc2d6"/>
+    <circle cx="61" cy="60" r="21" fill="#ffe2ec"/><circle cx="189" cy="60" r="21" fill="#ffe2ec"/>
+    <circle cx="97" cy="111" r="10" fill="#5d4037"/><circle cx="153" cy="111" r="10" fill="#5d4037"/>
+    <ellipse cx="125" cy="137" rx="26" ry="21" fill="#fff0f5"/><circle cx="125" cy="130" r="8" fill="#5d4037"/>
+    <path d="M111 146c10 10 18 10 28 0" stroke="#5d4037" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="50" y="195" width="150" height="130" rx="65" fill="#ffc2d6"/>
+    <ellipse cx="49" cy="247" rx="37" ry="56" fill="#ffc2d6" transform="rotate(18 49 247)"/>
+    <ellipse cx="201" cy="247" rx="37" ry="56" fill="#ffc2d6" transform="rotate(-18 201 247)"/>
+    <path d="M86 183c25 32 55 32 80 0" fill="#f75084"/>
+    <path d="M100 177c17 22 33 22 50 0" fill="#ff7aa7"/>
+  </g>
+  <g transform="translate(610 80)">
+    <rect x="0" y="0" width="92" height="92" rx="22" fill="#fff" opacity=".78"/>
+    <circle cx="46" cy="46" r="28" fill="#ffe0eb"/><circle cx="46" cy="39" r="12" fill="#8b5a52"/><path d="M24 71c6-18 38-18 44 0" fill="#ff92b5"/>
+  </g>
+</svg>

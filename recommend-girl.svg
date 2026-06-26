@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="推し活を楽しむ女の子">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8fb"/><stop offset="1" stop-color="#ffe3ee"/></linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8a5a50"/><stop offset="1" stop-color="#4f312d"/></linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9cbd"/><stop offset="1" stop-color="#f75084"/></linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="30" fill="url(#bg)"/>
+  <path d="M24 40c10-13 25-4 25 9 0 18-25 29-25 29S-1 67-1 49c0-13 15-22 25-9z" transform="translate(120 8) scale(.45)" fill="#ff8fb4" opacity=".8"/>
+  <path d="M36 151c4-34 22-52 54-52s50 18 54 52" fill="#ffc0d6"/>
+  <path d="M45 67c-4-38 14-55 45-55s49 17 45 55c-2 23-12 46-45 46S47 90 45 67z" fill="url(#hair)"/>
+  <path d="M55 76c0-28 13-46 35-46s35 18 35 46c0 30-14 48-35 48S55 106 55 76z" fill="#ffd7c7"/>
+  <path d="M62 48c11 7 47 8 59-2-5-16-17-25-31-25-15 0-25 9-28 27z" fill="url(#hair)"/>
+  <circle cx="73" cy="82" r="6" fill="#3f2c2a"/><circle cx="107" cy="82" r="6" fill="#3f2c2a"/>
+  <circle cx="63" cy="94" r="8" fill="#ff9cb8" opacity=".55"/><circle cx="117" cy="94" r="8" fill="#ff9cb8" opacity=".55"/>
+  <path d="M81 103c7 6 12 6 19 0" stroke="#8f4b54" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M64 34c-22 11-29 35-21 61 5 16 10 27 19 39-6-25-2-46 7-71" fill="url(#hair)"/>
+  <path d="M116 34c22 11 29 35 21 61-5 16-10 27-19 39 6-25 2-46-7-71" fill="url(#hair)"/>
+  <path d="M74 133h32l8 32H66z" fill="#fff7fb" opacity=".9"/>
+  <path d="M56 156c8-25 20-38 34-38s26 13 34 38" fill="url(#pink)"/>
+  <rect x="34" y="118" width="27" height="48" rx="13" fill="#ffd7c7" transform="rotate(-22 34 118)"/>
+  <rect x="119" y="118" width="27" height="48" rx="13" fill="#ffd7c7" transform="rotate(22 119 118)"/>
+  <rect x="29" y="105" width="15" height="50" rx="8" fill="#ff8fb4" transform="rotate(-22 29 105)"/>
+  <rect x="136" y="105" width="15" height="50" rx="8" fill="#ff8fb4" transform="rotate(22 136 105)"/>
+  <circle cx="37" cy="102" r="10" fill="#ff8fb4"/><circle cx="143" cy="102" r="10" fill="#ff8fb4"/>
+  <text x="90" y="160" text-anchor="middle" font-size="18" font-family="sans-serif" font-weight="900" fill="#fff">推し活</text>
+</svg>
