@@ -765,7 +765,7 @@ body.top-v3-page .topv3-badges{display:flex;gap:32px;align-items:flex-start;}
 body.top-v3-page .topv3-badges div{text-align:center;min-width:72px;}
 body.top-v3-page .topv3-badges b{width:46px;height:46px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:#fa6b9b;color:#fff;font-size:18px;font-weight:950;line-height:1;box-shadow:0 8px 14px rgba(250,107,155,.18);}
 body.top-v3-page .topv3-badges small{display:block;font-size:11px;font-weight:900;color:#1e171d;line-height:1.35;}
-body.top-v3-page .topv3-hero-image{position:relative;min-height:430px;background-image:linear-gradient(90deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.35) 18%,rgba(255,255,255,0) 38%),url('/top-hero-oshikatsu.svg');background-size:cover;background-position:center right;background-repeat:no-repeat;}
+body.top-v3-page .topv3-hero-image{position:relative;min-height:430px;background-image:linear-gradient(90deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.35) 18%,rgba(255,255,255,0) 38%),url('/top-hero-plush.png');background-size:cover;background-position:center right;background-repeat:no-repeat;}
 body.top-v3-page .topv3-hero-image:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 30%,rgba(255,255,255,.32),transparent 34%),linear-gradient(180deg,rgba(255,255,255,0),rgba(255,244,248,.16));pointer-events:none;}
 body.top-v3-page .topv3-tools{background:#fff;padding:26px 0 46px;}
 body.top-v3-page .topv3-tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid #ffdbe7;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 16px 34px rgba(189,93,124,.08);}
@@ -846,7 +846,7 @@ body.top-v3-page .topv3-hero{
   background:linear-gradient(90deg,#fff 0%,#fff 39%,#fff1f6 39%,#fff7fa 100%);
 }
 body.top-v3-page .topv3-hero-image{
-  background-image:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.55) 20%,rgba(255,255,255,0) 44%),url('/top-hero-oshikatsu.svg') !important;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.55) 20%,rgba(255,255,255,0) 44%),url('/top-hero-plush.png') !important;
   background-size:cover !important;
   background-position:center right !important;
 }
@@ -871,7 +871,7 @@ body.top-v3-page .topv3-girl img{
 }
 @media(max-width:1080px){
   body.top-v3-page .topv3-hero-image{
-    background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.1)),url('/top-hero-oshikatsu.svg') !important;
+    background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.1)),url('/top-hero-plush.png') !important;
     background-size:cover !important;
     background-position:center right !important;
   }
@@ -880,3 +880,54 @@ body.top-v3-page .topv3-girl img{
   body.top-v3-page .topv3-girl{display:none;}
 }
 /* ===== TOP REDESIGN v4: HERO/RECOMMEND IMAGE FIX END ===== */
+
+
+/* ===== TOP IMAGE REPLACE v5 START ===== */
+body.top-v3-page .topv3-hero{
+  background:linear-gradient(90deg,#fff 0%,#fff 40%,#fff3f7 40%,#fff7fa 100%) !important;
+}
+body.top-v3-page .topv3-hero-grid{
+  grid-template-columns:40% 60% !important;
+  min-height:440px !important;
+}
+body.top-v3-page .topv3-hero-copy{
+  padding-left:0 !important;
+  padding-right:34px !important;
+}
+body.top-v3-page .topv3-hero-image{
+  min-height:440px !important;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.56) 18%,rgba(255,255,255,0) 42%),url('/top-hero-plush.png') !important;
+  background-size:cover !important;
+  background-position:center right !important;
+  background-repeat:no-repeat !important;
+}
+body.top-v3-page .topv3-girl{
+  width:158px !important;
+  height:178px !important;
+  min-height:178px !important;
+  padding:0 !important;
+  border-radius:24px !important;
+  background:linear-gradient(180deg,#fff8fb,#ffeef5) !important;
+}
+body.top-v3-page .topv3-girl:before,
+body.top-v3-page .topv3-girl:after{content:none !important;}
+body.top-v3-page .topv3-girl img{
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+@media(max-width:1080px){
+  body.top-v3-page .topv3-hero-grid{grid-template-columns:1fr !important;}
+  body.top-v3-page .topv3-hero-image{
+    order:-1;
+    min-height:320px !important;
+    background-image:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.08)),url('/top-hero-plush.png') !important;
+  }
+}
+@media(max-width:720px){
+  body.top-v3-page .topv3-hero-image{min-height:250px !important;}
+  body.top-v3-page .topv3-girl{display:none !important;}
+}
+/* ===== TOP IMAGE REPLACE v5 END ===== */
