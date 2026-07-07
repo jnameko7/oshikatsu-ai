@@ -9,6 +9,7 @@ export default async function handler(req, res) {
     "yearly",
     "kakeibo",
     "articles",
+    "about",
     "terms",
     "privacy",
     "contact"
