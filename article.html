@@ -72,12 +72,14 @@
     margin-bottom:12px;
   }
 }
+  
+    .oa-author-box,.oa-disclaimer-box{margin:24px 0;padding:18px 20px;border:1px solid #ffe1ee;border-radius:18px;background:#fff8fb;color:#5b4850;line-height:1.8}.oa-author-box strong,.oa-disclaimer-box strong{display:block;margin-bottom:6px;color:#c92f78}.oa-meta span+span{margin-left:12px}.oa-meta .oa-updated{color:#c92f78;font-weight:800}
   </style>
 </head>
 <body>
-<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>
+<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a href="/about">運営者情報</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>
 <main class="oa-article-page"><article id="articleRoot" class="oa-article-card"><div class="oa-loading">記事を読み込み中...</div></article></main>
-<footer class="footer"><div class="container footer-grid"><div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div><div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div><div><h3>お役立ち情報</h3><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p></div><div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p></div></div></footer>
+<footer class="footer"><div class="container footer-grid"><div><h2>♥ 推し活資金AI</h2><p>推し活に夢中な人を応援する、無料のお金管理・診断ツールです。</p></div><div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div><div><h3>お役立ち情報</h3><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p></div><div><h3>運営について</h3><p><a href="/about">運営者情報</a></p><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p></div></div></footer>
 <script>
 const root=document.getElementById('articleRoot');
 const params=new URLSearchParams(location.search);
@@ -149,12 +151,14 @@ function renderArticle(article){
   const category=pick(article,['category','genre'])||'推し活コラム';
   const tags=getTags(article);
   const tagsHtml=tags.length?`<div class="oa-tags">${tags.map(tag=>`<a class="oa-tag" href="/articles?tag=${encodeURIComponent(tag)}"># ${escapeHtml(tag)}</a>`).join('')}</div>`:'';
-  const date=pick(article,['date','createdAt','updatedAt','publishedAt'])||'';
+  const date=pick(article,['date','publishedAt','createdAt'])||'';
+  const updated=pick(article,['updatedAt','revisedAt','modifiedAt'])||date;
   const affiliate=pick(article,['affiliateHtml','affiliateHTML','affiliate_html','adHtml','adHTML','adCode','rakutenHtml','htmlAd','affiliate','adsHtml'])||'';
   document.title=title+'｜推し活資金AI'; setMetaDescription(seo||lead||title); reflectSlugInUrl(article); setSeoTags(article,title,seo||lead||title,image);
   const split=splitIntroAndBody(body);
   const leadHtml=(lead&&normalizeText(lead)!==normalizeText(seo)&&normalizeText(lead)!==normalizeText(split.intro))?`<div class="oa-lead">${escapeHtml(lead)}</div>`:'';
-  root.innerHTML=`${image?`<img class="oa-eyecatch" src="${escapeAttr(image)}" alt="${escapeAttr(title)}" onerror="this.style.display='none'">`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb"><a href="/">ホーム</a><span>＞</span><a href="/articles">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}</div>${tagsHtml}${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><a class="oa-back-link" href="/articles">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
+  root.innerHTML=`${image?`<img class="oa-eyecatch" src="${escapeAttr(image)}" alt="${escapeAttr(title)}" onerror="this.style.display='none'">`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb"><a href="/">ホーム</a><span>＞</span><a href="/articles">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}${updated?`<span class="oa-updated">更新日：${escapeHtml(formatDate(updated))}</span>`:''}</div><div class="oa-author-box"><strong>この記事を書いた人</strong>推し活資金AI編集部。ライブ遠征費、推し活節約、チケット、ホテル、夜行バスなど、推し活に役立つ実用情報を発信しています。</div>${tagsHtml}${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><div class="oa-disclaimer-box"><strong>ご利用前の注意</strong>記事内の料金、節約額、予約条件、キャンペーン情報は目安です。実際の金額や条件は時期・地域・販売元により変わるため、予約や購入前に必ず公式サイトで最新情報をご確認ください。</div><a class="oa-back-link" href="/articles">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
+  injectArticleLd(article,title,seo||lead||title,image,date,updated);
   createToc(); 
 autoLinkArticleBody(); 
 if(affiliate)insertAffiliateBlocks(affiliate); 
@@ -178,6 +182,15 @@ function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)ret
 function insertAffiliateBlocks(html){const body=document.querySelector('.oa-body');if(!body)return;const h2s=[...body.querySelectorAll('h2')];const ad='<div class="oa-auto-affiliate">'+String(html)+'</div>';if(h2s[0])h2s[0].insertAdjacentHTML('beforebegin',ad);if(h2s[Math.floor(h2s.length/2)])h2s[Math.floor(h2s.length/2)].insertAdjacentHTML('beforebegin',ad);body.insertAdjacentHTML('beforeend',ad);}
 function createToc(){const mount=document.getElementById('oaToc');const heads=[...document.querySelectorAll('.oa-body h2')];if(!mount||!heads.length)return;mount.className='oa-toc';mount.innerHTML='<div class="oa-toc-title">目次</div><ol class="oa-toc-list">'+heads.map((h,i)=>{if(!h.id)h.id='toc-'+(i+1);return`<li><a href="#${h.id}">${escapeHtml(h.textContent)}</a></li>`;}).join('')+'</ol>';}
 function autoLinkArticleBody(){/* 将来用。今は本文を壊さないため空。 */}
+function injectArticleLd(article,title,desc,image,date,updated){
+  const slug=normalizeSlug(pick(article,['slug','urlSlug','url_slug','permalink','id']))||normalizeSlug(requestedKey);
+  const url='https://www.oshikatsu-kakeibo.com/article?id='+encodeURIComponent(slug);
+  const ld={"@context":"https://schema.org","@type":"Article",headline:title,description:desc,author:{"@type":"Organization",name:"推し活資金AI編集部"},publisher:{"@type":"Organization",name:"推し活資金AI",url:"https://www.oshikatsu-kakeibo.com/"},mainEntityOfPage:{"@type":"WebPage","@id":url}};
+  if(image)ld.image=[image];
+  if(date)ld.datePublished=new Date(date).toISOString();
+  if(updated)ld.dateModified=new Date(updated).toISOString();
+  let el=document.getElementById('articleLd');if(!el){el=document.createElement('script');el.type='application/ld+json';el.id='articleLd';document.head.appendChild(el);}el.textContent=JSON.stringify(ld);
+}
 function setSeoTags(article,title,desc,image){
   const slug=normalizeSlug(
     pick(article,['slug','urlSlug','url_slug','permalink','id'])

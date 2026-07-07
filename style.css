@@ -1033,3 +1033,25 @@ body.top-v3-page .topv3-bottom-inner .topv3-cta-bear img{
   body.top-v3-page .topv3-bottom-inner .topv3-cta-bear{display:none !important;}
 }
 /* ===== TOP IMAGE/ICON FIX v6 END ===== */
+
+
+/* ===== ADSENSE REVIEW QUALITY FIX START ===== */
+body.top-v3-page .topv3-note{margin:14px 0 0;padding:12px 14px;border:1px solid #ffd6e7;border-radius:16px;background:#fff8fb;color:#74515e;font-size:13px;line-height:1.8;font-weight:700}
+body.top-v3-page .topv3-quality,body.top-v3-page .topv3-editorial{background:#fff7fa;padding:46px 0}
+body.top-v3-page .topv3-section-head-wide{margin-bottom:18px}
+body.top-v3-page .topv3-quality-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0 20px}
+body.top-v3-page .topv3-quality-grid article{border:1px solid #ffd6e7;border-radius:24px;background:#fff;padding:22px;box-shadow:0 14px 32px rgba(255,94,142,.08)}
+body.top-v3-page .topv3-quality-grid h3{margin:0 0 10px;color:#4a2734;font-size:18px;line-height:1.5}
+body.top-v3-page .topv3-quality-grid p{margin:0;color:#5e4a52;font-size:14px;line-height:1.9}
+body.top-v3-page .topv3-category-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+body.top-v3-page .topv3-category-links a{display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border-radius:999px;background:#fff;border:1px solid #ffd6e7;color:#e84691;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 8px 18px rgba(255,94,142,.08)}
+body.top-v3-page .topv3-editorial-box{border:1px solid #ffd6e7;border-radius:26px;background:#fff;padding:26px 28px;box-shadow:0 16px 34px rgba(255,94,142,.08)}
+body.top-v3-page .topv3-editorial-box h2{margin:0 0 12px;color:#4a2734;font-size:24px}
+body.top-v3-page .topv3-editorial-box p{margin:0 0 12px;color:#57454c;line-height:1.9;font-weight:600}
+body.top-v3-page .topv3-editorial-box a{display:inline-flex;margin-top:4px;color:#e84691;font-weight:900;text-decoration:none}
+body.top-v3-page .topv3-ranking{grid-template-columns:1fr;}
+body.top-v3-page .topv3-rank-item i:empty{display:none}
+body.top-v3-page .topv3-rank-item p small{display:block;margin-top:4px;color:#8d737e;font-size:12px;font-weight:600}
+.about-page{background:#fff7fa;color:#352a30}.about-hero{padding:56px 0 28px}.about-card{max-width:980px;margin:0 auto;border:1px solid #ffd6e7;border-radius:30px;background:#fff;padding:clamp(24px,4vw,42px);box-shadow:0 18px 44px rgba(255,94,142,.10)}.about-card h1{margin:0 0 14px;font-size:clamp(28px,4vw,42px);line-height:1.35;color:#3b2831}.about-card h2{margin:34px 0 12px;padding:12px 16px;border-left:6px solid #ff6fae;border-radius:14px;background:#fff2f8;color:#4a2734;font-size:24px}.about-card p{line-height:2;margin:0 0 16px;color:#5b4850;font-weight:600}.about-card ul{margin:16px 0;padding:18px 24px 18px 34px;border:1px solid #ffd6e7;border-radius:18px;background:#fff8fb;line-height:1.9}.about-card li{margin:6px 0}.about-lead{font-size:17px}.about-profile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}.about-profile div{border:1px solid #ffd6e7;border-radius:18px;background:#fff8fb;padding:16px}.about-profile strong{display:block;margin-bottom:6px;color:#e84691}.about-cta{display:inline-flex;margin-top:10px;padding:12px 20px;border-radius:999px;background:linear-gradient(135deg,#ff5f9e,#ff8bbd);color:#fff;text-decoration:none;font-weight:900;box-shadow:0 12px 24px rgba(255,94,142,.22)}
+@media(max-width:800px){body.top-v3-page .topv3-quality-grid,.about-profile{grid-template-columns:1fr}body.top-v3-page .topv3-quality,body.top-v3-page .topv3-editorial{padding:32px 0}.about-hero{padding:30px 0}}
+/* ===== ADSENSE REVIEW QUALITY FIX END ===== */
