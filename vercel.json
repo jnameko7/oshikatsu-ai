@@ -28,6 +28,7 @@
 
     { "source": "/article", "destination": "/article.html" },
     { "source": "/articles", "destination": "/articles.html" },
+    { "source": "/categories", "destination": "/categories.html" },
 
     { "source": "/fund", "destination": "/fund.html" },
     { "source": "/saving", "destination": "/saving.html" },

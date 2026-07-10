@@ -59,6 +59,7 @@ crossorigin="anonymous"></script>
       <a href="/yearly">目標シミュレーター</a>
       <a href="/kakeibo">推し活家計簿</a>
       <a href="/about">運営者情報</a>
+      <a href="/categories">カテゴリ</a>
       <a href="/articles">お役立ち記事</a>
     </nav>
     <a class="topv3-cta" href="/fund">すべて無料で使えます</a>
@@ -134,7 +135,7 @@ crossorigin="anonymous"></script>
 
   <section class="topv3-quality">
     <div class="topv3-container">
-      <div class="topv3-section-head topv3-section-head-wide"><h2>推し活資金AIでできること</h2><a href="/about">運営者情報を見る →</a></div>
+      <div class="topv3-section-head topv3-section-head-wide"><h2>推し活資金AIでできること</h2><a href="/categories">カテゴリから記事を探す →</a></div>
       <div class="topv3-quality-grid">
         <article><h3>ライブ遠征費を見える化</h3><p>東京・大阪・福岡・名古屋・札幌など、ライブ遠征でかかる交通費、ホテル代、食費、現地交通費、グッズ代を整理し、無理のない予算を考えられるようにします。</p></article>
         <article><h3>推し活の節約と貯金をサポート</h3><p>コンビニ代、サブスク、外食、遠征時の移動手段などを見直し、推し活を我慢しすぎず続けるための節約アイデアを紹介します。</p></article>
@@ -181,6 +182,15 @@ crossorigin="anonymous"></script>
     </div>
   </section>
 
+
+  <section class="topv3-latest">
+    <div class="topv3-container">
+      <div class="topv3-section-head topv3-section-head-wide"><h2>最新の推し活お役立ち記事</h2><a href="/articles">記事一覧へ →</a></div>
+      <p class="topv3-latest-lead">ライブ遠征、チケット、ホテル、節約、うちわ、持ち物など、推し活に役立つ情報を更新しています。</p>
+      <div id="topLatestArticles" class="topv3-latest-grid"></div>
+    </div>
+  </section>
+
   <section class="topv3-bottom-cta">
     <div class="topv3-container topv3-bottom-inner">
       <p>さあ、今日から一緒に推し活資金を見える化しよう！</p>
@@ -197,12 +207,31 @@ crossorigin="anonymous"></script>
     <div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p><div class="topv3-social"><span>𝕏</span><span>◎</span><span>▶</span></div></div>
     <div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div>
     <div><h3>お役立ち情報</h3><p><a href="/articles">お役立ち記事一覧</a></p><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p><p><a href="/articles">ホテル比較</a></p><p><a href="/articles">ライブ準備</a></p></div>
-    <div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div>
+    <div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/categories">カテゴリ一覧</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div>
   </div>
   <p class="topv3-copy">© 2025 推し活資金AI</p>
 </footer>
 <script src="/common.js"></script>
 <script>
+
+async function loadTopLatestArticles(){
+  const mount=document.getElementById("topLatestArticles");
+  if(!mount)return;
+  try{
+    const res=await fetch("/api/articles?limit=8",{cache:"no-store"});
+    const data=await res.json();
+    const list=Array.isArray(data)?data:(data.contents||data.articles||data.posts||data.items||[]);
+    mount.innerHTML=list.slice(0,8).map(article=>{
+      const slug=article.slug||article.urlSlug||article.url_slug||article.permalink||article.id;
+      const href=`/article?id=${encodeURIComponent(slug)}`;
+      const img=article.thumbnail?.url||article.image?.url||article.eyecatch?.url||article.thumbnailUrl||article.imageUrl||'';
+      const title=article.title||'お役立ち記事';
+      const desc=(article.description||article.summary||article.excerpt||'').substring(0,55);
+      return `<a class="topv3-latest-card" href="${href}">${img?`<img src="${img}" alt="${title}">`:'<span></span>'}<strong>${title}</strong>${desc?`<small>${desc}</small>`:''}</a>`;
+    }).join("");
+  }catch(e){}
+}
+
 async function loadTopArticlesRanking(){
   const mount=document.getElementById("topArticlesRanking");
   if(!mount)return;
@@ -222,6 +251,7 @@ async function loadTopArticlesRanking(){
   }catch(e){}
 }
 loadTopArticlesRanking();
+loadTopLatestArticles();
 </script>
 </body>
 </html>
