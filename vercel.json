@@ -14,11 +14,6 @@
       "permanent": true
     },
     {
-      "source": "/article/:slug",
-      "destination": "/article?id=:slug",
-      "permanent": true
-    },
-    {
       "source": "/article_fixed",
       "destination": "/articles",
       "permanent": true
@@ -81,6 +76,14 @@
   ],
   "rewrites": [
     {
+      "source": "/article/:slug",
+      "destination": "/api/article-page?id=:slug"
+    },
+    {
+      "source": "/article",
+      "destination": "/api/article-page"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/api/sitemap"
     },
@@ -91,10 +94,6 @@
     {
       "source": "/sitemap-articles-:page.xml",
       "destination": "/api/sitemap-articles?page=:page"
-    },
-    {
-      "source": "/article",
-      "destination": "/api/article-page"
     },
     {
       "source": "/articles",
