@@ -14,63 +14,8 @@
       "permanent": true
     },
     {
-      "source": "/article_fixed",
+      "source": "/article.html",
       "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/article_seo_links_related",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/article-001",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/article-002",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/article-003",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/article-004",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/blog",
-      "destination": "/articles",
-      "permanent": true
-    },
-    {
-      "source": "/terms_affiliate_final",
-      "destination": "/terms",
-      "permanent": true
-    },
-    {
-      "source": "/goods-budget-list",
-      "destination": "/kakeibo",
-      "permanent": true
-    },
-    {
-      "source": "/live-expedition-saving",
-      "destination": "/saving",
-      "permanent": true
-    },
-    {
-      "source": "/oshikatsu-budget-start",
-      "destination": "/fund",
-      "permanent": true
-    },
-    {
-      "source": "/sim-saving-for-oshi",
-      "destination": "/saving",
       "permanent": true
     }
   ],

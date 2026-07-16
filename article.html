@@ -141,11 +141,23 @@ function findArticleFromLocalStorage(id){
 function readStorageKey(key,id){try{const raw=localStorage.getItem(key);if(!raw||raw.length<2)return null;return extractArticle(JSON.parse(raw),id);}catch(_){return null;}}
 function extractArticle(data,id){
   if(!data)return null;
-  if(Array.isArray(data)){if(id){const hit=data.find(x=>sameId(x,id));if(hit)return hit;}return data.find(hasArticleContent)||null;}
+  if(Array.isArray(data)){
+    if(id){
+      const hit=data.find(x=>sameId(x,id));
+      return hit||null;
+    }
+    return data.find(hasArticleContent)||null;
+  }
   if(typeof data==='object'){
-    if(sameId(data,id)&&hasArticleContent(data))return data;
-    for(const k of ['article','data','post','item','currentArticle','content']){const hit=extractArticle(data[k],id);if(hit)return hit;}
-    for(const k of ['contents','articles','posts','items','list','records']){const hit=extractArticle(data[k],id);if(hit)return hit;}
+    if(id&&sameId(data,id)&&hasArticleContent(data))return data;
+    for(const k of ['article','data','post','item','currentArticle','content']){
+      const hit=extractArticle(data[k],id);
+      if(hit)return hit;
+    }
+    for(const k of ['contents','articles','posts','items','list','records']){
+      const hit=extractArticle(data[k],id);
+      if(hit)return hit;
+    }
     if(!id&&hasArticleContent(data))return data;
   }
   return null;
