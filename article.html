@@ -77,17 +77,25 @@
   </style>
 </head>
 <body>
-<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a href="/about">運営者情報</a><a href="/categories">カテゴリ</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>
+<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>
 <main class="oa-article-page"><article id="articleRoot" class="oa-article-card"><div class="oa-loading">記事を読み込み中...</div></article></main>
 <footer class="topv3-footer">
   <div class="topv3-container topv3-footer-grid">
     <div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p><div class="topv3-social"><span>𝕏</span><span>◎</span><span>▶</span></div></div>
     <div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div>
-    <div><h3>お役立ち情報</h3><p><a href="/articles">お役立ち記事一覧</a></p><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p><p><a href="/articles">ホテル比較</a></p><p><a href="/articles">ライブ準備</a></p></div>
+    <div><h3>お役立ち情報</h3><p><a href="/articles">お役立ち記事一覧</a></p><p><a href="/articles?q=節約">節約術</a></p><p><a href="/articles?q=遠征">遠征のコツ</a></p><p><a href="/articles?q=ホテル">ホテル比較</a></p><p><a href="/articles?q=ライブ">ライブ準備</a></p></div>
     <div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/categories">カテゴリ一覧</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div>
   </div>
-  <p class="topv3-copy">© 2025 推し活資金AI</p>
+  <p class="topv3-copy">© 2026 推し活資金AI</p>
 </footer>
+<div id="oaStickyTools" class="oa-sticky-tools" aria-label="無料ツールへのショートカット">
+  <a href="/fund"><img src="/icon-fund-pig.png" alt=""><span><strong>推し活資金診断</strong><small>毎月いくら使える？</small></span></a>
+  <a href="/transport"><img src="/icon-transport-plane.png" alt=""><span><strong>遠征プランナー</strong><small>交通費・宿泊費を計算</small></span></a>
+  <a href="/yearly"><img src="/icon-goal-flag.png" alt=""><span><strong>目標シミュレーター</strong><small>目標までの期間を確認</small></span></a>
+  <a href="/kakeibo"><img src="/icon-goal-heart.png" alt=""><span><strong>推し活家計簿</strong><small>支出をまとめて管理</small></span></a>
+  <button type="button" id="oaStickyClose" aria-label="追従バナーを閉じる">×</button>
+</div>
+
 <script>
 const root=document.getElementById('articleRoot');
 const params=new URLSearchParams(location.search);
@@ -165,9 +173,12 @@ function renderArticle(article){
   document.title=title+'｜推し活資金AI'; setMetaDescription(seo||lead||title); reflectSlugInUrl(article); setSeoTags(article,title,seo||lead||title,image);
   const split=splitIntroAndBody(body);
   const leadHtml=(lead&&normalizeText(lead)!==normalizeText(seo)&&normalizeText(lead)!==normalizeText(split.intro))?`<div class="oa-lead">${escapeHtml(lead)}</div>`:'';
-  root.innerHTML=`${image?`<img class="oa-eyecatch" src="${escapeAttr(image)}" alt="${escapeAttr(title)}" onerror="this.style.display='none'">`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb"><a href="/">ホーム</a><span>＞</span><a href="/articles">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}${updated?`<span class="oa-updated">更新日：${escapeHtml(formatDate(updated))}</span>`:''}</div><div class="oa-author-box"><strong>この記事を書いた人</strong>推し活資金AI編集部。ライブ遠征費、推し活節約、チケット、ホテル、夜行バスなど、推し活に役立つ実用情報を発信しています。</div>${tagsHtml}${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><div class="oa-disclaimer-box"><strong>ご利用前の注意</strong>記事内の料金、節約額、予約条件、キャンペーン情報は目安です。実際の金額や条件は時期・地域・販売元により変わるため、予約や購入前に必ず公式サイトで最新情報をご確認ください。</div><a class="oa-back-link" href="/articles">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
+  root.innerHTML=`${image?`<img class="oa-eyecatch" src="${escapeAttr(image)}" alt="${escapeAttr(title)}" onerror="this.style.display='none'">`:''}<div class="oa-article-inner"><nav class="oa-breadcrumb"><a href="/">ホーム</a><span>＞</span><a href="/articles">お役立ち記事</a><span>＞</span><span>${escapeHtml(title)}</span></nav><div class="oa-category">♡ ${escapeHtml(category)}</div><h1 class="oa-title">${escapeHtml(title)}</h1><div class="oa-meta">${date?`<span>投稿日：${escapeHtml(formatDate(date))}</span>`:''}${updated?`<span class="oa-updated">更新日：${escapeHtml(formatDate(updated))}</span>`:''}<span id="oaReadTime">読了目安を計算中</span></div>${tagsHtml}${leadHtml}${split.intro?`<div class="oa-intro-body">${split.intro}</div>`:''}<section id="oaLearnBox" class="oa-learn-box"><h2>この記事でわかること</h2><ul></ul></section><div id="oaToc"></div><div class="oa-body">${split.body||'<p>本文がありません。</p>'}</div><section class="oa-editor-box"><div class="oa-editor-icon">♡</div><div><h2>この記事を書いた人</h2><h3>推し活資金AI編集部</h3><p>ライブ遠征、ホテル、交通費、チケット、夜行バス、推し活の節約方法を中心に、初心者にも実践しやすい情報を発信しています。料金や制度を扱う記事では公式サイトや運営会社の情報を確認し、必要に応じて内容を見直しています。</p><a href="/about">編集方針・運営者情報を見る →</a></div></section><div class="oa-disclaimer-box"><strong>ご利用前の注意</strong>記事内の料金、節約額、予約条件、キャンペーン情報は目安です。実際の金額や条件は時期・地域・販売元により変わるため、予約や購入前に必ず公式サイトで最新情報をご確認ください。</div><a class="oa-back-link" href="/articles">← お役立ち記事一覧へ戻る</a><section id="oaRelated" class="oa-related" style="display:none"></section><div class="oa-bottom-space"></div></div>`;
   injectArticleLd(article,title,seo||lead||title,image,date,updated);
-  createToc(); 
+  createToc();
+  buildLearnBox();
+  updateReadTime();
+  initStickyTools();
 autoLinkArticleBody(); 
 if(affiliate)insertAffiliateBlocks(affiliate); 
 loadAffiliateCards();
@@ -177,7 +188,7 @@ function splitIntroAndBody(html){const wrap=document.createElement('div');wrap.i
 function reflectSlugInUrl(article){
   return;
 }
-async function loadRelatedArticles(current){const mount=document.getElementById('oaRelated');if(!mount)return;try{const data=await fetch('/api/articles?limit=100',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);const list=collectArticles(data);const currentKey=normalizeSlug(pick(current,['slug','urlSlug','url_slug','permalink','id']));const currentTags=getTags(current);const currentCategory=String(pick(current,['category','genre'])||'');const filtered=list.filter(a=>{const key=normalizeSlug(pick(a,['slug','urlSlug','url_slug','permalink','id']));return key&&key!==currentKey&&hasArticleContent(a);});const sameTag=filtered.filter(a=>{const tags=getTags(a);return currentTags.length&&tags.some(tag=>currentTags.includes(tag));});const sameCategory=filtered.filter(a=>String(pick(a,['category','genre'])||'')===currentCategory&&!sameTag.includes(a));const related=[...sameTag,...sameCategory,...filtered.filter(a=>!sameTag.includes(a)&&!sameCategory.includes(a))].slice(0,3);if(!related.length)return;mount.innerHTML='<h2 class="oa-related-title">関連記事</h2><div class="oa-related-grid">'+related.map(relatedCardHtml).join('')+'</div>';mount.style.display='';}catch(e){console.warn(e);}}
+async function loadRelatedArticles(current){const mount=document.getElementById('oaRelated');if(!mount)return;try{const data=await fetch('/api/articles?limit=100',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);const list=collectArticles(data);const currentKey=normalizeSlug(pick(current,['slug','urlSlug','url_slug','permalink','id']));const currentTags=getTags(current);const currentCategory=String(pick(current,['category','genre'])||'');const filtered=list.filter(a=>{const key=normalizeSlug(pick(a,['slug','urlSlug','url_slug','permalink','id']));return key&&key!==currentKey&&hasArticleContent(a);});const sameTag=filtered.filter(a=>{const tags=getTags(a);return currentTags.length&&tags.some(tag=>currentTags.includes(tag));});const sameCategory=filtered.filter(a=>String(pick(a,['category','genre'])||'')===currentCategory&&!sameTag.includes(a));const related=[...sameTag,...sameCategory,...filtered.filter(a=>!sameTag.includes(a)&&!sameCategory.includes(a))].slice(0,6);if(!related.length)return;mount.innerHTML='<div class="oa-related-head"><h2 class="oa-related-title">あわせて読みたい関連記事</h2><a href="/articles">記事一覧を見る →</a></div><div class="oa-related-grid">'+related.map(relatedCardHtml).join('')+'</div>';mount.style.display='';}catch(e){console.warn(e);}}
 function collectArticles(data){if(!data)return[];if(Array.isArray(data))return data;if(typeof data==='object'){for(const k of ['contents','articles','posts','items','list','records','data']){const v=data[k];if(Array.isArray(v))return v;}}return[];}
 function relatedCardHtml(article){const title=pick(article,['title','name'])||'記事タイトル';const img=getArticleImage(article);const tags=getTags(article).slice(0,3);return `<a class="oa-related-card" href="${escapeAttr(buildArticleUrl(article))}">${img?`<img class="oa-related-thumb" src="${escapeAttr(img)}" alt="${escapeAttr(title)}">`:`<div class="oa-related-thumb"></div>`}<div class="oa-related-body"><h3>${escapeHtml(title)}</h3>${tags.length?`<div class="oa-related-tags">${tags.map(tag=>`<span class="oa-related-tag"># ${escapeHtml(tag)}</span>`).join('')}</div>`:''}</div></a>`;}
 function buildArticleUrl(article){
@@ -189,6 +200,33 @@ function buildArticleUrl(article){
 function formatArticleBody(input){const raw=String(input||'').trim();if(!raw)return'';if(/<\/?(h2|h3|p|ul|ol|li|table|blockquote|div|br|strong|a|img|iframe)\b/i.test(raw))return raw.replace(/<script[\s\S]*?<\/script>/gi,'');const escaped=escapeHtml(raw);return escaped.replace(/^###\s+(.+)$/gm,'<h3>$1</h3>').replace(/^##\s+(.+)$/gm,'<h2>$1</h2>').replace(/^#\s+(.+)$/gm,'<h2>$1</h2>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').split(/\n{2,}/).map(block=>{const t=block.trim();if(!t)return'';if(/^<h[23]>/.test(t))return t;if(/^[-・]\s+/m.test(t)){const items=t.split('\n').filter(Boolean).map(l=>l.replace(/^[-・]\s+/,'').trim());return'<ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>';}return'<p>'+t.replace(/\n/g,'<br>')+'</p>';}).join('');}
 function insertAffiliateBlocks(html){const body=document.querySelector('.oa-body');if(!body)return;const h2s=[...body.querySelectorAll('h2')];const ad='<div class="oa-auto-affiliate">'+String(html)+'</div>';if(h2s[0])h2s[0].insertAdjacentHTML('beforebegin',ad);if(h2s[Math.floor(h2s.length/2)])h2s[Math.floor(h2s.length/2)].insertAdjacentHTML('beforebegin',ad);body.insertAdjacentHTML('beforeend',ad);}
 function createToc(){const mount=document.getElementById('oaToc');const heads=[...document.querySelectorAll('.oa-body h2')];if(!mount||!heads.length)return;mount.className='oa-toc';mount.innerHTML='<div class="oa-toc-title">目次</div><ol class="oa-toc-list">'+heads.map((h,i)=>{if(!h.id)h.id='toc-'+(i+1);return`<li><a href="#${h.id}">${escapeHtml(h.textContent)}</a></li>`;}).join('')+'</ol>';}
+function buildLearnBox(){
+  const box=document.getElementById('oaLearnBox');
+  if(!box)return;
+  const heads=[...document.querySelectorAll('.oa-body h2')].slice(0,4);
+  const items=heads.map(h=>h.textContent.trim()).filter(Boolean);
+  if(!items.length){box.style.display='none';return;}
+  box.querySelector('ul').innerHTML=items.map(t=>`<li>${escapeHtml(t)}</li>`).join('');
+}
+function updateReadTime(){
+  const el=document.getElementById('oaReadTime');
+  const body=document.querySelector('.oa-body');
+  if(!el||!body)return;
+  const chars=(body.textContent||'').replace(/\s+/g,'').length;
+  const minutes=Math.max(1,Math.ceil(chars/500));
+  el.textContent=`読了目安：約${minutes}分`;
+}
+function initStickyTools(){
+  const banner=document.getElementById('oaStickyTools');
+  const close=document.getElementById('oaStickyClose');
+  if(!banner||!close)return;
+  const until=Number(localStorage.getItem('oaStickyToolsHiddenUntil')||0);
+  if(Date.now()<until){banner.hidden=true;return;}
+  close.addEventListener('click',()=>{
+    banner.hidden=true;
+    localStorage.setItem('oaStickyToolsHiddenUntil',String(Date.now()+24*60*60*1000));
+  });
+}
 function autoLinkArticleBody(){/* 将来用。今は本文を壊さないため空。 */}
 function injectArticleLd(article,title,desc,image,date,updated){
   const slug=normalizeSlug(pick(article,['slug','urlSlug','url_slug','permalink','id']))||normalizeSlug(requestedKey);
