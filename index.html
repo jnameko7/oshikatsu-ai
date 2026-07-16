@@ -141,10 +141,12 @@
 <div class="topv3-panel">
 <div class="topv3-section-head"><h2>おすすめ記事</h2><a href="/articles">もっと見る →</a></div>
 <div class="topv3-ranking" id="topArticlesRanking">
+<!-- SSR_RANKING_START -->
 <a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb hotel"></div><div><h3>ライブ遠征費の予算を立てる方法</h3><p><b>遠征費</b><b>ライブ準備</b></p></div><i></i></a>
 <a class="topv3-rank-item" href="/articles"><span>2</span><div class="thumb bus"></div><div><h3>夜行バス遠征の持ち物チェック</h3><p><b>夜行バス</b><b>持ち物</b></p></div><i></i></a>
 <a class="topv3-rank-item" href="/articles"><span>3</span><div class="thumb pouch"></div><div><h3>推し活の出費を無理なく節約するコツ</h3><p><b>節約</b><b>推し活</b></p></div><i></i></a>
 <a class="topv3-rank-item" href="/articles"><span>4</span><div class="thumb train"></div><div><h3>ライブチケットや遠征準備の始め方</h3><p><b>チケット</b><b>初心者</b></p></div><i></i></a>
+<!-- SSR_RANKING_END -->
 </div>
 </div>
 <div class="topv3-panel">
@@ -172,7 +174,7 @@
 <div class="topv3-container">
 <div class="topv3-section-head topv3-section-head-wide"><h2>最新の推し活お役立ち記事</h2><a href="/articles">記事一覧へ →</a></div>
 <p class="topv3-latest-lead">ライブ遠征、チケット、ホテル、節約、うちわ、持ち物など、推し活に役立つ情報を更新しています。</p>
-<div class="topv3-latest-grid" id="topLatestArticles"></div>
+<div class="topv3-latest-grid" id="topLatestArticles"><!-- SSR_LATEST_START --><!-- SSR_LATEST_END --></div>
 </div>
 </section>
 <section class="topv3-trust">
@@ -207,46 +209,6 @@
 <p class="topv3-copy">© 2025 推し活資金AI</p>
 </footer>
 <script src="/common.js"></script>
-<script>
 
-async function loadTopLatestArticles(){
-  const mount=document.getElementById("topLatestArticles");
-  if(!mount)return;
-  try{
-    const res=await fetch("/api/articles?limit=8",{cache:"no-store"});
-    const data=await res.json();
-    const list=Array.isArray(data)?data:(data.contents||data.articles||data.posts||data.items||[]);
-    mount.innerHTML=list.slice(0,8).map(article=>{
-      const slug=article.slug||article.urlSlug||article.url_slug||article.permalink||article.id;
-      const href=`/article?id=${encodeURIComponent(slug)}`;
-      const img=article.thumbnail?.url||article.image?.url||article.eyecatch?.url||article.thumbnailUrl||article.imageUrl||'';
-      const title=article.title||'お役立ち記事';
-      const desc=(article.description||article.summary||article.excerpt||'').substring(0,55);
-      return `<a class="topv3-latest-card" href="${href}">${img?`<img src="${img}" alt="${title}">`:'<span></span>'}<strong>${title}</strong>${desc?`<small>${desc}</small>`:''}</a>`;
-    }).join("");
-  }catch(e){}
-}
-
-async function loadTopArticlesRanking(){
-  const mount=document.getElementById("topArticlesRanking");
-  if(!mount)return;
-  try{
-    const res=await fetch("/api/articles?limit=12",{cache:"no-store"});
-    const data=await res.json();
-    const list=Array.isArray(data)?data:(data.contents||data.articles||data.posts||data.items||[]);
-    if(!list.length)return;
-    mount.innerHTML=list.slice(0,6).map((article,index)=>{
-      const slug=article.slug||article.urlSlug||article.url_slug||article.permalink||article.id;
-      const href=`/article?id=${encodeURIComponent(slug)}`;
-      const img=article.thumbnail?.url||article.image?.url||article.eyecatch?.url||article.thumbnailUrl||article.imageUrl||'';
-      const desc=(article.description||article.summary||article.excerpt||'').substring(0,38);
-      const thumb=img?`<div class="thumb"><img src="${img}" alt="${article.title||'記事サムネイル'}"></div>`:`<div class="thumb pouch"></div>`;
-      return `<a class="topv3-rank-item" href="${href}"><span>${index+1}</span>${thumb}<div><h3>${article.title||'お役立ち記事'}</h3><p><b>推し活</b><b>節約</b>${desc?`<small>${desc}</small>`:''}</p></div><i></i></a>`;
-    }).join("");
-  }catch(e){}
-}
-loadTopArticlesRanking();
-loadTopLatestArticles();
-</script>
 </body>
 </html>
