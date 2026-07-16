@@ -1,15 +1,14 @@
 
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>遠征プランナー｜推し活資金AI</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="hotel-search.css">
-<script async
-src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6088406710027099"
-crossorigin="anonymous"></script>
+<link href="style.css" rel="stylesheet"/>
+<link href="hotel-search.css" rel="stylesheet"/>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6088406710027099"></script>
 <style>
 .tool-page{padding:36px 16px 60px;background:linear-gradient(180deg,#fff,#fffafb)}
 .tool-box{width:min(960px,100%);margin:auto;background:#fff;border:1px solid #e9e8ef;border-radius:22px;box-shadow:0 18px 45px rgba(36,30,68,.10);padding:36px}
@@ -43,94 +42,85 @@ crossorigin="anonymous"></script>
 @media(max-width:760px){.tool-box{padding:24px}.tool-grid,.budget-cards,.adjust-grid,.affiliate-grid{grid-template-columns:1fr}.result-main strong{font-size:34px}}
 </style>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3CGGLYQE0X"></script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-3CGGLYQE0X"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3CGGLYQE0X');
 </script>
-</head>
+<link href="https://www.oshikatsu-kakeibo.com/transport" rel="canonical"/><meta content="index,follow,max-image-preview:large" name="robots"/></head>
 <body>
 <header class="header"><div class="container header-inner"><a class="logo" href="index.html"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="index.html">ホーム</a><a href="fund.html">診断ツール</a><a href="transport.html">遠征プランナー</a><a href="yearly.html">目標シミュレーター</a><a href="kakeibo.html">推し活家計簿</a><a href="articles.html">お役立ち記事</a></nav><a class="cta" href="fund.html">すべて無料で使えます</a></div></header>
-
 <main class="tool-page">
 <section class="tool-box">
 <div class="breadcrumb">ホーム ＞ 遠征プランナー</div>
 <h1>遠征プランナー</h1>
 <p class="tool-lead">遠征予算から交通費・宿泊費・食費を自動配分し、グッズ代に使える残額を出します。</p>
-
 <form id="budgetPlannerForm">
 <div class="tool-grid">
-<label class="tool-label">遠征予算（チケット代除く）<input type="number" id="tripBudget" value="30000"></label>
-<label class="tool-label">出発地<input type="text" id="plannerFrom" value="名古屋"></label>
-<label class="tool-label">目的地<input type="text" id="plannerTo" value="東京"></label>
+<label class="tool-label">遠征予算（チケット代除く）<input id="tripBudget" type="number" value="30000"/></label>
+<label class="tool-label">出発地<input id="plannerFrom" type="text" value="名古屋"/></label>
+<label class="tool-label">目的地<input id="plannerTo" type="text" value="東京"/></label>
 <label class="tool-label">交通希望手段<select id="preferredTransport"><option value="auto">おすすめ自動</option><option value="bus">夜行・高速バス</option><option value="lcc">LCC</option><option value="fsc">FSC</option><option value="shinkansen">新幹線・特急</option><option value="local">在来線</option></select></label>
-<label class="tool-label">人数<select id="plannerPeople"><option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
-<label class="tool-label">宿泊数<select id="plannerNights"><option value="0">日帰り</option><option value="1" selected>1泊</option><option value="2">2泊</option><option value="3">3泊</option></select></label>
-<label class="tool-label">食事タイプ<select id="mealType"><option value="mixed" selected>外食＋コンビニ</option><option value="restaurant">外食中心</option><option value="convenience">コンビニ中心</option></select></label>
-<label class="tool-label">1日何食にする？<select id="mealsPerDay"><option value="1">1食</option><option value="2" selected>2食</option><option value="3">3食</option></select></label>
-<label class="tool-label">宿泊費設定<select id="hotelCostMode"><option value="auto" selected>自動提案</option><option value="manual">自分で入力</option></select></label>
-<label class="tool-label">宿泊費を自分で入力<input type="number" id="manualHotelInput" value="0"></label>
-<label class="tool-label">予備費<input type="number" id="reserveCost" value="2000"></label>
-<label class="tool-label">グッズ代最低確保額<input type="number" id="goodsMinTarget" value="5000"></label>
+<label class="tool-label">人数<select id="plannerPeople"><option value="1">1人</option><option selected="" value="2">2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
+<label class="tool-label">宿泊数<select id="plannerNights"><option value="0">日帰り</option><option selected="" value="1">1泊</option><option value="2">2泊</option><option value="3">3泊</option></select></label>
+<label class="tool-label">食事タイプ<select id="mealType"><option selected="" value="mixed">外食＋コンビニ</option><option value="restaurant">外食中心</option><option value="convenience">コンビニ中心</option></select></label>
+<label class="tool-label">1日何食にする？<select id="mealsPerDay"><option value="1">1食</option><option selected="" value="2">2食</option><option value="3">3食</option></select></label>
+<label class="tool-label">宿泊費設定<select id="hotelCostMode"><option selected="" value="auto">自動提案</option><option value="manual">自分で入力</option></select></label>
+<label class="tool-label">宿泊費を自分で入力<input id="manualHotelInput" type="number" value="0"/></label>
+<label class="tool-label">予備費<input id="reserveCost" type="number" value="2000"/></label>
+<label class="tool-label">グッズ代最低確保額<input id="goodsMinTarget" type="number" value="5000"/></label>
 </div>
 <button class="submit-btn" type="submit">予算から遠征プランを作る →</button>
 </form>
-
-<div id="budgetPlannerResult" class="result"></div>
-
+<div class="result" id="budgetPlannerResult"></div>
 <div class="price-disclaimer">
 <strong>ご利用前にご確認ください</strong>
 <p>当サイトの交通費・宿泊費・食費は、入力条件から作成した想定金額です。実際の運賃・宿泊料金・空席状況・割引・キャンペーン・繁忙期料金は各予約サイトで変動します。正確な金額は必ず各予約ページや公式サイトでご確認ください。</p>
 </div>
 </section>
-
 <section class="transport-extra-section">
 <section class="rakuten-hotel-box">
 <h2>楽天ホテル自動検索</h2>
 <p class="rakuten-hotel-lead">日付・人数・宿泊予算から、遠征先のホテル候補を楽天APIで検索します。</p>
 <form class="rakuten-hotel-form">
-<label class="rakuten-hotel-label">検索キーワード<input type="text" id="hotelKeyword" value="東京"></label>
-<label class="rakuten-hotel-label">チェックイン<input type="date" id="hotelCheckinDate"></label>
-<label class="rakuten-hotel-label">チェックアウト<input type="date" id="hotelCheckoutDate"></label>
-<label class="rakuten-hotel-label">人数<select id="hotelAdultNum"><option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
-<label class="rakuten-hotel-label">宿泊予算<input type="number" id="hotelBudget" value="8000"></label>
-<label class="rakuten-hotel-label">メモ<input type="text" value="例：東京ドーム、東京、舞浜" disabled></label>
-<button id="hotelSearchBtn" class="rakuten-hotel-btn" type="button">ホテルを自動検索する →</button>
+<label class="rakuten-hotel-label">検索キーワード<input id="hotelKeyword" type="text" value="東京"/></label>
+<label class="rakuten-hotel-label">チェックイン<input id="hotelCheckinDate" type="date"/></label>
+<label class="rakuten-hotel-label">チェックアウト<input id="hotelCheckoutDate" type="date"/></label>
+<label class="rakuten-hotel-label">人数<select id="hotelAdultNum"><option value="1">1人</option><option selected="" value="2">2人</option><option value="3">3人</option><option value="4">4人</option></select></label>
+<label class="rakuten-hotel-label">宿泊予算<input id="hotelBudget" type="number" value="8000"/></label>
+<label class="rakuten-hotel-label">メモ<input disabled="" type="text" value="例：東京ドーム、東京、舞浜"/></label>
+<button class="rakuten-hotel-btn" id="hotelSearchBtn" type="button">ホテルを自動検索する →</button>
 </form>
-<div id="rakutenHotelResult" class="rakuten-hotel-result"></div>
+<div class="rakuten-hotel-result" id="rakutenHotelResult"></div>
 </section>
 </section>
-
 <section class="transport-extra-section">
 <div class="title"><h2>予約・比較リンク</h2></div>
 <div class="affiliate-grid">
-<a class="affiliate-card" href="https://a.r10.to/hYbXg0" target="_blank" rel="nofollow sponsored noopener"><div class="icon">🏨</div><p class="affiliate-name">ホテル・宿泊予約</p></a>
-<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=3H9XCX+CULW4Q+14CS+64JTE" target="_blank" rel="nofollow sponsored noopener"><div class="icon">🛏️</div><p class="affiliate-name">ホテル・旅館予約</p></a>
-<a class="affiliate-card" href="https://a.r10.to/hgDzCx" target="_blank" rel="nofollow sponsored noopener"><div class="icon">✈️</div><p class="affiliate-name">航空券・旅行予約</p></a>
-<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+62I63U+AD2+3H18R6" target="_blank" rel="nofollow sponsored noopener"><div class="icon">🚌</div><p class="affiliate-name">夜行・高速バス比較</p></a>
-<a class="affiliate-card" href="https://hb.afl.rakuten.co.jp/hsc/54a602e9.2581bd11.1fcadbb2.ab84ba9c/?link_type=text&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6Im5hbWUiLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow sponsored noopener"><div class="icon">🚌</div><p class="affiliate-name">高速バス予約</p></a>
-<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+72TM0A+4R8G+BWVTE" target="_blank" rel="nofollow sponsored noopener"><div class="icon">🚄</div><p class="affiliate-name">JR新幹線・特急予約</p></a>
+<a class="affiliate-card" href="https://a.r10.to/hYbXg0" rel="nofollow sponsored noopener" target="_blank"><div class="icon">🏨</div><p class="affiliate-name">ホテル・宿泊予約</p></a>
+<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=3H9XCX+CULW4Q+14CS+64JTE" rel="nofollow sponsored noopener" target="_blank"><div class="icon">🛏️</div><p class="affiliate-name">ホテル・旅館予約</p></a>
+<a class="affiliate-card" href="https://a.r10.to/hgDzCx" rel="nofollow sponsored noopener" target="_blank"><div class="icon">✈️</div><p class="affiliate-name">航空券・旅行予約</p></a>
+<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+62I63U+AD2+3H18R6" rel="nofollow sponsored noopener" target="_blank"><div class="icon">🚌</div><p class="affiliate-name">夜行・高速バス比較</p></a>
+<a class="affiliate-card" href="https://hb.afl.rakuten.co.jp/hsc/54a602e9.2581bd11.1fcadbb2.ab84ba9c/?link_type=text&amp;ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJ0ZXh0IiwiY29sIjoxLCJjYXQiOjEsImJhbiI6Im5hbWUiLCJhbXAiOmZhbHNlfQ%3D%3D" rel="nofollow sponsored noopener" target="_blank"><div class="icon">🚌</div><p class="affiliate-name">高速バス予約</p></a>
+<a class="affiliate-card" href="https://px.a8.net/svt/ejp?a8mat=4B5Q87+72TM0A+4R8G+BWVTE" rel="nofollow sponsored noopener" target="_blank"><div class="icon">🚄</div><p class="affiliate-name">JR新幹線・特急予約</p></a>
 </div>
 </section>
 </main>
-
 <div id="oshiHistoryMount"></div>
 <footer class="topv3-footer">
-  <div class="topv3-container topv3-footer-grid">
-    <div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p><div class="topv3-social"><span>𝕏</span><span>◎</span><span>▶</span></div></div>
-    <div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div>
-    <div><h3>お役立ち情報</h3><p><a href="/articles">お役立ち記事一覧</a></p><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p><p><a href="/articles">ホテル比較</a></p><p><a href="/articles">ライブ準備</a></p></div>
-    <div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/categories">カテゴリ一覧</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div>
-  </div>
-  <p class="topv3-copy">© 2025 推し活資金AI</p>
+<div class="topv3-container topv3-footer-grid">
+<div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p><div class="topv3-social"><span>𝕏</span><span>◎</span><span>▶</span></div></div>
+<div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div>
+<div><h3>お役立ち情報</h3><p><a href="/articles">お役立ち記事一覧</a></p><p><a href="/articles">節約術</a></p><p><a href="/articles">遠征のコツ</a></p><p><a href="/articles">ホテル比較</a></p><p><a href="/articles">ライブ準備</a></p></div>
+<div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/categories">カテゴリ一覧</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div>
+</div>
+<p class="topv3-copy">© 2025 推し活資金AI</p>
 </footer>
-
-<link rel="stylesheet" href="history.css">
+<link href="history.css" rel="stylesheet"/>
 <script src="history.js"></script>
 <script src="hotel-search.js?v=20260611fix2"></script>
-
 <!-- 交通費ハイブリッドエンジン：この順番で1回だけ読み込み -->
 <script src="distance-fallback.js"></script>
 <script src="transport-engine.js"></script>
@@ -143,7 +133,6 @@ crossorigin="anonymous"></script>
 <script src="kansai-routes.js"></script>
 <script src="chugoku-shikoku-routes.js"></script>
 <script src="kyushu-okinawa-routes.js"></script>
-
 <!-- 遠征プランナー本体は必ず最後 -->
 <script src="transport-budget-planner.js"></script>
 </body>

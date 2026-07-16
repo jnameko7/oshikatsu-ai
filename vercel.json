@@ -1,7 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-
   "redirects": [
     {
       "source": "/(.*)",
@@ -18,27 +17,128 @@
       "source": "/article/:slug",
       "destination": "/article?id=:slug",
       "permanent": true
+    },
+    {
+      "source": "/article_fixed",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article_seo_links_related",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article-001",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article-002",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article-003",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article-004",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/terms_affiliate_final",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/goods-budget-list",
+      "destination": "/kakeibo",
+      "permanent": true
+    },
+    {
+      "source": "/live-expedition-saving",
+      "destination": "/saving",
+      "permanent": true
+    },
+    {
+      "source": "/oshikatsu-budget-start",
+      "destination": "/fund",
+      "permanent": true
+    },
+    {
+      "source": "/sim-saving-for-oshi",
+      "destination": "/saving",
+      "permanent": true
     }
   ],
-
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/sitemap-pages.xml", "destination": "/api/sitemap-pages" },
-    { "source": "/sitemap-articles-:page.xml", "destination": "/api/sitemap-articles?page=:page" },
-
-    { "source": "/article", "destination": "/article.html" },
-    { "source": "/articles", "destination": "/articles.html" },
-    { "source": "/categories", "destination": "/categories.html" },
-
-    { "source": "/fund", "destination": "/fund.html" },
-    { "source": "/saving", "destination": "/saving.html" },
-    { "source": "/transport", "destination": "/transport.html" },
-    { "source": "/yearly", "destination": "/yearly.html" },
-    { "source": "/kakeibo", "destination": "/kakeibo.html" },
-
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/sitemap-pages.xml",
+      "destination": "/api/sitemap-pages"
+    },
+    {
+      "source": "/sitemap-articles-:page.xml",
+      "destination": "/api/sitemap-articles?page=:page"
+    },
+    {
+      "source": "/article",
+      "destination": "/api/article-page"
+    },
+    {
+      "source": "/articles",
+      "destination": "/articles.html"
+    },
+    {
+      "source": "/categories",
+      "destination": "/categories.html"
+    },
+    {
+      "source": "/fund",
+      "destination": "/fund.html"
+    },
+    {
+      "source": "/saving",
+      "destination": "/saving.html"
+    },
+    {
+      "source": "/transport",
+      "destination": "/transport.html"
+    },
+    {
+      "source": "/yearly",
+      "destination": "/yearly.html"
+    },
+    {
+      "source": "/kakeibo",
+      "destination": "/kakeibo.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    }
   ]
 }
