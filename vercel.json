@@ -12,14 +12,13 @@
       ],
       "destination": "https://www.oshikatsu-kakeibo.com/$1",
       "permanent": true
-    },
-    {
-      "source": "/article.html",
-      "destination": "/articles",
-      "permanent": true
     }
   ],
   "rewrites": [
+    {
+      "source": "/article.html",
+      "destination": "/api/article-page"
+    },
     {
       "source": "/article/:slug",
       "destination": "/api/article-page?id=:slug"
@@ -42,7 +41,7 @@
     },
     {
       "source": "/articles",
-      "destination": "/articles.html"
+      "destination": "/api/articles-page"
     },
     {
       "source": "/categories",
