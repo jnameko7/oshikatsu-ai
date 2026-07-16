@@ -1,8 +1,11 @@
 const SITE = "https://www.oshikatsu-kakeibo.com";
 
 export default async function handler(req, res) {
-  const key = String(req.query.id || "").trim();
-  if (!key) return send404(res);
+  // /article?id=slug と /article/slug の両方に対応。
+  // IDがない場合や不正な値の場合は、最新記事へフォールバックせず必ず404を返します。
+  const rawKey = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id;
+  const key = normalize(rawKey);
+  if (!key || key === "undefined" || key === "null") return send404(res);
 
   const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
   const apiKey = process.env.MICROCMS_API_KEY;
@@ -18,7 +21,7 @@ export default async function handler(req, res) {
       const d = a.publishDate || a["予約公開日時"] || a.publishedAt || a.createdAt;
       return !d || new Date(d).getTime() <= now;
     });
-    const article = list.find(a => [a.slug,a.urlSlug,a.url_slug,a.permalink,a.id].filter(Boolean).some(v => normalize(v) === normalize(key)));
+    const article = list.find(a => articleKeys(a).includes(key));
     if (!article) return send404(res);
 
     const html = renderArticle(article, list);
@@ -54,7 +57,23 @@ function articleCss(){return `.ssr-article{width:min(920px,calc(100% - 24px));ma
 function headings(html){const out=[];for(const m of html.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi)){out.push(text(m[1]));if(out.length===4)break;}return out.length?out:["記事の要点","初心者向けの実践方法","注意点と確認事項"]}
 function sanitize(v){return String(v||"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/\son\w+\s*=\s*(["']).*?\1/gi,"").replace(/javascript:/gi,"")}
 function imageUrl(v){return typeof v==='string'?v:(v&&v.url)||""}
-function normalize(v){return String(v||"").trim().replace(/^\/+|\/+$/g,"").replace(/^article\//,"")}
+function normalize(v){
+  let value = String(v || "").trim();
+  if (!value) return "";
+  try { value = decodeURIComponent(value); } catch {}
+  // permalinkに完全URLが入っている場合もslugだけを比較する。
+  try {
+    if (/^https?:\/\//i.test(value)) {
+      const url = new URL(value);
+      value = url.searchParams.get("id") || url.pathname;
+    }
+  } catch {}
+  value = value.split("#")[0].split("?")[0];
+  return value.trim().replace(/^\/+|\/+$/g, "").replace(/^article\//, "");
+}
+function articleKeys(article){
+  return [...new Set([article.slug,article.urlSlug,article.url_slug,article.permalink,article.id].map(normalize).filter(Boolean))];
+}
 function text(v){return String(v||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()}
 function esc(v){return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 function attr(v){return esc(v)}
