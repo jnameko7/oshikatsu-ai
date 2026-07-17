@@ -92,8 +92,10 @@ function renderArticle(article, pool) {
   const desc = plain(article.seoDescription || article.description || article.summary || article.excerpt || title).slice(0, 160);
   const slug = normalize(article.slug || article.urlSlug || article.url_slug || article.permalink || article.id);
   const canonical = `${SITE}/article?id=${encodeURIComponent(slug)}`;
-  const rawBody = article.body || article.content || article.articleBody || article.contentHtml || article.articleHtml || "<p>本文がありません。</p>";
-  const body = sanitize(rawBody);
+  // microCMS側で本文フィールド名が記事ごとに異なっても、最も内容量の多い本文を採用する。
+  // `body` に導入文だけ、`content` に全文が入っている旧記事にも対応。
+  const rawBody = selectFullArticleBody(article);
+  const body = sanitize(formatRichBody(rawBody));
   const image = imageUrl(article.thumbnail || article.image || article.eyecatch) || article.thumbnailUrl || article.imageUrl || "";
   const category = label(article.category || article.genre) || "推し活コラム";
   const tags = getTags(article);
@@ -132,6 +134,85 @@ function renderArticle(article, pool) {
   };
 
   return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}｜推し活資金AI</title><meta name="description" content="${attr(desc)}"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="${attr(canonical)}"><meta property="og:type" content="article"><meta property="og:title" content="${attr(title)}"><meta property="og:description" content="${attr(desc)}"><meta property="og:url" content="${attr(canonical)}">${image ? `<meta property="og:image" content="${attr(image)}">` : ""}<link rel="stylesheet" href="/style.css">${analytics()}<script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-6088406710027099" crossorigin="anonymous"></script><script type="application/ld+json">${json(articleLd)}</script><script type="application/ld+json">${json(breadcrumbLd)}</script><style>${articleCss()}</style></head><body>${header()}<main class="ssr-article"><article>${image ? `<img class="ssr-eye" src="${attr(image)}" alt="${attr(title)}" fetchpriority="high">` : ""}<div class="ssr-inner"><nav class="ssr-breadcrumb"><a href="/">ホーム</a><span>›</span><a href="/articles">お役立ち記事</a><span>›</span><span>${esc(title)}</span></nav><div class="ssr-category">♡ ${esc(category)}</div>${tags.length ? `<div class="ssr-tags">${tags.map(t => `<a href="/articles?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>` : ""}<h1>${esc(title)}</h1><div class="ssr-meta">${published ? `<span>公開日：${date(published)}</span>` : ""}${updated ? `<span>更新日：${date(updated)}</span>` : ""}<span>読了目安：約${readMinutes}分</span></div><section class="ssr-learn"><h2>この記事でわかること</h2><ul>${headings(bodyWithIds).map(h => `<li>${esc(h)}</li>`).join("")}</ul></section>${toc}<div class="ssr-body">${bodyWithTool}</div><section class="ssr-tool-bottom"><div><span>この記事におすすめの無料ツール</span><h2>${esc(tool.name)}</h2><p>${esc(tool.description)}</p></div><a href="${tool.href}">${esc(tool.button)} →</a></section><section class="ssr-author"><h2>この記事を書いた人</h2><h3>推し活資金AI編集部</h3><p>ライブ遠征、ホテル、交通費、チケット、夜行バス、推し活の節約方法を中心に、初心者にも実践しやすい情報を発信しています。公式サイトや運営会社の情報を確認し、必要に応じて内容を見直しています。</p><a href="/about">編集方針・運営者情報を見る →</a></section>${related.length ? `<section class="ssr-related"><h2>あわせて読みたい記事</h2><div>${related.map(relatedCard).join("")}</div></section>` : ""}</div></article></main>${footer()}${stickyTools(tool)}${affiliateCardsScript()}</body></html>`;
+}
+
+
+function selectFullArticleBody(article) {
+  const keys = [
+    "content", "body", "articleBody", "mainText", "text", "html",
+    "contentHtml", "articleHtml", "bodyHtml", "rawBody", "markdown", "value",
+    "本文", "記事本文", "本文HTML", "contents"
+  ];
+
+  const candidates = keys
+    .map(key => ({ key, value: richValue(article && article[key]) }))
+    .filter(item => item.value && plain(item.value).length > 0);
+
+  if (!candidates.length) return "<p>本文がありません。</p>";
+
+  // 見出し数・文字数・HTML構造を総合して「全文らしい」候補を選ぶ。
+  candidates.sort((a, b) => bodyScore(b.value) - bodyScore(a.value));
+  return candidates[0].value;
+}
+
+function bodyScore(value) {
+  const html = String(value || "");
+  const textLength = plain(html).length;
+  const h2Count = (html.match(/<h2\b/gi) || []).length;
+  const h3Count = (html.match(/<h3\b/gi) || []).length;
+  const paragraphCount = (html.match(/<p\b/gi) || []).length;
+  return textLength + h2Count * 1500 + h3Count * 500 + paragraphCount * 30;
+}
+
+function richValue(value) {
+  if (value == null) return "";
+  if (typeof value === "string") return decodeEntities(value.trim());
+  if (Array.isArray(value)) return value.map(richValue).filter(Boolean).join("\n");
+  if (typeof value === "object") {
+    for (const key of ["html", "value", "content", "body", "text", "richText"]) {
+      const found = richValue(value[key]);
+      if (found) return found;
+    }
+  }
+  return "";
+}
+
+function decodeEntities(value) {
+  let text = String(value || "");
+  // HTML全体がエスケープされた旧データだけを復元する。
+  if (!/&lt;\/?(?:h[1-6]|p|div|ul|ol|li|table|blockquote|img|a)\b/i.test(text)) return text;
+  const entities = { "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&amp;": "&" };
+  for (let i = 0; i < 2; i += 1) {
+    const decoded = text.replace(/&(lt|gt|quot|#39|amp);/g, match => entities[match] || match);
+    if (decoded === text) break;
+    text = decoded;
+  }
+  return text;
+}
+
+function formatRichBody(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "<p>本文がありません。</p>";
+  if (/<\/?(?:h[1-6]|p|div|ul|ol|li|table|blockquote|img|a|iframe|br)\b/i.test(raw)) return raw;
+
+  // プレーンテキスト／Markdown形式の記事も最低限読みやすいHTMLへ変換。
+  return esc(raw)
+    .replace(/^###\s+(.+)$/gm, "<h3>$1</h3>")
+    .replace(/^##\s+(.+)$/gm, "<h2>$1</h2>")
+    .replace(/^#\s+(.+)$/gm, "<h2>$1</h2>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .split(/\n{2,}/)
+    .map(block => {
+      const text = block.trim();
+      if (!text) return "";
+      if (/^<h[23]>/.test(text)) return text;
+      if (/^(?:[-・]\s+.+(?:\n|$))+/.test(text)) {
+        const items = text.split("\n").filter(Boolean).map(line => line.replace(/^[-・]\s+/, ""));
+        return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+      }
+      return `<p>${text.replace(/\n/g, "<br>")}</p>`;
+    })
+    .join("");
 }
 
 function chooseTool(text) {
