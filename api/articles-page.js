@@ -1,6 +1,6 @@
 const SITE = "https://www.oshikatsu-kakeibo.com";
+const PER_PAGE = 20;
 const GA_ID = "G-3CGGLYQE0X";
-const PAGE_SIZE = 20;
 
 export default async function handler(req, res) {
   const config = getConfig();
@@ -9,130 +9,38 @@ export default async function handler(req, res) {
     const all = await fetchAllArticles(config);
     const q = single(req.query.q).trim();
     const tag = single(req.query.tag).trim();
-    const requestedPage = Math.max(1, Number.parseInt(single(req.query.page), 10) || 1);
-    const filtered = all.filter(article => matches(article, q, tag));
-    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-    const page = Math.min(requestedPage, totalPages);
-    const start = (page - 1) * PAGE_SIZE;
-    const list = filtered.slice(start, start + PAGE_SIZE);
-
+    const page = Math.max(1, Number(single(req.query.page)) || 1);
+    const filtered = all.filter(a => matches(a, q, tag));
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+    const safePage = Math.min(page, totalPages);
+    const list = filtered.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE);
+    const html = renderPage({ all, list, q, tag, page:safePage, totalPages, total:filtered.length });
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=86400");
-    return res.status(200).send(renderPage({ all, list, q, tag, page, totalPages, total: filtered.length }));
+    return res.status(200).send(html);
   } catch (error) {
-    console.error("articles SSR error", error);
+    console.error(error);
     return res.status(500).send(errorPage("記事一覧の表示中にエラーが発生しました"));
   }
 }
-
-function getConfig() {
-  const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN;
-  const apiKey = process.env.MICROCMS_API_KEY;
-  return serviceDomain && apiKey ? { serviceDomain, apiKey } : null;
-}
-
-async function fetchAllArticles({ serviceDomain, apiKey }) {
-  const limit = 100;
-  const all = [];
-  let offset = 0;
-  let total = Infinity;
-  while (offset < total) {
-    const endpoint = `https://${serviceDomain}.microcms.io/api/v1/articles?limit=${limit}&offset=${offset}&orders=-publishedAt`;
-    const response = await fetch(endpoint, { headers: { "X-MICROCMS-API-KEY": apiKey } });
-    if (!response.ok) throw new Error(`microCMS ${response.status}`);
-    const data = await response.json();
-    const contents = Array.isArray(data.contents) ? data.contents : [];
-    all.push(...contents);
-    total = Number(data.totalCount ?? all.length);
-    if (!contents.length) break;
-    offset += contents.length;
-  }
-  const now = Date.now();
-  return all.filter(article => {
-    const published = article.publishDate || article["予約公開日時"] || article.publishedAt || article.createdAt;
-    return !published || new Date(published).getTime() <= now;
-  });
-}
-
-function renderPage({ all, list, q, tag, page, totalPages, total }) {
-  const tags = allTags(all);
-  const hasFilter = Boolean(q || tag);
-  const canonical = hasFilter ? `${SITE}/articles` : `${SITE}/articles${page > 1 ? `?page=${page}` : ""}`;
-  const robots = q ? "noindex,follow" : "index,follow,max-image-preview:large";
-  const title = q ? `「${q}」の検索結果` : tag ? `「${tag}」の記事` : page > 1 ? `お役立ち記事 ${page}ページ目` : "お役立ち記事";
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}｜推し活資金AI</title><meta name="description" content="推し活、ライブ遠征、ホテル、夜行バス、節約、家計管理のお役立ち記事をまとめています。"><meta name="robots" content="${robots}"><link rel="canonical" href="${attr(canonical)}"><meta property="og:type" content="website"><meta property="og:title" content="お役立ち記事｜推し活資金AI"><meta property="og:url" content="${attr(canonical)}"><link rel="stylesheet" href="/style.css">${analytics()}<script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-6088406710027099" crossorigin="anonymous"></script><style>${pageCss()}</style></head><body>${header()}<main><section class="blog-hero"><div class="container"><div class="blog-hero-box"><h1>推し活・遠征・節約のお役立ち記事</h1><p>ライブ遠征、ホテル、夜行バス、チケット、節約などの記事を、読み込み待ちなしで表示します。</p></div></div></section><section class="section"><div class="container"><form class="ssr-article-tools" method="get" action="/articles"><input name="q" type="search" value="${attr(q)}" placeholder="記事を検索する"><button type="submit">検索</button>${hasFilter ? '<a href="/articles">条件をクリア</a>' : ""}</form>${tags.length ? `<nav class="ssr-tags" aria-label="タグで絞り込み"><a class="${!tag ? "active" : ""}" href="/articles">すべて</a>${tags.map(item => `<a class="${tag === item ? "active" : ""}" href="/articles?tag=${encodeURIComponent(item)}">${esc(item)}</a>`).join("")}</nav>` : ""}<div class="ssr-list-head"><h2>${esc(title)}</h2><span>${total}件</span></div><div class="blog-grid ssr-blog-grid">${list.length ? list.map(card).join("") : '<p class="ssr-empty">該当する記事がありません。</p>'}</div>${pagination(page, totalPages, q, tag)}</div></section></main>${footer()}</body></html>`;
-}
-
-function card(article) {
-  const title = plain(article.title || article.name || "記事タイトル");
-  const desc = plain(article.lead || article.intro || article.excerpt || article.summary || article.description || "").slice(0, 100);
-  const category = label(article.category || article.genre) || "推し活コラム";
-  const published = article.publishDate || article["予約公開日時"] || article.publishedAt || article.createdAt || "";
-  const image = imageUrl(article.thumbnail || article.image || article.eyecatch) || article.thumbnailUrl || article.imageUrl || "";
-  const slug = normalize(article.slug || article.urlSlug || article.url_slug || article.permalink || article.id);
-  const tags = getTags(article);
-  return `<article class="article-card blog-card">${image ? `<a href="/article?id=${encodeURIComponent(slug)}"><img src="${attr(image)}" alt="${attr(title)}" loading="lazy" decoding="async"></a>` : ""}<div class="article-card-body blog-card-body"><span class="article-category">${esc(category)}</span><h2><a href="/article?id=${encodeURIComponent(slug)}">${esc(title)}</a></h2>${published ? `<p class="article-date">${date(published)}</p>` : ""}${desc ? `<p>${esc(desc)}</p>` : ""}${tags.length ? `<div class="article-card-tags">${tags.map(item => `<a class="article-card-tag" href="/articles?tag=${encodeURIComponent(item)}">${esc(item)}</a>`).join("")}</div>` : ""}</div></article>`;
-}
-
-function pagination(page, totalPages, q, tag) {
-  if (totalPages <= 1) return "";
-  const items = [];
-  let gap = false;
-  for (let i = 1; i <= totalPages; i += 1) {
-    if (i === 1 || i === totalPages || Math.abs(i - page) <= 2) {
-      const params = new URLSearchParams();
-      if (q) params.set("q", q);
-      if (tag) params.set("tag", tag);
-      if (i > 1) params.set("page", String(i));
-      items.push(`<a class="${i === page ? "active" : ""}" href="/articles${params.toString() ? `?${params.toString()}` : ""}">${i}</a>`);
-      gap = false;
-    } else if (!gap) {
-      items.push("<span>…</span>");
-      gap = true;
-    }
-  }
-  return `<nav class="article-pagination" aria-label="ページ送り">${items.join("")}</nav>`;
-}
-
-function matches(article, q, tag) {
-  const tags = getTags(article);
-  if (tag && !tags.includes(tag)) return false;
-  if (!q) return true;
-  const haystack = [article.title, article.description, article.summary, article.excerpt, article.lead, article.slug, article.id, label(article.category), tags.join(" ")].map(plain).join(" ").toLowerCase();
-  return haystack.includes(q.toLowerCase());
-}
-
-function allTags(list) {
-  const values = new Set();
-  list.forEach(article => getTags(article).forEach(tag => values.add(tag)));
-  return [...values].sort((a, b) => a.localeCompare(b, "ja")).slice(0, 30);
-}
-function getTags(article) {
-  const raw = article && article.tags;
-  if (!raw) return [];
-  const values = Array.isArray(raw) ? raw : typeof raw === "string" ? raw.split(/[、,\s]+/) : [raw];
-  return [...new Set(values.map(label).filter(Boolean))];
-}
-function label(value) { return typeof value === "object" && value ? plain(value.name || value.label || value.title || value.value || value.id || "") : plain(value); }
-function imageUrl(value) { return typeof value === "string" ? value : (value && value.url) || ""; }
-function normalize(value) {
-  let result = String(value || "").trim();
-  try { result = decodeURIComponent(result); } catch {}
-  try {
-    if (/^https?:\/\//i.test(result)) {
-      const url = new URL(result);
-      result = url.searchParams.get("id") || url.pathname;
-    }
-  } catch {}
-  return result.replace(/^\/+|\/+$/g, "").replace(/^article(?:\.html)?\//i, "").replace(/\.html?$/i, "");
-}
-function single(value) { return Array.isArray(value) ? String(value[0] || "") : String(value || ""); }
-function plain(value) { return String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(); }
-function esc(value) { return String(value || "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]); }
-function attr(value) { return esc(value); }
-function date(value) { try { return new Intl.DateTimeFormat("ja-JP").format(new Date(value)); } catch { return ""; } }
-function analytics() { return `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');</script>`; }
-function header() { return `<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>`; }
-function footer() { return `<footer class="topv3-footer"><div class="topv3-container topv3-footer-grid"><div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p></div><div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div><div><h3>お役立ち情報</h3><p><a href="/articles">記事一覧</a></p><p><a href="/categories">カテゴリ一覧</a></p></div><div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div></div><p class="topv3-copy">© 2026 推し活資金AI</p></footer>`; }
-function pageCss() { return `.ssr-article-tools{display:flex;gap:10px;max-width:720px;margin:0 auto 18px}.ssr-article-tools input{flex:1;min-width:0;padding:14px 16px;border:1px solid #ffd1e5;border-radius:14px}.ssr-article-tools button,.ssr-article-tools a{display:grid;place-items:center;border:0;border-radius:14px;padding:0 18px;background:#ef5b91;color:#fff;text-decoration:none;font-weight:800}.ssr-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}.ssr-tags a{padding:7px 12px;border:1px solid #ffd1e5;border-radius:999px;background:#fff;color:#c92f78;text-decoration:none;font-size:13px;font-weight:700}.ssr-tags a.active{background:#ef5b91;color:#fff}.ssr-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.ssr-blog-grid .article-card h2 a{color:inherit;text-decoration:none}.ssr-blog-grid .article-card-tag{display:inline-block;margin:4px 4px 0 0;padding:5px 9px;border-radius:999px;background:#fff0f7;color:#c92f78;text-decoration:none;font-size:12px}.article-pagination{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:32px}.article-pagination a,.article-pagination span{display:grid;place-items:center;min-width:38px;height:38px;padding:0 8px;border:1px solid #ffd1e5;border-radius:10px;text-decoration:none}.article-pagination a.active{background:#ef5b91;color:#fff}.ssr-empty{grid-column:1/-1;text-align:center;padding:40px}@media(max-width:640px){.ssr-article-tools{display:grid;grid-template-columns:1fr auto}.ssr-article-tools a{grid-column:1/-1;padding:10px}.ssr-tags{max-height:150px;overflow:auto}}`; }
-function errorPage(message) { return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>${esc(message)}｜推し活資金AI</title><link rel="stylesheet" href="/style.css"></head><body><main style="max-width:720px;margin:80px auto;padding:24px;text-align:center"><h1>${esc(message)}</h1><p><a href="/">ホームへ戻る</a></p></main></body></html>`; }
+function getConfig(){const serviceDomain=process.env.MICROCMS_SERVICE_DOMAIN;const apiKey=process.env.MICROCMS_API_KEY;return serviceDomain&&apiKey?{serviceDomain,apiKey}:null}
+async function fetchAllArticles({serviceDomain,apiKey}){const limit=100;const all=[];let offset=0,total=Infinity;while(offset<total){const url=`https://${serviceDomain}.microcms.io/api/v1/articles?limit=${limit}&offset=${offset}&orders=-publishedAt`;const r=await fetch(url,{headers:{"X-MICROCMS-API-KEY":apiKey}});if(!r.ok)throw new Error(`microCMS ${r.status}`);const d=await r.json();const c=Array.isArray(d.contents)?d.contents:[];all.push(...c);total=Number(d.totalCount??all.length);if(!c.length)break;offset+=c.length}const now=Date.now();return all.filter(a=>{const d=a.publishDate||a["予約公開日時"]||a.publishedAt||a.createdAt;return !d||new Date(d).getTime()<=now})}
+function renderPage({all,list,q,tag,page,totalPages,total}){const tags=allTags(all);const hasFilter=Boolean(q||tag);const canonical=hasFilter?`${SITE}/articles`:`${SITE}/articles${page>1?`?page=${page}`:""}`;const robots=q?"noindex,follow":"index,follow,max-image-preview:large";return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${hasFilter?`${esc(q||tag)}の記事検索｜`:page>1?`お役立ち記事 ${page}ページ目｜`:"お役立ち記事｜"}推し活資金AI</title><meta name="description" content="推し活、ライブ遠征、ホテル、夜行バス、節約、家計管理のお役立ち記事をまとめています。"><meta name="robots" content="${robots}"><link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:title" content="お役立ち記事｜推し活資金AI"><meta property="og:url" content="${canonical}"><link rel="stylesheet" href="/style.css">${analytics()}<script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-6088406710027099" crossorigin="anonymous"></script><style>${pageCss()}</style></head><body>${header()}<main><section class="blog-hero"><div class="container"><div class="blog-hero-box"><h1>推し活・遠征・節約のお役立ち記事</h1><p>推し活、ライブ遠征、ホテル、夜行バス、節約、家計管理に役立つ記事をまとめています。</p></div></div></section><section class="section"><div class="container"><form class="ssr-article-tools" method="get" action="/articles"><input name="q" type="search" value="${attr(q)}" placeholder="記事を検索する"><button type="submit">検索</button>${hasFilter?'<a href="/articles">条件をクリア</a>':''}</form>${tags.length?`<nav class="ssr-tags" aria-label="タグで絞り込み"><a class="${!tag?"active":""}" href="/articles">すべて</a>${tags.map(t=>`<a class="${tag===t?"active":""}" href="/articles?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</nav>`:""}<div class="ssr-list-head"><h2>${tag?`「${esc(tag)}」の記事`:q?`「${esc(q)}」の検索結果`:"最新記事"}</h2><span>${total}件</span></div><div class="blog-grid ssr-blog-grid">${list.length?list.map(card).join(""):'<p class="ssr-empty">該当する記事がありません。</p>'}</div>${pagination(page,totalPages,q,tag)}</div></section></main>${footer()}</body></html>`}
+function card(a){const title=plain(a.title||a.name||"記事タイトル");const desc=plain(a.lead||a.intro||a.excerpt||a.summary||a.description||"").slice(0,100);const cat=label(a.category||a.genre)||"推し活コラム";const dt=a.publishDate||a["予約公開日時"]||a.publishedAt||a.createdAt||"";const img=imageUrl(a.thumbnail||a.image||a.eyecatch)||a.thumbnailUrl||a.imageUrl||"";const slug=normalize(a.slug||a.urlSlug||a.url_slug||a.permalink||a.id);const tags=getTags(a);return `<article class="article-card blog-card">${img?`<a href="/article?id=${encodeURIComponent(slug)}"><img src="${attr(img)}" alt="${attr(title)}" loading="lazy"></a>`:""}<div class="article-card-body blog-card-body"><span class="article-category">${esc(cat)}</span><h2><a href="/article?id=${encodeURIComponent(slug)}">${esc(title)}</a></h2>${dt?`<p class="article-date">${date(dt)}</p>`:""}${desc?`<p>${esc(desc)}</p>`:""}${tags.length?`<div class="article-card-tags">${tags.map(t=>`<a class="article-card-tag" href="/articles?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>`:""}</div></article>`}
+function pagination(page,totalPages,q,tag){if(totalPages<=1)return"";const items=[];for(let i=1;i<=totalPages;i++){if(i===1||i===totalPages||Math.abs(i-page)<=2){const params=new URLSearchParams();if(q)params.set("q",q);if(tag)params.set("tag",tag);if(i>1)params.set("page",String(i));const href="/articles"+(params.toString()?`?${params}`:"");items.push(`<a class="${i===page?"active":""}" href="${href}">${i}</a>`)}else if(items[items.length-1]!=="<span>…</span>")items.push("<span>…</span>")}return `<nav class="article-pagination" aria-label="ページ送り">${items.join("")}</nav>`}
+function matches(a,q,tag){const tags=getTags(a);if(tag&&!tags.includes(tag))return false;if(!q)return true;const hay=[a.title,a.description,a.summary,a.excerpt,a.lead,a.slug,a.id,label(a.category),tags.join(" ")].map(plain).join(" ").toLowerCase();return hay.includes(q.toLowerCase())}
+function allTags(list){const s=new Set();list.forEach(a=>getTags(a).forEach(t=>s.add(t)));return [...s].sort((a,b)=>a.localeCompare(b,"ja")).slice(0,30)}
+function getTags(a){const raw=a&&a.tags;if(!raw)return[];const arr=Array.isArray(raw)?raw:typeof raw==="string"?raw.split(/[、,\s]+/):[raw];return [...new Set(arr.map(label).filter(Boolean))]}
+function label(v){if(!v)return"";if(typeof v==="object")return plain(v.name||v.label||v.title||v.value||v.id||"");return plain(v)}
+function imageUrl(v){return typeof v==="string"?v:(v&&v.url)||""}
+function normalize(v){let s=String(v||"").trim();try{s=decodeURIComponent(s)}catch{}return s.replace(/^https?:\/\/[^/]+/i,"").replace(/^\/?article(?:\.html)?\/?/i,"").replace(/^\/+|\/+$/g,"").replace(/\.html?$/i,"")}
+function single(v){return Array.isArray(v)?String(v[0]||""):String(v||"")}
+function plain(v){return String(v||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()}
+function esc(v){return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function attr(v){return esc(v)}
+function date(v){try{return new Intl.DateTimeFormat("ja-JP").format(new Date(v))}catch{return""}}
+function analytics(){return `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');</script>`}
+function header(){return `<header class="header"><div class="container header-inner"><a class="logo" href="/"><span class="heart">♥</span><span><strong>推し活資金AI</strong><small>推しを諦めないためのお金管理AI</small></span></a><nav class="nav"><a href="/">ホーム</a><a href="/fund">診断ツール</a><a href="/transport">遠征プランナー</a><a href="/yearly">目標シミュレーター</a><a href="/kakeibo">推し活家計簿</a><a class="active" href="/articles">お役立ち記事</a></nav><a class="cta" href="/fund">すべて無料で使えます</a></div></header>`}
+function footer(){return `<footer class="topv3-footer"><div class="topv3-container topv3-footer-grid"><div><h2>推し活資金AI</h2><p>推しを諦めないためのお金管理AI</p></div><div><h3>サービス</h3><p><a href="/fund">推し活資金診断</a></p><p><a href="/saving">娯楽費捻出診断</a></p><p><a href="/transport">遠征プランナー</a></p><p><a href="/yearly">目標シミュレーター</a></p><p><a href="/kakeibo">推し活家計簿</a></p></div><div><h3>お役立ち情報</h3><p><a href="/articles">記事一覧</a></p><p><a href="/categories">カテゴリ一覧</a></p></div><div><h3>運営について</h3><p><a href="/terms">利用規約</a></p><p><a href="/privacy">プライバシーポリシー</a></p><p><a href="/contact">お問い合わせ</a></p><p><a href="/about">運営者情報</a></p><p><a href="/sitemap.xml">サイトマップ</a></p></div></div><p class="topv3-copy">© 2026 推し活資金AI</p></footer>`}
+function pageCss(){return `.ssr-article-tools{display:flex;gap:10px;max-width:720px;margin:0 auto 18px}.ssr-article-tools input{flex:1;min-width:0;padding:14px 16px;border:1px solid #ffd1e5;border-radius:14px}.ssr-article-tools button,.ssr-article-tools a{display:grid;place-items:center;border:0;border-radius:14px;padding:0 18px;background:#ef5b91;color:#fff;text-decoration:none;font-weight:800}.ssr-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}.ssr-tags a{padding:7px 12px;border:1px solid #ffd1e5;border-radius:999px;background:#fff;color:#c92f78;text-decoration:none;font-size:13px;font-weight:700}.ssr-tags a.active{background:#ef5b91;color:#fff}.ssr-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.ssr-blog-grid .article-card h2 a{color:inherit;text-decoration:none}.ssr-blog-grid .article-card-tag{display:inline-block;margin:4px 4px 0 0;padding:5px 9px;border-radius:999px;background:#fff0f7;color:#c92f78;text-decoration:none;font-size:12px}.article-pagination{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:32px}.article-pagination a,.article-pagination span{display:grid;place-items:center;min-width:38px;height:38px;padding:0 8px;border:1px solid #ffd1e5;border-radius:10px;text-decoration:none}.article-pagination a.active{background:#ef5b91;color:#fff}.ssr-empty{grid-column:1/-1;text-align:center;padding:40px}@media(max-width:640px){.ssr-article-tools{display:grid;grid-template-columns:1fr auto}.ssr-article-tools a{grid-column:1/-1;padding:10px}.ssr-tags{max-height:150px;overflow:auto}}`}
+function errorPage(msg){return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>${esc(msg)}｜推し活資金AI</title><link rel="stylesheet" href="/style.css"></head><body><main style="max-width:720px;margin:80px auto;padding:24px;text-align:center"><h1>${esc(msg)}</h1><p><a href="/">ホームへ戻る</a></p></main></body></html>`}
