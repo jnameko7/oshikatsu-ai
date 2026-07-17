@@ -154,7 +154,7 @@ function addHeadingIds(html) {
 function buildToc(html) {
   const items = [];
   for (const match of String(html || "").matchAll(/<h2[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h2>/gi)) {
-    items.push({ id: match[1], text: text(match[2]) });
+    items.push({ id: match[1], text: plain(match[2]) });
   }
   if (!items.length) return "";
   return `<nav class="ssr-toc" aria-label="目次"><h2>目次</h2><ol>${items.map(item => `<li><a href="#${attr(item.id)}">${esc(item.text)}</a></li>`).join("")}</ol></nav>`;
