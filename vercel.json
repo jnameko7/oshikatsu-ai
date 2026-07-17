@@ -4,31 +4,93 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "oshikatsu-ai.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "oshikatsu-ai.vercel.app"
+        }
+      ],
       "destination": "https://www.oshikatsu-kakeibo.com/$1",
       "permanent": true
     },
-    { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/articles.html", "destination": "/articles", "permanent": true },
-    { "source": "/article.html", "destination": "/article", "permanent": true }
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/", "destination": "/api/home-page" },
-    { "source": "/articles", "destination": "/api/articles-page" },
-    { "source": "/article/:slug", "destination": "/api/article-page?id=:slug" },
-    { "source": "/article", "destination": "/api/article-page" },
-    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
-    { "source": "/sitemap-pages.xml", "destination": "/api/sitemap-pages" },
-    { "source": "/sitemap-articles-:page.xml", "destination": "/api/sitemap-articles?page=:page" },
-    { "source": "/categories", "destination": "/categories.html" },
-    { "source": "/fund", "destination": "/fund.html" },
-    { "source": "/saving", "destination": "/saving.html" },
-    { "source": "/transport", "destination": "/transport.html" },
-    { "source": "/yearly", "destination": "/yearly.html" },
-    { "source": "/kakeibo", "destination": "/kakeibo.html" },
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+    {
+      "source": "/",
+      "destination": "/api/home-page"
+    },
+    {
+      "source": "/article.html",
+      "destination": "/api/article-page"
+    },
+    {
+      "source": "/article/:slug",
+      "destination": "/api/article-page?id=:slug"
+    },
+    {
+      "source": "/article",
+      "destination": "/api/article-page"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/sitemap-pages.xml",
+      "destination": "/api/sitemap-pages"
+    },
+    {
+      "source": "/sitemap-articles-:page.xml",
+      "destination": "/api/sitemap-articles?page=:page"
+    },
+    {
+      "source": "/articles",
+      "destination": "/api/articles-page"
+    },
+    {
+      "source": "/categories",
+      "destination": "/categories.html"
+    },
+    {
+      "source": "/fund",
+      "destination": "/fund.html"
+    },
+    {
+      "source": "/saving",
+      "destination": "/saving.html"
+    },
+    {
+      "source": "/transport",
+      "destination": "/transport.html"
+    },
+    {
+      "source": "/yearly",
+      "destination": "/yearly.html"
+    },
+    {
+      "source": "/kakeibo",
+      "destination": "/kakeibo.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    }
   ]
 }
