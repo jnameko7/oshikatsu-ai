@@ -1,5 +1,5 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "redirects": [
     {
@@ -16,6 +16,66 @@
     {
       "source": "/index.html",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/articles.html",
+      "destination": "/articles",
+      "permanent": true
+    },
+    {
+      "source": "/article.html",
+      "destination": "/article",
+      "permanent": true
+    },
+    {
+      "source": "/fund.html",
+      "destination": "/fund",
+      "permanent": true
+    },
+    {
+      "source": "/saving.html",
+      "destination": "/saving",
+      "permanent": true
+    },
+    {
+      "source": "/transport.html",
+      "destination": "/transport",
+      "permanent": true
+    },
+    {
+      "source": "/yearly.html",
+      "destination": "/yearly",
+      "permanent": true
+    },
+    {
+      "source": "/kakeibo.html",
+      "destination": "/kakeibo",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/categories.html",
+      "destination": "/categories",
       "permanent": true
     }
   ],
