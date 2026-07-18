@@ -42,9 +42,19 @@ export default async function handler(req, res) {
       return new Date(publishDate) <= now;
     });
 
+    res.setHeader("Cache-Control", "no-store, max-age=0");
+    const sortedContents = [...filteredContents].sort((a, b) => {
+      const getTime = article => {
+        const value = article.publishDate || article["予約公開日時"] || article.publishedAt || article.createdAt || article.updatedAt;
+        const time = value ? new Date(value).getTime() : 0;
+        return Number.isNaN(time) ? 0 : time;
+      };
+      return getTime(b) - getTime(a);
+    });
+
     return res.status(200).json({
       ...data,
-      contents: filteredContents
+      contents: sortedContents
     });
 
   } catch (err) {
