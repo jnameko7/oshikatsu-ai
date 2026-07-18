@@ -258,9 +258,63 @@ function insertAffiliateBlocks(html, affiliate) {
 }
 
 function sanitizeAffiliate(value) {
-  return String(value || "")
-    .replace(/<script(?![^>]*src=["']https:\/\/pagead2\.googlesyndication\.com)[\s\S]*?<\/script>/gi, "")
-    .replace(/javascript:/gi, "");
+  let html = decodeAffiliateHtml(value);
+
+  // microCMSやMarkdown経由で付いた不要なエスケープを広告タグ内だけ補正。
+  html = html
+    .replace(/\\([_&/])/g, "$1")
+    .replace(/\b(src|href)=(['"])\/\//gi, '$1=$2https://');
+
+  const allowedScriptHosts = new Set([
+    "ad-verification.a8.net",
+    "www18.a8.net",
+    "ad.jp.ap.valuecommerce.com",
+    "pagead2.googlesyndication.com"
+  ]);
+
+  // 外部scriptは利用中の広告配信元だけ許可する。
+  html = html.replace(/<script\b([^>]*)src=(['"])([^'"]+)\2([^>]*)>[\s\S]*?<\/script>/gi,
+    (full, before, quote, src) => {
+      try {
+        const url = new URL(src, SITE);
+        return url.protocol === "https:" && allowedScriptHosts.has(url.hostname)
+          ? full.replace(/\bsrc=(['"])\/\//i, "src=$1https://")
+          : "";
+      } catch {
+        return "";
+      }
+    }
+  );
+
+  // A8.netのbrandsafe呼び出しだけインラインscriptとして許可する。
+  html = html.replace(/<script\b(?![^>]*\bsrc=)[^>]*>[\s\S]*?<\/script>/gi, script =>
+    /\bbrandsafe_js_async\s*\(/.test(script) &&
+    !/(?:document\.write|eval\s*\(|new\s+Function|fetch\s*\(|XMLHttpRequest|javascript:)/i.test(script)
+      ? script
+      : ""
+  );
+
+  return html
+    .replace(/\son\w+\s*=\s*(["'])[\s\S]*?\1/gi, "")
+    .replace(/javascript\s*:/gi, "");
+}
+
+function decodeAffiliateHtml(value) {
+  let html = String(value || "").trim();
+  if (!html) return "";
+
+  // 広告タグ全体がHTMLエンティティ化されている場合に最大2回復元する。
+  for (let i = 0; i < 2 && /&lt;\/?(?:script|noscript|a|img|div)\b/i.test(html); i += 1) {
+    const decoded = html
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#(?:39|x27);/gi, "'")
+      .replace(/&amp;/gi, "&");
+    if (decoded === html) break;
+    html = decoded;
+  }
+  return html;
 }
 
 function pick(obj, keys) {
