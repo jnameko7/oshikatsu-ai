@@ -142,10 +142,7 @@
 <div class="topv3-section-head"><h2>最新記事</h2><a href="/articles">もっと見る →</a></div>
 <div class="topv3-ranking" id="topArticlesRanking">
 <!-- SSR_RANKING_START -->
-<a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb hotel"></div><div><h3>ライブ遠征費の予算を立てる方法</h3><p><b>遠征費</b><b>ライブ準備</b></p></div><i></i></a>
-<a class="topv3-rank-item" href="/articles"><span>2</span><div class="thumb bus"></div><div><h3>夜行バス遠征の持ち物チェック</h3><p><b>夜行バス</b><b>持ち物</b></p></div><i></i></a>
-<a class="topv3-rank-item" href="/articles"><span>3</span><div class="thumb pouch"></div><div><h3>推し活の出費を無理なく節約するコツ</h3><p><b>節約</b><b>推し活</b></p></div><i></i></a>
-<a class="topv3-rank-item" href="/articles"><span>4</span><div class="thumb train"></div><div><h3>ライブチケットや遠征準備の始め方</h3><p><b>チケット</b><b>初心者</b></p></div><i></i></a>
+<a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb pouch"></div><div><h3>最新記事を確認しています</h3><p><b>推し活</b><b>新着</b></p></div><i></i></a>
 <!-- SSR_RANKING_END -->
 </div>
 </div>
@@ -209,6 +206,92 @@
 <p class="topv3-copy">© 2025 推し活資金AI</p>
 </footer>
 <script src="/common.js"></script>
+
+
+<script>
+(function () {
+  const list = document.getElementById('topArticlesRanking');
+  if (!list) return;
+
+  const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+
+  const plain = (value) => String(value ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
+  const imageUrl = (value) => typeof value === 'string' ? value : (value && value.url) || '';
+
+  const getImage = (article) => {
+    const candidates = [
+      article.thumbnail, article.eyecatch, article.image, article.coverImage,
+      article.mainImage, article.featuredImage, article.ogImage,
+      article.thumbnailUrl, article.imageUrl, article.eyecatchUrl
+    ];
+    for (const value of candidates) {
+      const url = imageUrl(value);
+      if (url) return url;
+    }
+    return '';
+  };
+
+  const getTags = (article) => {
+    const raw = article.tags || article.tag || article.categories || [];
+    const values = Array.isArray(raw) ? raw : String(raw).split(/[、,\s]+/);
+    return values.map(value => {
+      if (value && typeof value === 'object') {
+        return plain(value.name || value.label || value.title || value.value || '');
+      }
+      return plain(value);
+    }).filter(Boolean).slice(0, 2);
+  };
+
+  const articleTime = (article) => {
+    const value = article.publishDate || article['予約公開日時'] || article.publishedAt || article.createdAt || article.updatedAt;
+    const time = value ? new Date(value).getTime() : 0;
+    return Number.isFinite(time) ? time : 0;
+  };
+
+  const slugOf = (article) => String(article.slug || article.urlSlug || article.url_slug || article.permalink || article.id || '').trim();
+
+  fetch('/api/articles?limit=100&offset=0&_=' + Date.now(), { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('記事取得エラー: ' + response.status);
+      return response.json();
+    })
+    .then(data => {
+      const now = Date.now();
+      const articles = (Array.isArray(data.contents) ? data.contents : [])
+        .filter(article => {
+          const value = article.publishDate || article['予約公開日時'] || article.publishedAt || article.createdAt;
+          if (!value) return true;
+          const time = new Date(value).getTime();
+          return !Number.isFinite(time) || time <= now;
+        })
+        .sort((a, b) => articleTime(b) - articleTime(a))
+        .slice(0, 4);
+
+      if (!articles.length) throw new Error('公開記事がありません');
+
+      list.innerHTML = articles.map((article, index) => {
+        const title = plain(article.title || article.name || 'お役立ち記事');
+        const slug = slugOf(article);
+        const href = '/article?id=' + encodeURIComponent(slug);
+        const image = getImage(article);
+        const tags = getTags(article);
+        const thumb = image
+          ? '<div class="thumb"><img src="' + esc(image) + '" alt="' + esc(title) + '" loading="eager" decoding="async"></div>'
+          : '<div class="thumb pouch"></div>';
+        const tagHtml = (tags.length ? tags : ['推し活', '最新記事'])
+          .map(tag => '<b>' + esc(tag) + '</b>').join('');
+        return '<a class="topv3-rank-item" href="' + href + '"><span>' + (index + 1) + '</span>' + thumb + '<div><h3>' + esc(title) + '</h3><p>' + tagHtml + '</p></div><i></i></a>';
+      }).join('');
+    })
+    .catch(error => {
+      console.error('トップ最新記事の取得に失敗しました', error);
+      list.innerHTML = '<a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb pouch"></div><div><h3>最新記事を一覧から見る</h3><p><b>推し活</b><b>記事一覧</b></p></div><i></i></a>';
+    });
+})();
+</script>
 
 </body>
 </html>
