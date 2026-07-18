@@ -8,12 +8,12 @@ export default async function handler(req, res) {
   try {
     let html = fs.readFileSync(TEMPLATE_PATH, "utf8");
     const config = getConfig();
-    const articles = config ? await fetchArticles(config, 12) : [];
+    const articles = config ? await fetchArticles(config, 100) : [];
 
     html = replaceMarker(
       html,
       "SSR_RANKING",
-      articles.length ? articles.slice(0, 6).map(renderRanking).join("") : fallbackRanking()
+      articles.length ? articles.slice(0, 4).map(renderRanking).join("") : fallbackRanking()
     );
     html = replaceMarker(
       html,
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     );
 
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=86400");
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=600");
     return res.status(200).send(html);
   } catch (error) {
     console.error("home-page SSR error", error);
@@ -51,10 +51,25 @@ async function fetchArticles({ serviceDomain, apiKey }, limit) {
   if (!response.ok) throw new Error(`microCMS ${response.status}`);
   const data = await response.json();
   const now = Date.now();
-  return (Array.isArray(data.contents) ? data.contents : []).filter(article => {
-    const published = article.publishDate || article["予約公開日時"] || article.publishedAt || article.createdAt;
-    return !published || new Date(published).getTime() <= now;
-  });
+
+  return (Array.isArray(data.contents) ? data.contents : [])
+    .filter(article => {
+      const published = getEffectivePublishedAt(article);
+      return !published || published <= now;
+    })
+    .sort((a, b) => getEffectivePublishedAt(b) - getEffectivePublishedAt(a));
+}
+
+function getEffectivePublishedAt(article) {
+  const value =
+    article.publishDate ||
+    article["予約公開日時"] ||
+    article.publishedAt ||
+    article.createdAt ||
+    article.updatedAt ||
+    "";
+  const time = value ? new Date(value).getTime() : 0;
+  return Number.isFinite(time) ? time : 0;
 }
 
 function renderRanking(article, index) {
@@ -84,7 +99,7 @@ function replaceMarker(html, name, content) {
 }
 
 function fallbackRanking() {
-  return `<a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb hotel"></div><div><h3>推し活のお役立ち記事を見る</h3><p><b>推し活</b><b>最新記事</b></p></div><i></i></a>`;
+  return `<a class="topv3-rank-item" href="/articles"><span>1</span><div class="thumb hotel"></div><div><h3>最新記事を一覧から見る</h3><p><b>推し活</b><b>最新記事</b></p></div><i></i></a>`;
 }
 
 function fallbackLatest() {
