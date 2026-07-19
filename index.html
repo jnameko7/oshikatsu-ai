@@ -209,6 +209,71 @@
 <script src="/common.js"></script>
 
 
+
+<script>
+(function () {
+  const grid = document.getElementById('topLatestArticles');
+  if (!grid) return;
+
+  const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+  const plain = (value) => String(value ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const imageUrl = (value) => typeof value === 'string' ? value : (value && value.url) || '';
+  const getImage = (article) => {
+    const candidates = [article.thumbnail, article.eyecatch, article.image, article.coverImage, article.mainImage, article.featuredImage, article.ogImage, article.thumbnailUrl, article.imageUrl, article.eyecatchUrl];
+    for (const value of candidates) {
+      const url = imageUrl(value);
+      if (url) return url;
+    }
+    return '';
+  };
+  const articleTime = (article) => {
+    const value = article.publishDate || article['予約公開日時'] || article.publishedAt || article.createdAt || article.updatedAt;
+    const time = value ? new Date(value).getTime() : 0;
+    return Number.isFinite(time) ? time : 0;
+  };
+  const slugOf = (article) => String(article.slug || article.urlSlug || article.url_slug || article.permalink || article.id || '').trim();
+
+  fetch('/api/articles?limit=100&offset=0&_=' + Date.now(), { cache: 'no-store' })
+    .then(response => {
+      if (!response.ok) throw new Error('記事取得エラー: ' + response.status);
+      return response.json();
+    })
+    .then(data => {
+      const now = Date.now();
+      const articles = (Array.isArray(data.contents) ? data.contents : [])
+        .filter(article => {
+          const value = article.publishDate || article['予約公開日時'] || article.publishedAt || article.createdAt;
+          if (!value) return true;
+          const time = new Date(value).getTime();
+          return !Number.isFinite(time) || time <= now;
+        })
+        .sort((a, b) => articleTime(b) - articleTime(a))
+        .slice(0, 8);
+
+      if (!articles.length) throw new Error('公開記事がありません');
+
+      grid.innerHTML = articles.map(article => {
+        const title = plain(article.title || article.name || 'お役立ち記事');
+        const slug = slugOf(article);
+        const href = '/article?id=' + encodeURIComponent(slug);
+        const image = getImage(article);
+        const description = plain(article.description || article.summary || article.excerpt || article.metaDescription || article.body || '').slice(0, 70);
+        return '<a class="topv3-latest-card" href="' + href + '">' +
+          (image ? '<img src="' + esc(image) + '" alt="' + esc(title) + '" loading="lazy" decoding="async">' : '<span></span>') +
+          '<strong>' + esc(title) + '</strong>' +
+          (description ? '<small>' + esc(description) + '</small>' : '') +
+          '</a>';
+      }).join('');
+    })
+    .catch(error => {
+      console.error('上部の最新記事取得に失敗しました', error);
+      grid.innerHTML = '<a class="topv3-latest-card" href="/articles"><span></span><strong>最新記事を一覧から見る</strong><small>ライブ遠征・節約・ホテルなどの記事を掲載しています。</small></a>';
+    });
+})();
+</script>
+
 <script>
 (function () {
   const list = document.getElementById('topArticlesRanking');
