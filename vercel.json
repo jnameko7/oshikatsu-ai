@@ -77,6 +77,21 @@
       "source": "/categories.html",
       "destination": "/categories",
       "permanent": true
+    },
+    {
+      "source": "/editorial-policy.html",
+      "destination": "/editorial-policy",
+      "permanent": true
+    },
+    {
+      "source": "/methodology.html",
+      "destination": "/methodology",
+      "permanent": true
+    },
+    {
+      "source": "/updates.html",
+      "destination": "/updates",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -151,6 +166,18 @@
     {
       "source": "/contact",
       "destination": "/contact.html"
+    },
+    {
+      "source": "/editorial-policy",
+      "destination": "/editorial-policy.html"
+    },
+    {
+      "source": "/methodology",
+      "destination": "/methodology.html"
+    },
+    {
+      "source": "/updates",
+      "destination": "/updates.html"
     }
   ]
 }
