@@ -11,6 +11,9 @@ export default async function handler(req, res) {
     "articles",
     "categories",
     "about",
+    "editorial-policy",
+    "methodology",
+    "updates",
     "terms",
     "privacy",
     "contact"
